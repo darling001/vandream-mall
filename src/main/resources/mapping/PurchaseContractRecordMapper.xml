@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.purchase.PurchaseContractRecordDAO">
+    <resultMap id="BaseResultMap"
+               type="com.vandream.mall.business.dto.purchase.PurchaseContractRecordDTO">
+        <id column="PURCHASE_CONTRACT_RECORD_ID" property="purchaseContractRecordId"
+            jdbcType="VARCHAR"/>
+        <result column="PURCHASE_CONTRACT_HEAD_ID" property="purchaseContractHeadId"
+                jdbcType="CHAR"/>
+        <result column="OPERATOR_TYPE" property="operatorType" jdbcType="VARCHAR"/>
+        <result column="OPERATOR_DATE" property="operatorDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="OPERATOR_DEPARTMENT_ID" property="operatorDepartmentId" jdbcType="VARCHAR"/>
+        <result column="OPERATOR_DEPARTMENT_CODE" property="operatorDepartmentCode"
+                jdbcType="VARCHAR"/>
+        <result column="OPERATOR_DEPARTMENT_NAME" property="operatorDepartmentName"
+                jdbcType="VARCHAR"/>
+        <result column="OPERATOR_STAFF_ID" property="operatorStaffId" jdbcType="VARCHAR"/>
+        <result column="OPERATOR_STAFF_CODE" property="operatorStaffCode" jdbcType="VARCHAR"/>
+        <result column="OPERATOR_STAFF_NAME" property="operatorStaffName" jdbcType="VARCHAR"/>
+        <result column="RECORD_REMARK" property="recordRemark" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR"/>
+        <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR"/>
+        <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR"/>
+        <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR"/>
+        <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR"/>
+        <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR"/>
+        <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR"/>
+        <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR"/>
+        <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR"/>
+        <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    PURCHASE_CONTRACT_RECORD_ID, PURCHASE_CONTRACT_HEAD_ID, OPERATOR_TYPE, OPERATOR_DATE, 
+    OPERATOR_DEPARTMENT_ID, OPERATOR_DEPARTMENT_CODE, OPERATOR_DEPARTMENT_NAME, OPERATOR_STAFF_ID, 
+    OPERATOR_STAFF_CODE, OPERATOR_STAFF_NAME, RECORD_REMARK, CREATE_DATE, CREATE_USER_ID, 
+    CREATE_USER_NAME, MODIFY_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, ORG_ID, GROUP_ID, 
+    BOOK_ID, EXT_COL1, EXT_COL3, EXT_COL5, EXT_COL4, EXT_COL2, EXT_COL6, EXT_COL7, EXT_COL8, 
+    EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, EXT_COL16, 
+    EXT_COL17, EXT_COL18, EXT_COL19, EXT_COL20
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pom_purchase_contract_record
+        where PURCHASE_CONTRACT_RECORD_ID = #{purchaseContractRecordId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByHeadIdAndType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pom_purchase_contract_record
+        where OPERATOR_TYPE=#{operatorType} AND PURCHASE_CONTRACT_HEAD_ID =
+        #{purchaseContractHeadId}
+    </select>
+
+</mapper>

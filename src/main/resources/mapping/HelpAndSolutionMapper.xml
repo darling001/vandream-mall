@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.homepage.HelpAndSolutionDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.homepage.HelpAndSolutionDTO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="picture_url" jdbcType="VARCHAR" property="pictureUrl"/>
+        <result column="brief_introduction" jdbcType="VARCHAR" property="briefIntroduction"/>
+        <result column="from_type" jdbcType="INTEGER" property="fromType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <collection column="id" property="informationDetailList"
+                    ofType="com.vandream.mall.business.dto.homepage.InformationDetailDTO"
+                    select="findInformationDetailList">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="detailed_introduction" jdbcType="VARCHAR" property="detailedIntroduction"/>
+            <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+            <result column="sub_title" jdbcType="VARCHAR" property="subTitle"/>
+        </collection>
+    </resultMap>
+    <!--根据type类型，获取帮助中心或解决方案列表-->
+    <select id="findHelpAndSolutionList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        id,
+        title,
+        picture_url,
+        brief_introduction,
+        create_time
+        FROM mall_information
+        WHERE from_type=#{type}
+    </select>
+    <!--根据id，获取帮助中心或解决方案详情-->
+    <select id="getInformationDetail" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        id,
+        title,
+        picture_url,
+        brief_introduction,
+        create_time
+        FROM mall_information
+        WHERE id=#{id}
+    </select>
+    <!--子查询，查出子表list-->
+    <select id="findInformationDetailList" parameterType="java.lang.Integer" resultType="com.vandream.mall.business.dto.homepage.InformationDetailDTO">
+        SELECT
+        detailed_introduction detailedIntroduction,
+        sub_title subTitle,
+        img_url imgUrl
+        FROM mall_information_detail
+        WHERE information_id=#{id}
+    </select>
+</mapper>

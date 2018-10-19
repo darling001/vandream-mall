@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.FindDeliverDAO">
+    <resultMap id="findDeliverInfo" type="com.vandream.mall.business.vo.buyerContract.FindDeliverInfoVO">
+        <id column="DELIVERY_HEAD_ID" jdbcType="CHAR" property="id"/>
+        <result column="DELIVERY_CODE" jdbcType="VARCHAR" property="code"/>
+        <result column="DELIVERY_DATE" jdbcType="TIMESTAMP" property="deliverTime" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="CUSTOMER_CONSIGNEET_NAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CUSTOMER_CONSIGNEET_PHONE" jdbcType="VARCHAR" property="customerPhone"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="DELIVERY_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="read_status" jdbcType="VARCHAR" property="isRead"/>
+        <result column="TOTAL_DELIVERY_ACCOUNT" jdbcType="INTEGER" property="goodsNum"/>
+    </resultMap>
+    <select id="findDeliverInfoList" resultMap="findDeliverInfo">
+        SELECT
+          tms_delivery_head.DELIVERY_CODE,
+          tms_delivery_head.DELIVERY_HEAD_ID,
+          tms_delivery_head.DELIVERY_DATE,
+          CONCAT(tms_delivery_head.CUS_SITE_REGION_NAME,tms_delivery_head.CUS_SITE_CITY_NAME,tms_delivery_head.CUS_SITE_COUNTY_NAME,tms_delivery_head.CUSTOMER_SITE_ADDRESS) as address,
+          tms_delivery_head.CUSTOMER_CONSIGNEET_NAME,
+          tms_delivery_head.CUSTOMER_CONSIGNEET_PHONE,
+          tms_delivery_line.ITEM_NAME,
+          tms_delivery_head.DELIVERY_STATUS,
+          count( DELIVERY_CODE ) TOTAL_DELIVERY_ACCOUNT,
+         CASE
+          WHEN tms_delivery_head.SALES_CONTRACT_HEAD_ID IS NULL THEN
+          0
+          WHEN ( SELECT count( * ) FROM ext_bill_read WHERE BILL_ID = tms_delivery_head.DELIVERY_HEAD_ID AND BILL_TYPE = 25 AND ext_bill_read.ACCOUNT_ID = #{userId}) > 0 THEN
+          1
+          WHEN ( SELECT count( * ) FROM ext_bill_read WHERE BILL_ID = tms_delivery_head.DELIVERY_HEAD_ID AND BILL_TYPE = 25 AND ext_bill_read.ACCOUNT_ID = #{userId} ) = 0 THEN
+          2
+          END AS read_status
+        FROM
+          tms_delivery_head
+          LEFT JOIN tms_delivery_line ON tms_delivery_head.DELIVERY_HEAD_ID = tms_delivery_line.DELIVERY_HEAD_ID
+        WHERE
+        tms_delivery_head.SALES_CONTRACT_HEAD_ID = #{contractId} and tms_delivery_head.DELIVERY_STATUS in (40,50,90)
+        GROUP BY
+        DELIVERY_CODE
+    </select>
+</mapper>

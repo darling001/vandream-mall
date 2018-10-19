@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.OrderDAO">
+    <resultMap id="orderResultMap" type="com.vandream.mall.business.vo.OrderItemVO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="order_item_id" jdbcType="BIGINT" property="orderItemId"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="item_id" jdbcType="VARCHAR"  property="itemId" />
+        <result column="item_line_id" jdbcType="VARCHAR" property="itemLineId"/>
+        <result column="item_unit" jdbcType="VARCHAR" property="itemUnit" />
+        <result column="item_price" jdbcType="DECIMAL" property="itemPrice" />
+        <result column="item_num" jdbcType="INTEGER" property="itemNum" />
+               <association property="orderEntity"
+                            javaType="com.vandream.mall.business.vo.OrderVO">
+                   <id column="id" jdbcType="BIGINT" property="id"/>
+                   <result column="order_no" jdbcType="BIGINT" property="orderNo"/>
+                   <result column="address" jdbcType="BIGINT" property="address"/>
+                   <result column="lead_time" jdbcType="TIMESTAMP"  property="leadTime"  typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+                   <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+                   <result column="user_name" jdbcType="VARCHAR" property="name" />
+               </association>
+    </resultMap>
+    <resultMap id="OrderItemDTO" type="com.vandream.mall.business.dto.order.OrderItemDTO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="item_id" jdbcType="VARCHAR"  property="itemId" />
+        <result column="item_line_id" jdbcType="VARCHAR" property="itemLineId"/>
+    </resultMap>
+    <insert id="insertOrder" parameterType="com.vandream.mall.business.vo.OrderVO">
+          INSERT  INTO  MALL_ORDER(order_no,address,lead_time,user_id,user_name)
+          VALUES
+          (#{orderNo},#{address},#{leadTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler},#{userId},#{userName})
+    </insert>
+
+    <insert id="insertOrderItem" parameterType="com.vandream.mall.business.vo.OrderItemVO">
+        INSERT INTO  MALL_ORDER_ITEM(order_id,item_id,item_line_id,item_unit,item_price,item_num)
+        VALUES(#{orderNo},#{itemId},#{itemLineId},#{itemUnit},#{itemPrice},#{number})
+    </insert>
+
+    <insert id="batchInsertOrderItemList" parameterType="java.lang.String">
+        insert into vandream_mall.MALL_ORDER_ITEM(order_id,item_id,item_line_id,item_unit,item_price,item_num)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.orderId},#{item.itemId},#{item.itemLineId},#{item.itemUnit},#{item.itemPrice},#{item.itemNum})
+        </foreach>
+    </insert>
+
+    <select id="selectByIdUserName" resultType="java.lang.String">
+        SELECT ACCOUNT_NAME FROM `UCM_ACCOUNT` WHERE `ACCOUNT_ID` = #{userId}
+    </select>
+    <select id="getOrderItemDTOListByOrderId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT item_line_id FROM vandream_mall.MALL_ORDER_ITEM WHERE order_id=#{orderId}
+    </select>
+
+    <select id="findAreaRangeCode"  resultType="java.lang.String">
+        SELECT  ar.AREA_RANGE_CODE   FROM  aus_area_range ar   INNER JOIN  aus_area_range_line arl
+        ON ar.AREA_RANGE_HEAD_ID = arl.AREA_RANGE_HEAD_ID  INNER JOIN aus_area_info ai
+        ON ai.AREA_ID = arl.AREA_ID WHERE ar.STATUS = '40' AND ai.AREA_STATUS = '40'
+        AND  arl.AREA_CODE =  #{cityCode} 
+         GROUP BY ar.AREA_RANGE_HEAD_ID
+    </select>
+    
+    
+</mapper>

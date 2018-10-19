@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.SubAccountDAO">
+
+    <resultMap id="subAccountMap" type="com.vandream.mall.business.dto.subAccount.SubAccountDTO">
+        <id column="ACCOUNT_ID" jdbcType="CHAR" property="accountId"/>
+        <result column="PARENT_ACCOUNT_ID" jdbcType="CHAR" property="parentAccountId"/>
+        <result column="ACCOUNT_TYPE" jdbcType="VARCHAR" property="accountType"/>
+        <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName"/>
+        <collection property="roleList" ofType="com.vandream.mall.business.dto.subAccount.RoleDTO"
+                    select="getRoleListByAccountId" column="{accountId=ACCOUNT_ID}">
+        </collection>
+    </resultMap>
+
+    <resultMap id="roleMap" type="com.vandream.mall.business.dto.subAccount.RoleDTO">
+        <id column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="role_type" jdbcType="INTEGER" property="roleType"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <collection property="menuList" javaType="java.util.List" column="{roleId=role_id}"
+                    ofType="com.vandream.mall.business.dto.subAccount.MenuDTO" select="findRootMenuList"/>
+    </resultMap>
+
+    <resultMap id="menuMap" type="com.vandream.mall.business.dto.subAccount.MenuDTO">
+        <id column="menu_id" property="menuId"/>
+        <result column="name" property="name"/>
+        <result column="order" property="order"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="url" property="url"/>
+        <result column="selected" property="selected"/>
+        <result column="role_id" property="roleId"/>
+        <collection property="menuList" javaType="java.util.List"
+                    ofType="com.vandream.mall.business.dto.subAccount.MenuDTO" select="findSubMenuList"
+                    column="{parent_id=menu_id,roleId=role_id}"/>
+    </resultMap>
+
+    <!-- 查询账户的基本信息 -->
+    <select id="getAccount" resultMap="subAccountMap">
+        SELECT
+        ACCOUNT_ID, PARENT_ACCOUNT_ID, ACCOUNT_TYPE, ACCOUNT_NAME
+        FROM
+        ucm_account
+        WHERE
+        ACCOUNT_ID=#{accountId}
+    </select>
+
+    <!-- 查询当前账户下的角色信息 -->
+    <select id="getRoleListByAccountId" resultMap="roleMap" parameterType="java.util.HashMap">
+        SELECT
+        ur.role_id,
+        ur.role_name,
+        ur.role_type
+        FROM ucm_account ua INNER JOIN ucm_account_role uar ON ua.ACCOUNT_ID = uar.account_id
+        INNER JOIN ucm_role ur ON uar.role_id = ur.role_id
+        <where>
+            <if test="accountId !=null and '' != accountId">
+                ua.account_id = #{accountId}
+            </if>
+            <if test="accountType != null and '' != accountType">
+                AND ua.ACCOUNT_TYPE = #{accountType}
+            </if>
+            <if test="roleType != null">
+                AND ur.role_Type = #{roleType}
+            </if>
+        </where>
+    </select>
+
+    <sql id="base_columns">
+           menu_id, name, parent_id, url, `order`
+    </sql>
+
+    <!-- 查询角色对应的一级菜单列表 -->
+    <select id="findRootMenuList" resultMap="menuMap">
+        SELECT
+        <include refid="base_columns"/>, '${roleId}' as role_id
+        FROM
+        ucm_menu
+        WHERE
+        menu_id
+        IN
+        (SELECT
+        DISTINCT
+        urm.root_menu_id
+        FROM
+        ucm_role ur
+        LEFT JOIN
+        ucm_role_menu urm
+        ON
+        ur.`role_id` = urm.`role_id`
+        LEFT JOIN
+        ucm_menu um
+        ON
+        urm.`menu_id` = um.`menu_id`
+        <where>
+            <if test="roleFlag != null and '' != roleFlag">
+                ur.role_flag = #{roleFlag}
+            </if>
+            <if test="roleId != null and '' != roleId">
+                AND ur.`role_id` = #{roleId}
+            </if>
+            <if test="roleType != null">
+                AND ur.`role_Type` = #{roleType}
+            </if>
+            AND urm.`role_id` IS NOT NULL
+        </where>
+        )
+        ORDER BY
+        `order`
+    </select>
+
+    <!-- 递归查询一级菜单下的子菜单列表 -->
+    <select id="findSubMenuList" resultMap="menuMap" parameterType="java.util.HashMap">
+        SELECT
+        m.menu_id, m.name, m.parent_id, m.url, '${roleId}' as role_id, `order`,
+        IF(
+        (SELECT distinct urm.menu_id FROM ucm_role_menu urm WHERE urm.menu_id=m.menu_id
+            <if test="roleId != null and '' != roleId ">
+                    AND urm.role_id = #{roleId}
+            </if>
+        )  IS NULL, 0, 1) selected
+        FROM
+            ucm_menu m
+        WHERE
+            m.parent_id=#{parent_id}
+        ORDER BY
+        m.`order`
+    </select>
+</mapper>

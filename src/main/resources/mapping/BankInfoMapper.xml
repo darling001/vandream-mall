@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.BankInfoDAO" >
+  <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.BankInfoDTO" >
+    <id column="GL_BANK_ID" property="glBankId" jdbcType="VARCHAR" />
+    <result column="GL_BANK_CODE" property="glBankCode" jdbcType="VARCHAR" />
+    <result column="GL_BANK_NAME" property="glBankName" jdbcType="VARCHAR" />
+    <result column="GL_BANK_NUM" property="glBankNum" jdbcType="VARCHAR" />
+    <result column="CURRENCY_CODE" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BRANCH_CODE" property="branchCode" jdbcType="VARCHAR" />
+    <result column="RECEIPT_FLAG" property="receiptFlag" jdbcType="VARCHAR" />
+    <result column="PAY_FLAG" property="payFlag" jdbcType="VARCHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="LEGAL_ORG_ID" property="legalOrgId" jdbcType="VARCHAR" />
+    <result column="SWIFT_CODE" property="swiftCode" jdbcType="VARCHAR" />
+    <result column="DEFAULT_FLAG" property="defaultFlag" jdbcType="VARCHAR" />
+    <result column="OBJECT_ID" property="objectId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="ORG_GID" property="orgGid" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.vandream.mall.business.dto.BankInfoDTOWithBLOBs" extends="BaseResultMap" >
+    <result column="EXT_COL1" property="extCol1" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL3" property="extCol3" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL5" property="extCol5" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL4" property="extCol4" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL2" property="extCol2" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL6" property="extCol6" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL7" property="extCol7" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL8" property="extCol8" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL9" property="extCol9" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL10" property="extCol10" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL11" property="extCol11" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL12" property="extCol12" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL13" property="extCol13" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL14" property="extCol14" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL15" property="extCol15" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL16" property="extCol16" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL17" property="extCol17" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL18" property="extCol18" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL19" property="extCol19" jdbcType="LONGVARCHAR" />
+    <result column="EXT_COL20" property="extCol20" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GL_BANK_ID, GL_BANK_CODE, GL_BANK_NAME, GL_BANK_NUM, CURRENCY_CODE, BANK_CODE, BRANCH_CODE, 
+    RECEIPT_FLAG, PAY_FLAG, START_DATE, END_DATE, LEGAL_ORG_ID, SWIFT_CODE, DEFAULT_FLAG, 
+    OBJECT_ID, CREATE_DATE, CREATE_USER_ID, MODIFY_DATE, MODIFY_USER_ID, ORG_GID, ORG_ID, 
+    GROUP_ID, BOOK_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    EXT_COL1, EXT_COL3, EXT_COL5, EXT_COL4, EXT_COL2, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, 
+    EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, EXT_COL16, EXT_COL17, 
+    EXT_COL18, EXT_COL19, EXT_COL20
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gz_bank_info
+    where GL_BANK_ID = #{glBankId,jdbcType=VARCHAR}
+  </select>
+</mapper>

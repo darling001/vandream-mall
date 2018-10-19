@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.DemandHeadDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.demand.DemandHeadDTO">
+        <id column="DEMAND_ID" property="demandId" jdbcType="CHAR"/>
+        <result column="DEMAND_CODE" property="demandCode" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="CHAR"/>
+        <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR"/>
+        <result column="DEMAND_RESUME" property="demandResume" jdbcType="VARCHAR"/>
+        <result column="DEMAND_DISCUSS" property="demandDiscuss" jdbcType="VARCHAR"/>
+        <result column="DEMAND_STATUS" property="demandStatus" jdbcType="VARCHAR"/>
+        <result column="DEMAND_TYPE" property="demandType" jdbcType="VARCHAR"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="FROM_ID" property="fromId" jdbcType="VARCHAR"/>
+        <result column="FROM_CODE" property="fromCode" jdbcType="VARCHAR"/>
+        <result column="DEMAND_TIME" property="demandTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DEMAND_ACCOUNT_ID" property="demandAccountId" jdbcType="CHAR"/>
+        <result column="DEMAND_ACCOUNT_NAME" property="demandAccountName" jdbcType="VARCHAR"/>
+        <result column="DEMAND_CONTACTS" property="demandContacts" jdbcType="VARCHAR"/>
+        <result column="DEMAND_PHONE" property="demandPhone" jdbcType="VARCHAR"/>
+        <result column="DEMAND_CONTACTS_ROLE" property="demandContactsRole" jdbcType="VARCHAR"/>
+        <result column="PROJECT_ID" property="projectId" jdbcType="CHAR"/>
+        <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR"/>
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"/>
+        <result column="BUDGET" property="budget" jdbcType="DECIMAL"/>
+        <result column="CURRENCY_CODE" property="currencyCode" jdbcType="VARCHAR"/>
+        <result column="DELIVERY_PERIOD_START" property="deliveryPeriodStart" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_END" property="deliveryPeriodEnd" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="PLATFORM_CONTACTS" property="platformContacts" jdbcType="VARCHAR"/>
+        <result column="PLATFORM_CONTACTS_CODE" property="platformContactsCode" jdbcType="VARCHAR"/>
+        <result column="PLATFORM_CONTACTS_ID" property="platformContactsId" jdbcType="CHAR"/>
+        <result column="SITE_COUNTRY_CODE" property="siteCountryCode" jdbcType="VARCHAR"/>
+        <result column="SITE_COUNTRY_NAME" property="siteCountryName" jdbcType="VARCHAR"/>
+        <result column="SITE_REGION_CODE" property="siteRegionCode" jdbcType="VARCHAR"/>
+        <result column="SITE_REGION_NAME" property="siteRegionName" jdbcType="VARCHAR"/>
+        <result column="SITE_CITY_CODE" property="siteCityCode" jdbcType="VARCHAR"/>
+        <result column="SITE_CITY_NAME" property="siteCityName" jdbcType="VARCHAR"/>
+        <result column="SITE_COUNTY_CODE" property="siteCountyCode" jdbcType="VARCHAR"/>
+        <result column="SITE_COUNTY_NAME" property="siteCountyName" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_AREA" property="customerSiteArea" jdbcType="VARCHAR"/>
+        <result column="PLATFORM_PHONE" property="platFormPhone" jdbcType="VARCHAR"/>
+        <result column="DEMAND_VISIT_ID" property="demandVisitId" jdbcType="CHAR"/>
+        <result column="CLOSE_REASON" property="closeReason" jdbcType="VARCHAR"/>
+        <result column="CLOSE_TIME" property="closeTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CLOSE_USER_ID" property="closeUserId" jdbcType="CHAR"/>
+        <result column="CLOSE_USER_NAME" property="closeUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookCode" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+    </resultMap>
+    <resultMap id="demandDetailInfo" type="com.vandream.mall.business.dto.demand.DemandDetailDTO">
+        <id column="DEMAND_ID" property="demandId" jdbcType="CHAR"/>
+        <result column="DEMAND_CODE" property="demandCode" jdbcType="VARCHAR"/>
+        <result column="DEMAND_RESUME" property="demandResume" jdbcType="VARCHAR"/>
+        <result column="DEMAND_DISCUSS" property="demandDiscuss" jdbcType="VARCHAR"/>
+        <result column="DEMAND_TIME" property="demandTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_START" property="deliveryPeriodStart" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_END" property="deliveryPeriodEnd" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DEMAND_CONTACTS" property="demandContacts" jdbcType="VARCHAR"/>
+        <result column="DEMAND_PHONE" property="demandPhone" jdbcType="VARCHAR"/>
+        <result column="ADDRESS" property="customerSiteArea" jdbcType="VARCHAR"/>
+        <result column="mallStatus" property="demandStatus" jdbcType="VARCHAR"/>
+        <result column="SALER" property="saler" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectDetailByDemandId" resultMap="demandDetailInfo"
+            parameterType="com.vandream.mall.business.vo.demand.DemandRequestVO">
+        SELECT
+        h.DEMAND_ID,
+        h.`DEMAND_CODE`,
+        h.`DEMAND_RESUME`,
+        h.`DEMAND_DISCUSS`,
+        h.`DEMAND_TIME`,
+        h.DELIVERY_PERIOD_START,
+        h.DELIVERY_PERIOD_END,
+        h.`DEMAND_STATUS`,
+        h.DEMAND_CONTACTS,
+        h.DEMAND_PHONE,
+        CONCAT( h.SITE_REGION_NAME,h.SITE_CITY_NAME,
+        h.SITE_COUNTY_NAME,h.CUSTOMER_SITE_AREA) AS "ADDRESS",
+        CONCAT ( h.`PLATFORM_CONTACTS`,' ',h.`PLATFORM_PHONE`) AS "SALER",
+        IF ('40'>h.DEMAND_STATUS,
+            IF (
+              (SELECT COUNT(*)  FROM  business.psd_solution_head t2
+               WHERE t2.SOLUTION_STATUS = '50'
+                AND t2.DEMAND_ID = h.DEMAND_ID GROUP BY h.DEMAND_ID) > 0,
+              '35',
+               h.DEMAND_STATUS
+            ),
+        h.DEMAND_STATUS
+        ) mallStatus
+        FROM
+        psd_demand_head h
+        <where>
+            <if test="null!=demandId and ''!=demandId ">
+                AND h.DEMAND_ID=#{demandId}
+            </if>
+        </where>
+    </select>
+    <!-- 获取需求记录列表-->
+    <resultMap id="demandResponseBody" type="com.vandream.mall.business.vo.demand.DemandBillVO">
+        <result column="DEMAND_ID" property="demandId" jdbcType="VARCHAR"/>
+        <result column="DEMAND_CODE" property="demandCode" jdbcType="VARCHAR"/>
+        <result column="DEMAND_RESUME" property="demandResume" jdbcType="VARCHAR"/>
+        <result column="SELLER" property="seller" jdbcType="VARCHAR"></result>
+        <result column="CREATE_DATE" property="createTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_START" property="submitStartTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_END" property="submitEndTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DEMAND_STATUS" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- -->
+    <resultMap id="demandResponseToBeConfirmedBody" type="com.vandream.mall.business.vo.demand.DemandBillVO">
+        <result column="DEMAND_ID" property="demandId" jdbcType="VARCHAR"/>
+        <result column="DEMAND_CODE" property="demandCode" jdbcType="VARCHAR"/>
+        <result column="DEMAND_RESUME" property="demandResume" jdbcType="VARCHAR"/>
+        <result column="SELLER" property="seller" jdbcType="VARCHAR"></result>
+        <result column="CREATE_DATE" property="createTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_START" property="submitStartTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_PERIOD_END" property="submitEndTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="mallStatus" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--正常查询需求记录列表 -->
+    <select id="findDemandList" resultMap="demandResponseBody"
+            parameterType="com.vandream.mall.business.vo.demand.DemandRequestVO">
+        SELECT
+        h.DEMAND_ID ,
+        h.`DEMAND_CODE` ,
+        h.`DEMAND_RESUME` ,
+        h.`CREATE_DATE`,
+        h.DELIVERY_PERIOD_START ,
+        h.DELIVERY_PERIOD_END ,
+        CONCAT (h.`PLATFORM_CONTACTS`,h.`PLATFORM_PHONE`) AS "SELLER",
+        h.`DEMAND_STATUS`
+        FROM
+        psd_demand_head h
+        <where>
+            <if test="null!=demandId and ''!=demandId ">
+                AND h.DEMAND_ID=#{demandId}
+            </if>
+            <if test="null!=demandStatus and ''!=demandStatus">
+                <choose>
+                    <when test="demandStatus=='20'">
+                        AND ( h.DEMAND_STATUS=#{demandStatus}
+                        or h.DEMAND_STATUS ='30')
+                    </when>
+                    <when test="demandStatus!='20'">
+                        AND h.DEMAND_STATUS=#{demandStatus}
+                    </when>
+                </choose>
+            </if>
+            <if test="null!=keyword and ''!=keyword">
+                AND ( h.DEMAND_RESUME like concat('%',#{keyword}, '%')
+                or h.DEMAND_CODE like concat('%', #{keyword}, '%'))
+            </if>
+            <if test="null!=companyId and ''!=companyId ">
+                AND h.CUSTOMER_ID=#{companyId}
+            </if>
+            <if test="null!=submitStartTime">
+                <![CDATA[ AND
+                h.DEMAND_TIME >=
+                #{submitStartTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                ]]>
+            </if>
+            <if test="null!=submitEndTime">
+                <![CDATA[ AND
+                h.DEMAND_TIME <
+                #{submitEndTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                ]]>
+            </if>
+        </where>
+        GROUP BY h.`DEMAND_ID`
+        ORDER BY h.CREATE_DATE DESC
+    </select>
+    <!--查询状态为待需方确认 需求记录列表 -->
+    <select id="selectToBeConfirmed" resultMap="demandResponseToBeConfirmedBody"
+            parameterType="com.vandream.mall.business.vo.demand.DemandRequestVO">
+        SELECT
+        dh.DEMAND_ID,
+        dh.`DEMAND_CODE` ,
+        dh.`DEMAND_RESUME` ,
+        dh.`CREATE_DATE`,
+        dh.DELIVERY_PERIOD_START ,
+        dh.DELIVERY_PERIOD_END ,
+        dh.SELLER,
+        dh.mallStatus
+        FROM
+          (SELECT  t.DEMAND_ID,t.DEMAND_STATUS,t.`DEMAND_CODE`,t.`DEMAND_RESUME`,t.`CREATE_DATE`,t.DELIVERY_PERIOD_START ,
+            t.DELIVERY_PERIOD_END ,CONCAT (t.`PLATFORM_CONTACTS`,t.`PLATFORM_PHONE`) AS "SELLER",t.CUSTOMER_ID,t.DEMAND_TIME,
+            IF ('40'> t.DEMAND_STATUS,
+             IF ((SELECT COUNT(*) FROM  business.psd_solution_head t2 WHERE t2.SOLUTION_STATUS = '50'
+              AND t2.DEMAND_ID = t.DEMAND_ID GROUP BY t.DEMAND_ID)>0,'35',t.DEMAND_STATUS),
+            t.DEMAND_STATUS
+            ) mallStatus FROM business.psd_demand_head t) dh
+        <where>
+            <if test="null!=demandId and ''!=demandId ">
+                AND dh.DEMAND_ID=#{demandId}
+            </if>
+            <if test="null!=demandStatus and ''!=demandStatus">
+                <choose>
+                    <when test="demandStatus=='20'">
+                        AND ( dh.mallStatus=#{demandStatus}
+                        or dh.mallStatus ='30')
+                    </when>
+                    <when test="demandStatus!='20'">
+                        AND dh.mallStatus=#{demandStatus}
+                    </when>
+                </choose>
+            </if>
+            <if test="null!=keyword and ''!=keyword">
+                AND ( dh.DEMAND_RESUME like concat('%',#{keyword}, '%')
+                or dh.DEMAND_CODE like concat('%', #{keyword}, '%'))
+            </if>
+            <if test="null!=companyId and ''!=companyId ">
+                AND dh.CUSTOMER_ID=#{companyId}
+            </if>
+            <if test="null!=submitStartTime">
+                <![CDATA[ AND
+                dh.DEMAND_TIME >=
+                #{submitStartTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                ]]>
+            </if>
+            <if test="null!=submitEndTime">
+                <![CDATA[ AND
+                dh.DEMAND_TIME <
+                #{submitEndTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                ]]>
+            </if>
+        </where>
+        GROUP BY dh.`DEMAND_ID`
+        ORDER BY dh.CREATE_DATE DESC
+    </select>
+    <select id="selectDemandSolutionList" resultMap="demandResponseToBeConfirmedBody"
+            parameterType="com.vandream.mall.business.vo.demand.DemandRequestVO">
+        SELECT
+            t.DEMAND_ID,
+            t.DEMAND_STATUS,
+            t.`DEMAND_CODE`,
+            t.`DEMAND_RESUME`,
+            t.`CREATE_DATE`,
+            t.DELIVERY_PERIOD_START,
+            t.DELIVERY_PERIOD_END,
+            CONCAT(
+              t.`PLATFORM_CONTACTS`,
+              t.`PLATFORM_PHONE`
+            ) AS "SELLER",
+            t.CUSTOMER_ID,
+            t.DEMAND_TIME,
+            IF (
+              '40' > t.DEMAND_STATUS,
+              IF ( COUNT(t2.`DEMAND_ID`) > 0,'35', t.DEMAND_STATUS),
+              t.DEMAND_STATUS
+            ) mallStatus
+          FROM
+            business.psd_demand_head t
+            LEFT JOIN business.psd_solution_head t2 ON ( t2.DEMAND_ID = t.DEMAND_ID AND  t2.SOLUTION_STATUS = '50')
+            <where>
+                <if test="null!=demandId and ''!=demandId ">
+                    AND t.DEMAND_ID=#{demandId}
+                </if>
+
+                <if test="null!=keyword and ''!=keyword">
+                    AND ( t.DEMAND_RESUME like concat('%',#{keyword}, '%')
+                    or t.DEMAND_CODE like concat('%', #{keyword}, '%'))
+                </if>
+                <if test="null!=companyId and ''!=companyId ">
+                    AND t.CUSTOMER_ID=#{companyId}
+                </if>
+                <if test="null!=submitStartTime">
+                    <![CDATA[ AND
+                    t.DEMAND_TIME >=
+                    #{submitStartTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                    ]]>
+                </if>
+                <if test="null!=submitEndTime">
+                    <![CDATA[ AND
+                    t.DEMAND_TIME <
+                    #{submitEndTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                    ]]>
+                </if>
+            </where>
+            GROUP BY t.DEMAND_ID
+            HAVING 1=1 <if test="null!=demandStatus and ''!=demandStatus">
+                <choose>
+                    <when test="demandStatus=='20'">
+                        AND ( mallStatus=#{demandStatus}
+                        or mallStatus ='30')
+                    </when>
+                    <when test="demandStatus!='20'">
+                        AND mallStatus=#{demandStatus}
+                    </when>
+                </choose>
+            </if>
+            ORDER BY t.CREATE_DATE DESC
+    </select>
+    <sql id="Base_Column_List">
+    DEMAND_ID, DEMAND_CODE, CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, DEMAND_RESUME,
+    DEMAND_DISCUSS, DEMAND_STATUS, DEMAND_TYPE, FROM_TYPE, FROM_ID, FROM_CODE, DEMAND_TIME,
+    DEMAND_ACCOUNT_ID, DEMAND_ACCOUNT_NAME, DEMAND_CONTACTS, DEMAND_PHONE, DEMAND_CONTACTS_ROLE,
+    PROJECT_ID, PROJECT_CODE, PROJECT_NAME, BUDGET, CURRENCY_CODE, DELIVERY_PERIOD_START,
+    DELIVERY_PERIOD_END, PLATFORM_CONTACTS, PLATFORM_CONTACTS_CODE, PLATFORM_CONTACTS_ID,
+    SITE_COUNTRY_CODE, SITE_COUNTRY_NAME, SITE_REGION_CODE, SITE_REGION_NAME, SITE_CITY_CODE,
+    SITE_CITY_NAME, SITE_COUNTY_CODE, SITE_COUNTY_NAME, CUSTOMER_SITE_AREA, PLATFORM_PHONE,
+    DEMAND_VISIT_ID, CLOSE_REASON, CLOSE_TIME, CLOSE_USER_ID, CLOSE_USER_NAME, CREATE_USER_ID,
+    CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, MODIFY_DATE, ORG_ID,
+    BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7,
+    EXT_COL8, EXT_COL9, EXT_COL10
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_demand_head
+        where DEMAND_ID = #{demandId,jdbcType=CHAR}
+    </select>
+    <select id="getOrderCodeById" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT DEMAND_CODE FROM PSD_DEMAND_HEAD p WHERE p.DEMAND_ID=#{demandId}
+    </select>
+</mapper>

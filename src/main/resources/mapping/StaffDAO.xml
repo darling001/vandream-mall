@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.StaffDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.StaffDTO">
+        <id column="OBJECT_ID" property="objectId" jdbcType="VARCHAR"/>
+        <result column="STAFF_ID" property="staffId" jdbcType="VARCHAR"/>
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result column="E_MAIL" property="eMail" jdbcType="VARCHAR"/>
+        <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR"/>
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="ORG_GID" property="orgGid" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    OBJECT_ID, STAFF_ID, USER_CODE, USER_NAME, E_MAIL, TELEPHONE, ADDRESS, CREATE_DATE, 
+    CREATE_USER_ID, MODIFY_DATE, MODIFY_USER_ID, ORG_GID, ORG_ID, GROUP_ID, BOOK_ID, 
+    STATUS
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from hr_staff
+        where OBJECT_ID = #{objectId,jdbcType=VARCHAR}
+    </select>
+    <select id="findListByStaffIdList" resultMap="BaseResultMap" parameterType="list">
+        select
+        <include refid="Base_Column_List"/>
+        from hr_staff
+        where STATUS='1' AND STAFF_ID IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="findByStaffId" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from hr_staff
+        where STATUS='1' AND STAFF_ID=#{staffId}
+    </select>
+
+</mapper>

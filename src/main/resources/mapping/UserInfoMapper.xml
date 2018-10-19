@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.UserInfoDAO">
+    <resultMap id="securityResultMap" type="com.vandream.mall.business.vo.UserInfoVO">
+        <id column="ACCOUNT_ID" jdbcType="CHAR" property="userId"/>
+        <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="ACCOUNT_MOBILE" jdbcType="VARCHAR" property="phoneNumber" />
+        <result column="COMPANY_ID" jdbcType="CHAR" property="companyId" />
+        <result column="ACCOUNT_FLAG" jdbcType="CHAR" property="accountFlag" />
+    </resultMap>
+    <select id="getUserInfoByUserId" resultMap="securityResultMap">
+        SELECT `ACCOUNT_ID`,`ACCOUNT_NAME`,`ACCOUNT_MOBILE`,`COMPANY_ID`,`ACCOUNT_FLAG` FROM
+        ucm_account  WHERE `ACCOUNT_ID` = #{userId}
+    </select>
+
+    <select id="getCompanyName" resultType="java.lang.String">
+        SELECT `ACCOUNT_NAME` FROM ucm_account WHERE `ACCOUNT_ID` = #{userId}
+    </select>
+</mapper>

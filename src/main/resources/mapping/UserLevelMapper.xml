@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.UserLevelDAO">
+    <resultMap id="userLevelResultMap" type="com.vandream.mall.business.dto.mallCart.UcmAccountDTO">
+    <id column="ACCOUNT_ID" jdbcType="CHAR" property="accountId"/>
+    <result column="COMPANY_ID" jdbcType="VARCHAR" property="companyId"/>
+      <association property="crmCustomerDTO"
+                 javaType="com.vandream.mall.business.dto.mallCart.CrmCustomerDTO">
+        <id column="CUSTOMER_ID" jdbcType="VARCHAR" property="customerId"/>
+        <result column="COMPANY_ID" jdbcType="VARCHAR" property="companyId"/>
+        <result column="CUSTOMER_LEVEL" jdbcType="CHAR" property="customerLevel"/>
+      </association>
+    </resultMap>
+
+
+    <select id="getUserLevel" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT CUSTOMER_LEVEL FROM UCM_ACCOUNT ucm LEFT JOIN CRM_CUSTOMER crm  ON
+        ucm.COMPANY_ID=crm.COMPANY_ID WHERE ACCOUNT_ID = #{userId} limit 1
+    </select>
+
+</mapper>

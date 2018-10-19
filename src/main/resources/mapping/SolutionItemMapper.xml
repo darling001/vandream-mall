@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.SolutionItemDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.solution.SolutionItemDTO">
+        <id column="SOLUTION_ITEM_ID" property="solutionItemId" jdbcType="CHAR"/>
+        <result column="SOLUTION_ITEM_CODE" property="solutionItemCode" jdbcType="VARCHAR"/>
+        <result column="SOLUTION_ITEM_STATUS" property="solutionItemStatus" jdbcType="VARCHAR"/>
+        <result column="SOLUTION_ID" property="solutionId" jdbcType="CHAR"/>
+        <result column="SOLUTION_DEMAND_ID" property="solutionDemandId" jdbcType="CHAR"/>
+        <result column="DEMAND_ID" property="demandId" jdbcType="CHAR"/>
+        <result column="DEMAND_LINE_ID" property="demandLineId" jdbcType="CHAR"/>
+        <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR"/>
+        <result column="CATEGORY_CODE" property="categoryCode" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="SPU_ID" property="spuId" jdbcType="CHAR"/>
+        <result column="SPU_CODE" property="spuCode" jdbcType="VARCHAR"/>
+        <result column="SPU_NAME" property="spuName" jdbcType="VARCHAR"/>
+        <result column="SPEC_HEAD_ID" property="specHeadId" jdbcType="CHAR"/>
+        <result column="ITEM_ID" property="itemId" jdbcType="CHAR"/>
+        <result column="ITEM_CODE" property="itemCode" jdbcType="VARCHAR"/>
+        <result column="ITEM_DETAIL" property="itemDetail" jdbcType="VARCHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="ITEM_SHORTNAME" property="itemShortname" jdbcType="VARCHAR"/>
+        <result column="ITEM_DESC" property="itemDesc" jdbcType="VARCHAR"/>
+        <result column="TRADEMARK" property="trademark" jdbcType="VARCHAR"/>
+        <result column="STANDARD_FLAG" property="standardFlag" jdbcType="VARCHAR"/>
+        <result column="PRIMARY_UNIT_CODE" property="primaryUnitCode" jdbcType="VARCHAR"/>
+        <result column="VALID_START" property="validStart" jdbcType="TIMESTAMP"/>
+        <result column="VALID_END" property="validEnd" jdbcType="TIMESTAMP"/>
+        <result column="UOM_WIDTH" property="uomWidth" jdbcType="VARCHAR"/>
+        <result column="UOM_HEIGHT" property="uomHeight" jdbcType="VARCHAR"/>
+        <result column="UOM_LENGTH" property="uomLength" jdbcType="VARCHAR"/>
+        <result column="UOM_DENSITY" property="uomDensity" jdbcType="VARCHAR"/>
+        <result column="UOM_WEIGHT" property="uomWeight" jdbcType="VARCHAR"/>
+        <result column="MANUFACTURER_NAME" property="manufacturerName" jdbcType="VARCHAR"/>
+        <result column="TECHNICAL_STANDARD" property="technicalStandard" jdbcType="VARCHAR"/>
+        <result column="GOLDEN_TAX_CODE" property="goldenTaxCode" jdbcType="VARCHAR"/>
+        <result column="LOSS_RATE" property="lossRate" jdbcType="DECIMAL"/>
+        <result column="ORIGIN" property="origin" jdbcType="VARCHAR"/>
+        <result column="LOCK_FLAG" property="lockFlag" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE1" property="specValue1" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE2" property="specValue2" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE3" property="specValue3" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE4" property="specValue4" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE5" property="specValue5" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE6" property="specValue6" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE7" property="specValue7" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE8" property="specValue8" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE9" property="specValue9" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE10" property="specValue10" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE11" property="specValue11" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE12" property="specValue12" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE13" property="specValue13" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE14" property="specValue14" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE15" property="specValue15" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE16" property="specValue16" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE17" property="specValue17" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE18" property="specValue18" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE19" property="specValue19" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUE20" property="specValue20" jdbcType="VARCHAR"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="FROM_ID" property="fromId" jdbcType="VARCHAR"/>
+        <result column="FROM_CODE" property="fromCode" jdbcType="VARCHAR"/>
+        <result column="ITEM_SPEC_DESC" property="itemSpecDesc" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ItemInfoResultMap"
+               type="com.vandream.mall.business.dto.solution.SolutionItemDTO">
+        <id column="SOLUTION_ITEM_ID" property="solutionItemId" jdbcType="CHAR"/>
+        <result column="ITEM_ID" property="itemId" />
+        <result column="ITEM_NAME" property="itemName" />
+        <result column="TRADEMARK" property="trademark" />
+        <result column="STANDARD_FLAG" property="standardFlag" />
+        <result column="PRIMARY_UNIT_CODE" property="primaryUnitCode" />
+        <result column="SOLUTION_ITEM_LINE_ID" property="solutionItemLineId" />
+        <result column="SOLUTION_SUPPLIER_ID" property="solutionSupplierId" />
+        <result column="QUANTITY" property="quantity" />
+        <result column="DEMAND_REMARK" property="demandRemark" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    SOLUTION_ITEM_ID, SOLUTION_ITEM_CODE, SOLUTION_ITEM_STATUS, SOLUTION_ID, SOLUTION_DEMAND_ID, 
+    DEMAND_ID, DEMAND_LINE_ID, CATEGORY_ID, CATEGORY_CODE, CATEGORY_NAME, SPU_ID, SPU_CODE, 
+    SPU_NAME, SPEC_HEAD_ID, ITEM_ID, ITEM_CODE, ITEM_DETAIL, ITEM_NAME, ITEM_SHORTNAME,
+    ITEM_DESC, TRADEMARK, STANDARD_FLAG, PRIMARY_UNIT_CODE, VALID_START, VALID_END, UOM_WIDTH,
+    UOM_HEIGHT, UOM_LENGTH, UOM_DENSITY, UOM_WEIGHT, MANUFACTURER_NAME, TECHNICAL_STANDARD,
+    GOLDEN_TAX_CODE, LOSS_RATE, ORIGIN, LOCK_FLAG, SPEC_VALUE1, SPEC_VALUE2, SPEC_VALUE3,
+    SPEC_VALUE4, SPEC_VALUE5, SPEC_VALUE6, SPEC_VALUE7, SPEC_VALUE8, SPEC_VALUE9, SPEC_VALUE10,
+    SPEC_VALUE11, SPEC_VALUE12, SPEC_VALUE13, SPEC_VALUE14, SPEC_VALUE15, SPEC_VALUE16,
+    SPEC_VALUE17, SPEC_VALUE18, SPEC_VALUE19, SPEC_VALUE20, FROM_TYPE, FROM_ID, FROM_CODE,
+    ITEM_SPEC_DESC, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME,
+    MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5,
+    EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10
+  </sql>
+    <sql id="Item_Info_Column">
+        it.SOLUTION_ITEM_ID,it.ITEM_NAME,it.TRADEMARK,it.PRIMARY_UNIT_CODE,pil.SOLUTION_ITEM_LINE_ID,pil.SOLUTION_SUPPLIER_ID,
+        it.STANDARD_FLAG,pil.QUANTITY,sd.DEMAND_REMARK
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_item
+        where SOLUTION_ITEM_ID = #{solutionItemId}
+    </select>
+    <select id="findItemInfoList" resultMap="ItemInfoResultMap">
+        SELECT
+        <include refid="Item_Info_Column"/>
+        FROM psd_item it
+        INNER JOIN psd_item_line pil ON it.SOLUTION_ITEM_ID=pil.SOLUTION_ITEM_ID
+        INNER JOIN psd_solution_supplier pss ON
+        pss.SOLUTION_SUPPLIER_ID=pil.SOLUTION_SUPPLIER_ID
+        LEFT JOIN psd_solution_demand sd ON it.SOLUTION_DEMAND_ID=sd.SOLUTION_DEMAND_ID
+        <where>
+            pil.SOLUTION_SUPPLIER_ID IN
+            <foreach collection="list" item="id" index="index"
+                     open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+</mapper>

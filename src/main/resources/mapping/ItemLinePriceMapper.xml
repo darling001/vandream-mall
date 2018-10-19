@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace= "com.vandream.mall.business.dao.ItemLinePriceDAO">
+    <resultMap id="itemLinePriceResultMap" type="com.vandream.mall.business.dto.ItemLinePriceDTO">
+        <id column="ITEM_PRICE_ID" jdbcType="VARCHAR" property="itemPriceId"/>
+        <result column="SALE_PRICE1" jdbcType="DECIMAL" property="salePrivateOrdinary" />
+        <result column="SALE_PRICE2" jdbcType="DECIMAL" property="salePrivateSenior" />
+        <result column="SALE_PRICE3" jdbcType="DECIMAL" property="salePrivateVip"/>
+    </resultMap>
+    <select id="itemLinePrice" resultMap="itemLinePriceResultMap">
+        SELECT `SALE_PRICE1`,`SALE_PRICE2`,`SALE_PRICE3` FROM cmc_item_price
+        WHERE `ITEM_LINE_ID` = #{itemLineId}
+    </select>
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.DeliveryInfoDAO">
+    <resultMap id="InfoResultMap" type="com.vandream.mall.business.vo.buyerContract.DeliveryInfoVO">
+        <id column="DELIVERY_HEAD_ID" jdbcType="VARCHAR" property="deliveryId"/>
+        <result column="FROM_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="DELIVERY_DATE" jdbcType="TIMESTAMP" property="deliveryDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="NOTICE_DATE" jdbcType="TIMESTAMP" property="deliveryNoticeDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ARRIVAL_DATE" jdbcType="TIMESTAMP" property="arrivalDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="SALES_CONTRACT_CODE" jdbcType="VARCHAR" property="contractCode"/>
+        <result column="DELIVERY_CODE" jdbcType="VARCHAR" property="deliveryCode"/>
+        <result column="DELIVERY_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="CUSTOMER_CONSIGNEET_NAME" jdbcType="VARCHAR" property="deliveryName"/>
+        <result column="CUSTOMER_CONSIGNEET_PHONE" jdbcType="VARCHAR" property="deliveryPhone"/>
+        <result column="DELIVERY_REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="RECEIPT_REMARK" jdbcType="VARCHAR" property="receiptInfo"/>
+        <result column="RECEIPT_DATE" jdbcType="TIMESTAMP" property="receiptDateTime" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="FILE_NAME" jdbcType="VARCHAR" property="attachmentName"/>
+        <result column="FILE_PATH" jdbcType="VARCHAR" property="attachmentPath"/>
+        <result column="TRANSPORT_COMPANY" jdbcType="VARCHAR" property="logisticsName"/>
+        <result column="TRANSPORT_CONTACTS" jdbcType="VARCHAR" property="contactName"/>
+        <result column="TRANSPORT_CONTACTS_PHONE" jdbcType="VARCHAR" property="contactTel"/>
+        <result column="TRANSPORT_CODE" jdbcType="VARCHAR" property="logisticsNumber"/>
+        <result column="CAR_SHIP_NO" jdbcType="VARCHAR" property="carNumber"/>
+        <result column="CAR_CONTACTS" jdbcType="VARCHAR" property="driverName"/>
+        <result column="CAR_CONTACTS_PHONE" jdbcType="VARCHAR" property="driverTel"/>
+        <collection property="logisticsList" ofType="com.vandream.mall.business.vo.buyerContract.FindLogisticsVO">
+            <result column="LOGISTICS_DATE" jdbcType="TIMESTAMP" property="logisticsTime" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+            <result column="LOGISTICS_MEMO" jdbcType="VARCHAR" property="logisticsInfo"/>
+        </collection>
+        <collection property="itemList" ofType="com.vandream.mall.business.vo.buyerContract.InfoItemListVO">
+            <result column="DELIVERY_LINE_ID" jdbcType="VARCHAR" property="deliveryLineId"/>
+            <result column="DELIVERY_LINE_CODE" jdbcType="VARCHAR" property="deliveryLineCode"/>
+            <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+            <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+            <result column="ITEM_SPEC_DESC" jdbcType="VARCHAR" property="parameters"/>
+            <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unit"/>
+            <result column="SALE_QUANTITY" jdbcType="DECIMAL" property="contractTotal"/>
+            <result column="NOTICE_DELIVERY_QUANTITY" jdbcType="DECIMAL" property="noticeQuantity"/>
+            <result column="DELIVERY_QUANTITY" jdbcType="DECIMAL" property="realQuantity"/>
+            <result column="RECEIPT_QUANTITY" jdbcType="DECIMAL" property="receiptQuantity"/>
+        </collection>
+
+    </resultMap>
+    <select id="getDeliveryInfo" resultMap="InfoResultMap">
+        SELECT
+            tms_delivery_head.DELIVERY_HEAD_ID,
+            tms_delivery_head.DELIVERY_CODE,
+            tms_delivery_head.DELIVERY_DATE,
+            tms_delivery_head.DELIVERY_STATUS,
+            tms_delivery_head.RECEIPT_REMARK,
+            tms_delivery_head.RECEIPT_DATE,
+            tms_delivery_head.FROM_CODE,
+            tms_delivery_head.SALES_CONTRACT_CODE,
+            CONCAT(
+		    tms_delivery_head.CUS_SITE_REGION_NAME,
+		    tms_delivery_head.CUS_SITE_CITY_NAME,
+		    tms_delivery_head.CUS_SITE_COUNTY_NAME,
+		    tms_delivery_head.CUSTOMER_SITE_ADDRESS
+	         ) AS address,
+            tms_delivery_head.CUSTOMER_CONSIGNEET_NAME,
+            tms_delivery_head.CUSTOMER_CONSIGNEET_PHONE,
+            tms_delivery_head.TRANSPORT_COMPANY,
+            tms_delivery_head.TRANSPORT_CODE,
+            tms_delivery_head.TRANSPORT_CONTACTS,
+            tms_delivery_head.TRANSPORT_CONTACTS_PHONE,
+            tms_delivery_head.CAR_SHIP_NO,
+            tms_delivery_head.CAR_CONTACTS,
+            tms_delivery_head.CAR_CONTACTS_PHONE,
+            tms_logistics_info.LOGISTICS_DATE,
+            tms_logistics_info.LOGISTICS_MEMO,
+            tms_delivery_head.DELIVERY_REMARK,
+            tms_delivery_line.DELIVERY_LINE_ID,
+            tms_delivery_line.DELIVERY_LINE_CODE,
+            tms_delivery_line.ITEM_NAME,
+            tms_delivery_line.ITEM_SPEC_DESC,
+            tms_delivery_line.UNIT_TYPE,
+            tms_delivery_line.NOTICE_DELIVERY_QUANTITY,
+            tms_delivery_line.DELIVERY_QUANTITY,
+            tms_delivery_line.RECEIPT_QUANTITY,
+            som_sales_contract_line.BRAND_NAME,
+            som_sales_contract_line.SALE_QUANTITY,
+            aus_at_attachment_list.FILE_NAME,
+            aus_at_attachment_list.FILE_PATH,
+            som_delivery_notice_head.NOTICE_DATE,
+	        tms_delivery_head.ARRIVAL_DATE
+        FROM
+            tms_delivery_head
+            LEFT JOIN tms_delivery_line ON tms_delivery_head.DELIVERY_HEAD_ID = tms_delivery_line.DELIVERY_HEAD_ID
+            LEFT JOIN tms_logistics_info ON tms_delivery_head.DELIVERY_HEAD_ID = tms_logistics_info.DELIVERY_HEAD_ID
+            LEFT JOIN som_sales_contract_line ON tms_delivery_line.SALES_CONTRACT_LINE_ID = som_sales_contract_line.SALES_CONTRACT_LINE_ID
+            LEFT JOIN aus_at_attachment_list ON tms_delivery_head.DELIVERY_HEAD_ID = aus_at_attachment_list.BILL_NO AND aus_at_attachment_list.ATTACHMENT_TYPE = 'tmsDeliveryFile'
+            LEFT JOIN som_delivery_notice_head ON tms_delivery_head.FROM_CODE = som_delivery_notice_head.DELIVERY_NOTICE_CODE
+            WHERE tms_delivery_head.DELIVERY_HEAD_ID = #{deliveryId}
+            ORDER BY tms_logistics_info.LOGISTICS_DATE DESC
+    </select>
+</mapper>

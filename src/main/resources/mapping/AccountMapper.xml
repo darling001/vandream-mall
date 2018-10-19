@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.AccountDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.domain.AccountDTO">
+        <id column="ACCOUNT_ID" jdbcType="CHAR" property="accountId"/>
+        <result column="ACCOUNT_MOBILE" jdbcType="VARCHAR" property="accountMobile"/>
+        <result column="ACCOUNT_REGISTER_MOBILE" jdbcType="VARCHAR"
+                property="accountRegisterMobile"/>
+        <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName"/>
+        <result column="ACCOUNT_EMAIL" jdbcType="VARCHAR" property="accountEmail"/>
+        <result column="ACCOUNT_DUTY" jdbcType="VARCHAR" property="accountDuty"/>
+        <result column="ACCOUNT_STATUS" jdbcType="CHAR" property="accountStatus"/>
+        <result column="ACCOUNT_PWD" jdbcType="VARCHAR" property="accountPwd"/>
+        <result column="ACCOUNT_TYPE" jdbcType="CHAR" property="accountType"/>
+        <result column="ACCOUNT_FLAG" jdbcType="CHAR" property="accountFlag"/>
+        <result column="PARENT_ACCOUNT_ID" jdbcType="CHAR" property="parentAccountId"/>
+        <result column="PWD_FLAG" jdbcType="CHAR" property="pwdFlag"/>
+        <result column="COMPANY_ID" jdbcType="CHAR" property="companyId"/>
+        <result column="CUSTOMER_ID" jdbcType="CHAR" property="customerId"/>
+        <result column="CUSTOMER_CLUE_ID" jdbcType="CHAR" property="customerClueId"/>
+        <result column="SUPPLIER_ID" jdbcType="CHAR" property="supplierId"/>
+        <result column="SUPPLIER_CLUE_ID" jdbcType="CHAR" property="supplierClueId"/>
+        <result column="CREATE_USER_ID" jdbcType="VARCHAR" property="createUserId"/>
+        <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="MODIFY_USER_ID" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="MODIFY_USER_NAME" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="ORG_ID" jdbcType="VARCHAR" property="orgId"/>
+        <result column="BOOK_ID" jdbcType="VARCHAR" property="bookId"/>
+        <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId"/>
+        <result column="EXT_COL1" jdbcType="VARCHAR" property="extCol1"/>
+        <result column="EXT_COL2" jdbcType="VARCHAR" property="extCol2"/>
+        <result column="EXT_COL3" jdbcType="VARCHAR" property="extCol3"/>
+        <result column="EXT_COL4" jdbcType="VARCHAR" property="extCol4"/>
+        <result column="EXT_COL5" jdbcType="VARCHAR" property="extCol5"/>
+        <result column="EXT_COL6" jdbcType="VARCHAR" property="extCol6"/>
+        <result column="EXT_COL7" jdbcType="VARCHAR" property="extCol7"/>
+        <result column="EXT_COL8" jdbcType="VARCHAR" property="extCol8"/>
+        <result column="EXT_COL9" jdbcType="VARCHAR" property="extCol9"/>
+        <result column="EXT_COL10" jdbcType="VARCHAR" property="extCol10"/>
+        <result column="EXT_COL11" jdbcType="VARCHAR" property="extCol11"/>
+        <result column="EXT_COL12" jdbcType="VARCHAR" property="extCol12"/>
+        <result column="EXT_COL13" jdbcType="VARCHAR" property="extCol13"/>
+        <result column="EXT_COL14" jdbcType="VARCHAR" property="extCol14"/>
+        <result column="EXT_COL15" jdbcType="VARCHAR" property="extCol15"/>
+        <result column="EXT_COL16" jdbcType="VARCHAR" property="extCol16"/>
+        <result column="EXT_COL17" jdbcType="VARCHAR" property="extCol17"/>
+        <result column="EXT_COL18" jdbcType="VARCHAR" property="extCol18"/>
+        <result column="EXT_COL19" jdbcType="VARCHAR" property="extCol19"/>
+        <result column="EXT_COL20" jdbcType="VARCHAR" property="extCol20"/>
+    </resultMap>
+    <resultMap id="LoginResultMap" type="com.vandream.mall.business.dto.LoginDTO">
+        <id column="ACCOUNT_ID" jdbcType="CHAR" property="accountId"/>
+        <result column="ACCOUNT_MOBILE" jdbcType="VARCHAR" property="accountMobile"/>
+        <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName"/>
+        <result column="ACCOUNT_EMAIL" jdbcType="VARCHAR" property="accountEmail"/>
+        <result column="ACCOUNT_STATUS" jdbcType="CHAR" property="accountStatus"/>
+        <result column="ACCOUNT_PWD" jdbcType="VARCHAR" property="accountPwd"/>
+        <result column="ACCOUNT_TYPE" jdbcType="CHAR" property="accountType"/>
+        <result column="ACCOUNT_FLAG" jdbcType="CHAR" property="accountFlag"/>
+        <result column="COMPANY_ID" jdbcType="CHAR" property="companyId"/>
+        <result column="COMPANY_NAME" jdbcType="CHAR" property="companyName"/>
+        <result column="COMPANY_FLAG" jdbcType="VARCHAR" property="companyFlag"/>
+        <result column="COMPANY_CODE" jdbcType="VARCHAR" property="companyCode"/>
+        <result column="APPLICATION_STATUS" jdbcType="VARCHAR" property="applicationStatus"/>
+        <result column="SUPPLIER_ID" jdbcType="CHAR" property="supplierId"/>
+        <result column="CUSTOMER_ID" jdbcType="VARCHAR" property="customerId"/>
+        <result column="CUSTOMER_LEVEL" jdbcType="VARCHAR" property="customerLevel"/>
+        <result column="CUSTOMER_STAGE" jdbcType="VARCHAR" property="customerStage"/>
+        <result column="CUSTOMER_STATUS" jdbcType="VARCHAR" property="customerStatus"/>
+        <result column="PWD_FLAG" jdbcType="CHAR" property="pwdFlag"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    ACCOUNT_ID, ACCOUNT_MOBILE, ACCOUNT_REGISTER_MOBILE, ACCOUNT_NAME, ACCOUNT_EMAIL, 
+    ACCOUNT_DUTY, ACCOUNT_STATUS, ACCOUNT_PWD, ACCOUNT_TYPE, ACCOUNT_FLAG, PARENT_ACCOUNT_ID, 
+    COMPANY_ID, CUSTOMER_ID, CUSTOMER_CLUE_ID, SUPPLIER_ID, SUPPLIER_CLUE_ID, CREATE_USER_ID, 
+    CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, PWD_FLAG,
+    BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, 
+    EXT_COL8, EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, 
+    EXT_COL16, EXT_COL17, EXT_COL18, EXT_COL19, EXT_COL20
+  </sql>
+    <sql id="Login_Column_List">
+        a.ACCOUNT_ID, a.ACCOUNT_MOBILE, a.ACCOUNT_REGISTER_MOBILE, a.ACCOUNT_NAME, a.ACCOUNT_EMAIL,
+        a.ACCOUNT_DUTY, a.ACCOUNT_STATUS, a.ACCOUNT_PWD, a.ACCOUNT_TYPE, a.ACCOUNT_FLAG,PWD_FLAG,
+        a.PARENT_ACCOUNT_ID,a.COMPANY_ID,a.CUSTOMER_ID,a.SUPPLIER_ID,c.COMPANY_ID,c.COMPANY_NAME,c.COMPANY_CODE,c.COMPANY_FLAG,
+        c.APPLICATION_STATUS,a.CUSTOMER_ID,cr.CUSTOMER_LEVEL,cr.CUSTOMER_STAGE,cr.CUSTOMER_STATUS
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="string">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ucm_account
+        WHERE ACCOUNT_ID =#{userId}
+    </select>
+    <select id="verifyPhoneExist" resultType="java.lang.Integer" parameterType="string">
+        SELECT
+        COUNT(1)
+        FROM member.ucm_account WHERE ACCOUNT_MOBILE=#{phone} AND ACCOUNT_STATUS != '3'
+    </select>
+    <select id="verifyLogin" resultType="java.lang.Integer"
+            parameterType="com.vandream.mall.business.domain.AccountDTO">
+        SELECT COUNT(1) FROM member.ucm_account WHERE ACCOUNT_STATUS='2' AND ACCOUNT_MOBILE =#{accountMobile}
+         AND ACCOUNT_PWD=#{accountPwd}
+    </select>
+    <select id="findByLogin" resultMap="LoginResultMap" parameterType="string">
+        SELECT
+        <include refid="Login_Column_List"/>
+        FROM member.ucm_account a
+        LEFT JOIN member.crm_company c ON a.COMPANY_ID=c.COMPANY_ID
+        LEFT JOIN member.crm_customer cr ON a.CUSTOMER_ID=cr.CUSTOMER_ID
+        LEFT JOIN member.crm_supplier cs ON a.SUPPLIER_ID=cs.SUPPLIER_ID
+        WHERE
+        (ACCOUNT_STATUS = '0' OR ACCOUNT_STATUS = '2') AND
+        a.ACCOUNT_MOBILE =#{accountMobile}
+    </select>
+    <select id="findById" resultMap="LoginResultMap" parameterType="string">
+        SELECT
+        <include refid="Login_Column_List"/>
+        FROM member.ucm_account a LEFT JOIN member.crm_company c ON
+        a.COMPANY_ID=c.COMPANY_ID LEFT JOIN member.crm_customer cr
+        ON a.CUSTOMER_ID=cr.CUSTOMER_ID
+        WHERE
+        a.ACCOUNT_STATUS='2' AND
+        a.ACCOUNT_ID =#{userId}
+    </select>
+    <select id="findByPhone" resultMap="BaseResultMap" parameterType="string">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM member.ucm_account
+        WHERE
+        ACCOUNT_MOBILE=#{phone} AND (ACCOUNT_STATUS = '0' OR ACCOUNT_STATUS = '2')
+
+    </select>
+
+    <select id="getAccountFlagByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT account_flag from member.ucm_account WHERE ACCOUNT_ID=#{userId}
+    </select>
+
+    <select id="verifyPhoneIsExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1)
+        FROM member.ucm_account WHERE ACCOUNT_MOBILE=#{phone} AND ACCOUNT_STATUS = '2'
+    </select>
+
+</mapper>

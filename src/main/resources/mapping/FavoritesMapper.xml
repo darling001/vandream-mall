@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.FavoritesDAO">
+    <resultMap id="baseResultMap" type="com.vandream.mall.business.vo.FavoritesVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="item_id" jdbcType="VARCHAR" property="itemId"/>
+        <result column="item_line_id" jdbcType="VARCHAR" property="itemLineId"/>
+        <result column="spu_id" jdbcType="CHAR" property="spuId"></result>
+        <result column="user_id" jdbcType="CHAR"  property="userId"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="is_add" jdbcType="TINYINT" property="isAdd"/>
+        <result column="number" javaType="DECIMAL" property="number"/>
+</resultMap>
+
+    <insert id="addFavorites" parameterType="com.vandream.mall.business.vo.FavoritesVO">
+        INSERT  INTO  MALL_FAVORITY
+        (item_id,item_line_id,user_id, spu_id,status,`number`)
+        VALUE
+         (#{itemId},#{itemLineId},#{userId},#{spuId},#{status},#{count})
+    </insert>
+
+    <update id="removeFavorites" parameterType="com.vandream.mall.business.vo.FavoritesVO" >
+        UPDATE MALL_FAVORITY
+        SET
+        status = 0
+        WHERE
+        id = #{id} AND user_id = #{userId}
+    </update>
+
+    <select id="selectSkuId" parameterType="com.vandream.mall.business.vo.FavoritesVO"
+           resultMap="baseResultMap">
+         SELECT id,item_id,item_line_id,user_id,is_add,status,`number` FROM MALL_FAVORITY
+         WHERE
+         user_id=#{UserId} AND status = 1
+    </select>
+    <update id="updateFavoritesStatus" parameterType="com.vandream.mall.business.vo.FavoritesVO">
+        UPDATE MALL_FAVORITY SET is_add=#{isAdd} WHERE user_id=#{userId} AND item_line_id=#{itemLineId}
+
+    </update>
+    <select id="selectItemLineId" resultType="java.lang.String">
+        SELECT `ITEM_LINE_ID` FROM cmc_item_line WHERE
+        `ITEM_ID` = #{itemId} AND status="40"
+        <choose>
+            <when test="areaCode!=null and areaCode!='' ">
+                  AND AREA_CODE=#{areaCode}
+            </when>
+            <otherwise>
+                limit 0,1
+            </otherwise>
+        </choose>
+    </select>
+    <select id="selectFavorites" resultType="java.math.BigDecimal">
+        SELECT `number` FROM MALL_FAVORITY WHERE item_line_id=#{itemLineId} AND status = 1 AND user_id = #{userId};
+    </select>
+    <select id="selectItemLineMinOrder" resultType="java.math.BigDecimal">
+        SELECT `MIN_ORDER_NUM` FROM cmc_item_line WHERE item_line_id=#{itemLineId}
+    </select>
+    <update id="addFavoritesCount">
+        UPDATE MALL_FAVORITY SET `number` = #{count} WHERE item_line_id=#{itemLineId} AND status = 1;
+    </update>
+    <select id="selectFavoritesCountByUserId" resultType="java.lang.Integer">
+     SELECT count(item_line_id) FROM MALL_FAVORITY WHERE user_id = #{userId} AND status = 1;
+    </select>
+</mapper>

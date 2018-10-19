@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.SolutionSupplierDAO">
+    <resultMap id="BaseResultMap"
+               type="com.vandream.mall.business.dto.solution.SolutionSupplierDTO">
+        <id column="SOLUTION_SUPPLIER_ID" jdbcType="CHAR" property="solutionSupplierId"/>
+        <result column="SOLUTION_ID" jdbcType="CHAR" property="solutionId"/>
+        <result column="SUPPLIER_ID" jdbcType="CHAR" property="supplierId"/>
+        <result column="SUPPLIER_CODE" jdbcType="VARCHAR" property="supplierCode"/>
+        <result column="SUPPLIER_TIME" jdbcType="TIMESTAMP" property="supplierTime"/>
+        <result column="SUPPLIER_PHONE" jdbcType="VARCHAR" property="supplierPhone"/>
+        <result column="SUPPLIER_NAME" jdbcType="VARCHAR" property="supplierName"/>
+        <result column="SUPPLIER_CONTACTS" jdbcType="VARCHAR" property="supplierContacts"/>
+        <result column="SOLUTION_SUPPLIER_STATUS" jdbcType="VARCHAR"
+                property="solutionSupplierStatus"/>
+        <result column="FROM_TYPE" jdbcType="VARCHAR" property="fromType"/>
+        <result column="FROM_LINE_ID" jdbcType="VARCHAR" property="fromLineId"/>
+        <result column="FROM_LINE_CODE" jdbcType="VARCHAR" property="fromLineCode"/>
+        <result column="CREATE_USER_ID" jdbcType="CHAR" property="createUserId"/>
+        <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="MODIFY_USER_ID" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="MODIFY_USER_NAME" jdbcType="VARCHAR" property="modifyUserName"/>
+        <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="ORG_ID" jdbcType="CHAR" property="orgId"/>
+        <result column="BOOK_ID" jdbcType="CHAR" property="bookId"/>
+        <result column="GROUP_ID" jdbcType="CHAR" property="groupId"/>
+        <result column="EXT_COL1" jdbcType="VARCHAR" property="extCol1"/>
+        <result column="EXT_COL2" jdbcType="VARCHAR" property="extCol2"/>
+        <result column="EXT_COL3" jdbcType="VARCHAR" property="extCol3"/>
+        <result column="EXT_COL4" jdbcType="VARCHAR" property="extCol4"/>
+        <result column="EXT_COL5" jdbcType="VARCHAR" property="extCol5"/>
+        <result column="EXT_COL6" jdbcType="VARCHAR" property="extCol6"/>
+        <result column="EXT_COL7" jdbcType="VARCHAR" property="extCol7"/>
+        <result column="EXT_COL8" jdbcType="VARCHAR" property="extCol8"/>
+        <result column="EXT_COL9" jdbcType="VARCHAR" property="extCol9"/>
+        <result column="EXT_COL10" jdbcType="VARCHAR" property="extCol10"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SOLUTION_SUPPLIER_ID, SOLUTION_ID, SUPPLIER_ID, SUPPLIER_CODE, SUPPLIER_TIME, SUPPLIER_PHONE, 
+    SUPPLIER_NAME, SUPPLIER_CONTACTS, SOLUTION_SUPPLIER_STATUS, FROM_TYPE, FROM_LINE_ID, 
+    FROM_LINE_CODE, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, 
+    MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, 
+    EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_solution_supplier
+        where SOLUTION_SUPPLIER_ID = #{solutionSupplierId,jdbcType=CHAR}
+    </select>
+    <select id="findSolutionSupplierList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_solution_supplier
+        where SOLUTION_SUPPLIER_ID = #{solutionSupplierId} and SUPPLIER_ID = #{supplierId}
+    </select>
+</mapper>

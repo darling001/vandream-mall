@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.PublishDao">
+    <resultMap id="publishLocationMap" type="com.vandream.mall.business.dto.publish.Advertisement">
+        <result column="publish_code" property="advertisementCode" />
+        <result column="publish_name" property="advertisementName"/>
+    </resultMap>
+<select id="queryPublishListByCode" resultMap="publishLocationMap" >
+    SELECT publish_code ,publish_name FROM VANDREAM_CMS.publish_location
+    <if test="null!=publishCodeList">
+        WHERE publish_code IN
+        <foreach item="item" collection="publishCodeList" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+    </if>
+</select>
+</mapper>

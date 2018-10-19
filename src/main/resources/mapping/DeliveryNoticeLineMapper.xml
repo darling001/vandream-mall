@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.delivery.DeliveryNoticeLineDAO">
+    <resultMap  id ="baseMap" type="com.vandream.mall.business.dto.delivery.DeliverySubLineDTO">
+        <id column="DELIVERY_NOTICE_LINE_ID" jdbcType="VARCHAR" property="fromLineId"/>
+        <result column="DELIVERY_NOTICE_LINE_CODE" jdbcType="VARCHAR" property="fromLineCode"/>
+        <result column="NOTICE_QUANTITY" jdbcType="VARCHAR" property="noticeDeliveryQuantity"/>
+   </resultMap>
+
+    <select id="selectNoticeInfo" resultMap="baseMap" parameterType="java.util.Map">
+        select DELIVERY_NOTICE_LINE_ID, DELIVERY_NOTICE_LINE_CODE, NOTICE_QUANTITY 
+        from som_delivery_notice_line  where   DELIVERY_NOTICE_LINE_ID = #{fromLineId}
+        and DELIVERY_NOTICE_HEAD_ID = #{fromHeadId}
+    </select>
+</mapper>

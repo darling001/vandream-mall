@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.PurchaseContractDAO">
+
+    <!-- 发货通知单商品DTO -->
+    <resultMap id="DeliveryNoticeGoodsResultMap"
+               type="com.vandream.mall.business.dto.delivery.notice.DeliveryNoticeGoodsDTO">
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="ITEM_SPEC_DESC" jdbcType="VARCHAR" property="parameters"/>
+        <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unit"/>
+        <result column="PURCHASE_QUANTITY" jdbcType="DECIMAL" property="orderCount"/>
+        <result column="NOTICE_QUANTITY" jdbcType="DECIMAL" property="noticeNumber"/>
+    </resultMap>
+
+    <!-- 发货单商品DTO -->
+    <resultMap id="DeliveryGoodsResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryGoodsDTO">
+        <id column="DELIVERY_NOTICE_LINE_ID" jdbcType="CHAR" property="deliveryNoticeLineId"/>
+        <result column="DELIVERY_NOTICE_LINE_CODE" jdbcType="VARCHAR" property="deliveryNoticeLineCode"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="ITEM_SPEC_DESC" jdbcType="VARCHAR" property="parameters"/>
+        <result column="PURCHASE_QUANTITY" jdbcType="DECIMAL" property="quantity"/>
+        <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unit"/>
+        <result column="NOTICE_QUANTITY" jdbcType="DECIMAL" property="noticeQuantity"/>
+        <result column="DELIVERY_QUANTITY" jdbcType="DECIMAL" property="historyQuantity"/>
+        <result column="RECEIPT_QUANTITY" jdbcType="DECIMAL" property="realQuantity"/>
+    </resultMap>
+
+    <!-- 发货通知单商品详情 -->
+    <select id="getDeliveryNoticeGoodsInfo" resultMap="DeliveryNoticeGoodsResultMap">
+        SELECT
+        pom_purchase_contract_line.ITEM_NAME,
+        pom_purchase_contract_line.BRAND_NAME,
+        pom_purchase_contract_line.ITEM_SPEC_DESC,
+        pom_purchase_contract_line.UNIT_TYPE,
+        pom_purchase_contract_line.PURCHASE_QUANTITY,
+        som_delivery_notice_line.NOTICE_QUANTITY
+        FROM
+        som_delivery_notice_head AS som_delivery_notice_head
+        LEFT JOIN som_delivery_notice_line AS som_delivery_notice_line
+        ON som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = som_delivery_notice_line.DELIVERY_NOTICE_HEAD_ID
+        LEFT JOIN pom_purchase_contract_line AS pom_purchase_contract_line
+        ON som_delivery_notice_line.PURCHASE_CONTRACT_LINE_ID = pom_purchase_contract_line.PURCHASE_CONTRACT_LINE_ID
+        WHERE som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = #{deliveryNoticeId}
+    </select>
+    <!--已发货商品map-->
+    <resultMap id="DeliverySendedGoodsResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryGoodsDTO">
+        <id column="DELIVERY_LINE_ID" jdbcType="CHAR" property="deliveryNoticeLineId"/>
+        <result column="DELIVERY_LINE_CODE" jdbcType="VARCHAR" property="deliveryNoticeLineCode"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="ITEM_SPEC_DESC" jdbcType="VARCHAR" property="parameters"/>
+        <result column="PURCHASE_QUANTITY" jdbcType="DECIMAL" property="quantity"/>
+        <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unit"/>
+        <result column="NOTICE_DELIVERY_QUANTITY" jdbcType="DECIMAL" property="noticeQuantity"/>
+        <result column="DELIVERY_QUANTITY" jdbcType="DECIMAL" property="historyQuantity"/>
+        <result column="RECEIPT_QUANTITY" jdbcType="DECIMAL" property="realQuantity"/>
+    </resultMap>
+
+    <!-- 发货单商品详情 -->
+    <!--df11e7dc2c0f6ff3446edc1f2628bb5b-->
+    <select id="getDeliveryGoodsInfo" resultMap="DeliveryGoodsResultMap">
+        SELECT
+	      som_delivery_notice_line.DELIVERY_NOTICE_LINE_ID,
+	      som_delivery_notice_line.DELIVERY_NOTICE_LINE_CODE,
+	      pom_purchase_contract_line.ITEM_NAME,
+	      pom_purchase_contract_line.BRAND_NAME,
+	      pom_purchase_contract_line.ITEM_SPEC_DESC,
+	      pom_purchase_contract_line.PURCHASE_QUANTITY,
+	      pom_purchase_contract_line.UNIT_TYPE,
+	      som_delivery_notice_line.NOTICE_QUANTITY,
+	      SUM(tms_delivery_line.DELIVERY_QUANTITY) DELIVERY_QUANTITY
+        FROM
+	      som_delivery_notice_head AS som_delivery_notice_head
+        LEFT JOIN som_delivery_notice_line AS som_delivery_notice_line
+        ON som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = som_delivery_notice_line.DELIVERY_NOTICE_HEAD_ID
+        LEFT JOIN pom_purchase_contract_line AS pom_purchase_contract_line
+        ON som_delivery_notice_line.PURCHASE_CONTRACT_LINE_ID = pom_purchase_contract_line.PURCHASE_CONTRACT_LINE_ID
+        LEFT JOIN tms_delivery_line AS tms_delivery_line
+        ON pom_purchase_contract_line.PURCHASE_CONTRACT_LINE_ID = tms_delivery_line.PURCHASE_CONTRACT_LINE_ID
+        WHERE
+	      som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = #{deliveryNoticeId}
+	    AND som_delivery_notice_head.NOTICE_STATUS = '30'
+	    GROUP BY DELIVERY_NOTICE_LINE_ID
+        ORDER BY
+        pom_purchase_contract_line.CREATE_DATE ASC
+
+    </select>
+
+    <!--获取已发货商品信息-->
+    <select id="getDeliverySendedGoodsInfo" resultMap="DeliverySendedGoodsResultMap">
+        SELECT
+          tms_delivery_line.DELIVERY_LINE_ID,
+          tms_delivery_line.DELIVERY_LINE_CODE,
+          pom_purchase_contract_line.ITEM_NAME,
+          pom_purchase_contract_line.BRAND_NAME,
+          pom_purchase_contract_line.ITEM_SPEC_DESC,
+          pom_purchase_contract_line.PURCHASE_QUANTITY,
+          pom_purchase_contract_line.UNIT_TYPE,
+          tms_delivery_line.NOTICE_DELIVERY_QUANTITY,
+          tms_delivery_line.DELIVERY_QUANTITY,
+          tms_delivery_line.RECEIPT_QUANTITY
+        FROM
+          tms_delivery_line AS tms_delivery_line
+        LEFT JOIN pom_purchase_contract_line AS pom_purchase_contract_line
+          ON tms_delivery_line.PURCHASE_CONTRACT_LINE_ID = pom_purchase_contract_line.PURCHASE_CONTRACT_LINE_ID
+        LEFT JOIN tms_delivery_head AS tms_delivery_head
+          ON tms_delivery_line.DELIVERY_HEAD_ID = tms_delivery_head.DELIVERY_HEAD_ID
+        WHERE tms_delivery_head.DELIVERY_HEAD_ID = #{deliveryHeadId}
+          ORDER BY tms_delivery_line.`CREATE_DATE` DESC
+    </select>
+
+</mapper>

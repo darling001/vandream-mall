@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.OrgExinfoDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.OrgExinfo">
+        <id column="ORG_EXINFO_ID" property="orgExinfoId" jdbcType="VARCHAR"/>
+        <result column="ORGANIZATION_ID" property="organizationId" jdbcType="VARCHAR"/>
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR"/>
+        <result column="ORG_EXINFO_TYPE" property="orgExinfoType" jdbcType="VARCHAR"/>
+        <result column="FLAG" property="flag" jdbcType="VARCHAR"/>
+        <result column="REF_BOOK_ID" property="refBookId" jdbcType="VARCHAR"/>
+        <result column="LEGAL_AGENT" property="legalAgent" jdbcType="VARCHAR"/>
+        <result column="TAX_NUM" property="taxNum" jdbcType="VARCHAR"/>
+        <result column="TEL_NUM" property="telNum" jdbcType="VARCHAR"/>
+        <result column="FAX_NUM" property="faxNum" jdbcType="VARCHAR"/>
+        <result column="ZIP_CODE" property="zipCode" jdbcType="VARCHAR"/>
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
+        <result column="ADDRESS_KEY" property="addressKey" jdbcType="VARCHAR"/>
+        <result column="CONTACT_PERSON" property="contactPerson" jdbcType="VARCHAR"/>
+        <result column="CONTACT_PERSON_TEL" property="contactPersonTel" jdbcType="VARCHAR"/>
+        <result column="DEFAULT_FLAG" property="defaultFlag" jdbcType="VARCHAR"/>
+        <result column="EX_COL1" property="exCol1" jdbcType="VARCHAR"/>
+        <result column="EX_COL2" property="exCol2" jdbcType="VARCHAR"/>
+        <result column="EX_COL3" property="exCol3" jdbcType="VARCHAR"/>
+        <result column="EX_COL4" property="exCol4" jdbcType="VARCHAR"/>
+        <result column="EX_COL5" property="exCol5" jdbcType="VARCHAR"/>
+        <result column="EX_COL6" property="exCol6" jdbcType="VARCHAR"/>
+        <result column="EX_COL7" property="exCol7" jdbcType="VARCHAR"/>
+        <result column="EX_COL8" property="exCol8" jdbcType="VARCHAR"/>
+        <result column="EX_COL9" property="exCol9" jdbcType="VARCHAR"/>
+        <result column="EX_COL10" property="exCol10" jdbcType="VARCHAR"/>
+        <result column="OBJECT_ID" property="objectId" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="ORG_GID" property="orgGid" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="GL_BANK_NUM" property="glBankNum" jdbcType="VARCHAR"/>
+        <result column="BRANCH_CODE" property="branchCode" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    ORG_EXINFO_ID, ORGANIZATION_ID,ORG_NAME, ORG_EXINFO_TYPE, FLAG, REF_BOOK_ID, LEGAL_AGENT,
+    TAX_NUM, TEL_NUM, FAX_NUM, ZIP_CODE, ADDRESS, ADDRESS_KEY, CONTACT_PERSON, CONTACT_PERSON_TEL, 
+    DEFAULT_FLAG, EX_COL1, EX_COL2, EX_COL3, EX_COL4, EX_COL5, EX_COL6, EX_COL7, EX_COL8, 
+    EX_COL9, EX_COL10, OBJECT_ID, CREATE_DATE, CREATE_USER_ID, MODIFY_DATE, MODIFY_USER_ID, 
+    ORG_GID, ORG_ID, GROUP_ID, BOOK_ID
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from hr_org_exinfo
+        where ORG_EXINFO_ID = #{orgExinfoId,jdbcType=VARCHAR}
+    </select>
+    <select id="findVandreamCompanyInfo" resultMap="BaseResultMap">
+        SELECT
+          t1.ORGANIZATION_ID,
+          t1.ORG_NAME,
+          t2.LEGAL_AGENT,
+          t2.TAX_NUM,
+          t2.TEL_NUM,
+          t2.ADDRESS,
+          t3.GL_BANK_NUM,
+          t3.BRANCH_CODE
+        FROM
+          hr_organization t1,
+          hr_org_exinfo t2,
+          gz_bank_info t3
+        WHERE
+          t1.ORGANIZATION_ID = t2.ORGANIZATION_ID AND
+          t1.ORGANIZATION_ID=t3.LEGAL_ORG_ID
+        AND t1.ORGANIZATION_ID = '1001'
+        AND t2.ORG_EXINFO_TYPE = 'legal'
+    </select>
+</mapper>

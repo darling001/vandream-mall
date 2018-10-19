@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.purchase.PurchaseSettlementLineDAO" >
+  <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.purchase.PurchaseSettlementLineDTO" >
+    <id column="PURCHASE_SETTLEMENT_LINE_ID" property="purchaseSettlementLineId" jdbcType="CHAR" />
+    <result column="PURCHASE_SETTLEMENT_LINE_CODE" property="purchaseSettlementLineCode" jdbcType="VARCHAR" />
+    <result column="PURCHASE_SETTLEMENT_HEAD_ID" property="purchaseSettlementHeadId" jdbcType="CHAR" />
+    <result column="FUND_TYPE" property="fundType" jdbcType="VARCHAR" />
+    <result column="INVOICE_ITEM_ID" property="invoiceItemId" jdbcType="VARCHAR" />
+    <result column="INVOICE_ITEM_LINE_ID" property="invoiceItemLineId" jdbcType="VARCHAR" />
+    <result column="INVOICE_ITEM_LINE_CODE" property="invoiceItemLineCode" jdbcType="VARCHAR" />
+    <result column="INVOICE_ITEM_NAME" property="invoiceItemName" jdbcType="VARCHAR" />
+    <result column="INVOICE_QUANTITY" property="invoiceQuantity" jdbcType="DECIMAL" />
+    <result column="INVOICE_UNIT_TYPE" property="invoiceUnitType" jdbcType="VARCHAR" />
+    <result column="TAX_CODE_TYPE" property="taxCodeType" jdbcType="VARCHAR" />
+    <result column="TAX_CODE" property="taxCode" jdbcType="VARCHAR" />
+    <result column="INVOICE_PRICE" property="invoicePrice" jdbcType="DECIMAL" />
+    <result column="NO_TAX_AMOUNT" property="noTaxAmount" jdbcType="DECIMAL" />
+    <result column="TAX_AMOUNT" property="taxAmount" jdbcType="DECIMAL" />
+    <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="STOCK_ITEM_ID" property="stockItemId" jdbcType="VARCHAR" />
+    <result column="STOCK_ITEM_LINE_ID" property="stockItemLineId" jdbcType="VARCHAR" />
+    <result column="STOCK_ITEM_LINE_CODE" property="stockItemLineCode" jdbcType="VARCHAR" />
+    <result column="STOCK_QUANTITY" property="stockQuantity" jdbcType="DECIMAL" />
+    <result column="STOCK_UNIT_TYPE" property="stockUnitType" jdbcType="VARCHAR" />
+    <result column="SETTLEMENT_LINE_REMARK" property="settlementLineRemark" jdbcType="VARCHAR" />
+    <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR" />
+    <result column="FROM_LINE_ID" property="fromLineId" jdbcType="VARCHAR" />
+    <result column="FROM_LINE_CODE" property="fromLineCode" jdbcType="VARCHAR" />
+    <result column="PURCHASE_CONTRACT_HEAD_ID" property="purchaseContractHeadId" jdbcType="CHAR" />
+    <result column="PURCHASE_CONTRACT_LINE_ID" property="purchaseContractLineId" jdbcType="CHAR" />
+    <result column="RECEIPT_NOTICE_HEAD_ID" property="receiptNoticeHeadId" jdbcType="CHAR" />
+    <result column="RECEIPT_NOTICE_LINE_ID" property="receiptNoticeLineId" jdbcType="CHAR" />
+    <result column="INSTOCK_HEAD_ID" property="instockHeadId" jdbcType="CHAR" />
+    <result column="INSTOCK_LINE_ID" property="instockLineId" jdbcType="CHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+    <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR" />
+    <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR" />
+    <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR" />
+    <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR" />
+    <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR" />
+    <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR" />
+    <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR" />
+    <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR" />
+    <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR" />
+    <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR" />
+    <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR" />
+    <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR" />
+    <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR" />
+    <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR" />
+    <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR" />
+    <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR" />
+    <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR" />
+    <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR" />
+    <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR" />
+    <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PURCHASE_SETTLEMENT_LINE_ID, PURCHASE_SETTLEMENT_LINE_CODE, PURCHASE_SETTLEMENT_HEAD_ID, 
+    FUND_TYPE, INVOICE_ITEM_ID, INVOICE_ITEM_LINE_ID, INVOICE_ITEM_LINE_CODE, INVOICE_ITEM_NAME, 
+    INVOICE_QUANTITY, INVOICE_UNIT_TYPE, TAX_CODE_TYPE, TAX_CODE, INVOICE_PRICE, NO_TAX_AMOUNT, 
+    TAX_AMOUNT, TOTAL_AMOUNT, STOCK_ITEM_ID, STOCK_ITEM_LINE_ID, STOCK_ITEM_LINE_CODE, 
+    STOCK_QUANTITY, STOCK_UNIT_TYPE, SETTLEMENT_LINE_REMARK, FROM_TYPE, FROM_LINE_ID, 
+    FROM_LINE_CODE, PURCHASE_CONTRACT_HEAD_ID, PURCHASE_CONTRACT_LINE_ID, RECEIPT_NOTICE_HEAD_ID, 
+    RECEIPT_NOTICE_LINE_ID, INSTOCK_HEAD_ID, INSTOCK_LINE_ID, CREATE_USER_ID, CREATE_USER_NAME, 
+    CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, GROUP_ID, BOOK_ID, 
+    EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, 
+    EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, EXT_COL16, EXT_COL17, 
+    EXT_COL18, EXT_COL19, EXT_COL20
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from pom_purchase_settlement_line
+    where PURCHASE_SETTLEMENT_LINE_ID = #{purchaseSettlementLineId,jdbcType=CHAR}
+  </select>
+
+</mapper>

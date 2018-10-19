@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.DeliveryNoticeInfoDAO">
+    <resultMap id="noticeInfoResultMap" type="com.vandream.mall.business.vo.buyerContract.DeliveryNoticeInfoVO">
+        <id column="DELIVERY_NOTICE_HEAD_ID" jdbcType="VARCHAR" property="deliveryNoticeId"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="NOTICE_DATE" jdbcType="TIMESTAMP" property="deliverNoticeDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="EXPECTED_RECEIPT_DATE" jdbcType="TIMESTAMP" property="expectDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="SALES_CONTRACT_HEAD_ID" jdbcType="VARCHAR" property="contractId"/>
+        <result column="SALES_CONTRACT_CODE" jdbcType="VARCHAR" property="contractCode"/>
+        <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="sales"/>
+        <result column="TELEPHONE" jdbcType="VARCHAR" property="contactTel"/>
+        <collection property="itemList" ofType="com.vandream.mall.business.vo.buyerContract.NoticeItemListVO">
+            <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+            <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+            <result column="ITEM_SPEC_DESC" jdbcType="VARCHAR" property="parameters"/>
+            <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unit"/>
+            <result column="SALE_QUANTITY" jdbcType="DECIMAL" property="contractTotal"/>
+            <result column="NOTICE_QUANTITY" jdbcType="DECIMAL" property="noticeNumber"/>
+        </collection>
+    </resultMap>
+    <select id="getDeliveryNoticeInfo" resultMap="noticeInfoResultMap">
+        SELECT
+        som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID,
+        som_delivery_notice_head.DELIVERY_NOTICE_CODE,
+        som_delivery_notice_head.NOTICE_DATE,
+        som_delivery_notice_head.EXPECTED_RECEIPT_DATE,
+        som_delivery_notice_head.SALES_CONTRACT_HEAD_ID,
+        som_sales_contract_head.SALES_CONTRACT_CODE,
+        som_delivery_notice_head.CUSTOMER_NAME,
+        CONCAT(
+		som_delivery_notice_head.CUS_SITE_REGION_NAME,
+		som_delivery_notice_head.CUS_SITE_CITY_NAME,
+		som_delivery_notice_head.CUS_SITE_COUNTY_NAME,
+		som_delivery_notice_head.CUSTOMER_SITE_ADDRESS
+	    ) AS address,
+        som_sales_contract_head.PROJECT_NAME,
+        hr_staff.USER_NAME,
+        hr_staff.TELEPHONE,
+        som_sales_contract_line.ITEM_NAME,
+        som_sales_contract_line.BRAND_NAME,
+        som_sales_contract_line.ITEM_SPEC_DESC,
+        som_sales_contract_line.UNIT_TYPE,
+        som_sales_contract_line.SALE_QUANTITY,
+        som_delivery_notice_line.NOTICE_QUANTITY
+        FROM
+        som_delivery_notice_head
+        LEFT JOIN som_sales_contract_head ON som_delivery_notice_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_head.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN som_sales_contract_line ON som_delivery_notice_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_line.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN som_delivery_notice_line ON (som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = som_delivery_notice_line.DELIVERY_NOTICE_HEAD_ID)
+        and (som_delivery_notice_line.SALES_CONTRACT_LINE_ID=som_sales_contract_line.SALES_CONTRACT_LINE_ID)
+        LEFT JOIN hr_staff ON som_delivery_notice_head.STAFF_ID = hr_staff.STAFF_ID
+        WHERE
+        som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = #{deliveryNoticeId}
+    </select>
+</mapper>

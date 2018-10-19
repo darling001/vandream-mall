@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.AttachmentDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.aus.AttachmentDTO">
+        <id column="ATTACHMENT_ID" property="attachmentId" jdbcType="VARCHAR"/>
+        <result column="ORGANIZATION_ID" property="organizationId" jdbcType="VARCHAR"/>
+        <result column="BILL_NO" property="billNo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR"/>
+        <result column="BUSINESS_FUNCTION" property="businessFunction" jdbcType="VARCHAR"/>
+        <result column="ATTACHMENT_TYPE" property="attachmentType" jdbcType="VARCHAR"/>
+        <result column="REPORT_CODE1" property="reportCode1" jdbcType="VARCHAR"/>
+        <result column="REPORT_CODE2" property="reportCode2" jdbcType="VARCHAR"/>
+        <result column="REPORT_CODE3" property="reportCode3" jdbcType="VARCHAR"/>
+        <result column="REPORT_CODE4" property="reportCode4" jdbcType="VARCHAR"/>
+        <result column="REPORT_CODE5" property="reportCode5" jdbcType="VARCHAR"/>
+        <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+        <result column="FILE_TYPE" property="fileType" jdbcType="VARCHAR"/>
+        <result column="FILE_SIZE" property="fileSize" jdbcType="DECIMAL"/>
+        <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR"/>
+        <result column="FILE_STORAGE_NAME" property="fileStorageName" jdbcType="VARCHAR"/>
+        <result column="FILE_EXTERNAL_ID" property="fileExternalId" jdbcType="VARCHAR"/>
+        <result column="FILE_STATUS" property="fileStatus" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR"/>
+        <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR"/>
+        <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR"/>
+        <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR"/>
+        <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR"/>
+        <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR"/>
+        <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR"/>
+        <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR"/>
+        <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR"/>
+        <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ATTACHMENT_ID, ORGANIZATION_ID, BILL_NO, BUSINESS_TYPE, BUSINESS_FUNCTION, ATTACHMENT_TYPE, 
+    REPORT_CODE1, REPORT_CODE2, REPORT_CODE3, REPORT_CODE4, REPORT_CODE5, FILE_NAME, 
+    FILE_TYPE, FILE_SIZE, FILE_PATH, FILE_STORAGE_NAME, FILE_EXTERNAL_ID, FILE_STATUS, 
+    CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, 
+    MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, 
+    EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, 
+    EXT_COL14, EXT_COL15, EXT_COL16, EXT_COL17, EXT_COL18, EXT_COL19, EXT_COL20
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from aus_at_attachment_list
+        where ATTACHMENT_ID = #{attachmentId,jdbcType=VARCHAR}
+    </select>
+    <select id="findByBillNo" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from aus_at_attachment_list
+        <where>
+            FILE_STATUS='40' AND BILL_NO=#{billNo}
+            <if test="null!=businessType and ''!=businessType " >
+                AND BUSINESS_TYPE=#{businessType}
+            </if>
+            <if test="null!=attachmentType and ''!=attachmentType " >
+                AND ATTACHMENT_TYPE=#{attachmentType}
+            </if>
+        </where>
+        ORDER BY  create_date DESC
+    </select>
+    <select id="findList" resultMap="BaseResultMap">
+        select * FROM ( select
+        <include refid="Base_Column_List"/>
+        from aus_at_attachment_list
+        <where>
+            FILE_STATUS='40' AND BILL_NO IN
+            <foreach item="billNo" index="index" collection="billNoList"
+                     open="(" separator="," close=")">
+                #{billNo}
+            </foreach>
+            <if test="null!=businessType and ''!=businessType " >
+                AND BUSINESS_TYPE=#{businessType}
+            </if>
+            <if test="null!=attachmentType and ''!=attachmentType " >
+                AND ATTACHMENT_TYPE=#{attachmentType}
+            </if>
+        </where>
+        ORDER BY  create_date DESC )t
+        GROUP BY t.bill_no
+    </select>
+</mapper>

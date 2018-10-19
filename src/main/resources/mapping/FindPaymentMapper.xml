@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.FindPaymentDAO">
+    <resultMap id="PaymentResultMap" type="com.vandream.mall.business.vo.buyerContract.FindPaymentVO">
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="uploadTime" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="FILE_NAME" jdbcType="VARCHAR" property="attachmentName"/>
+        <result column="FILE_PATH" jdbcType="VARCHAR" property="attachmentPath"/>
+    </resultMap>
+    <select id="findPaymentHistory" resultMap="PaymentResultMap">
+          SELECT
+              aus_at_attachment_list.CREATE_DATE,
+              aus_at_attachment_list.FILE_NAME,
+              aus_at_attachment_list.FILE_PATH
+          FROM
+              aus_at_attachment_list
+          WHERE
+              aus_at_attachment_list.BUSINESS_TYPE = #{businessType}
+              AND aus_at_attachment_list.BILL_NO = #{contractId} AND ATTACHMENT_TYPE = 'salesContractPayment'
+    </select>
+    <resultMap id="findContractNameCode" type="com.vandream.mall.business.vo.buyerContract.FindPaymentHistoryVO">
+        <result column="SALES_CONTRACT_HEAD_ID" jdbcType="VARCHAR" property="contractId"/>
+        <result column="SALES_CONTRACT_CODE" jdbcType="VARCHAR" property="contractCode"/>
+        <result column="CONTRACT_NAME" jdbcType="VARCHAR" property="contractName"/>
+    </resultMap>
+    <select id="findPaymentContract" resultMap="findContractNameCode">
+      SELECT SALES_CONTRACT_HEAD_ID,SALES_CONTRACT_CODE,CONTRACT_NAME FROM som_sales_contract_head
+      WHERE SALES_CONTRACT_HEAD_ID = #{contractId}
+    </select>
+</mapper>

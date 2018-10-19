@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.SolutionItemLineDAO">
+    <resultMap id="BaseResultMap"
+               type="com.vandream.mall.business.dto.solution.SolutionItemLineDTO">
+        <id column="SOLUTION_ITEM_LINE_ID" property="solutionItemLineId" jdbcType="CHAR"/>
+        <result column="SOLUTION_ITEM_ID" property="solutionItemId" jdbcType="CHAR"/>
+        <result column="SOLUTION_SUPPLIER_ID" property="solutionSupplierId" jdbcType="CHAR"/>
+        <result column="SUPPLIER_ID" property="supplierId" jdbcType="CHAR"/>
+        <result column="SUPPLIER_CODE" property="supplierCode" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_NAME" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="QUANTITY" property="quantity" jdbcType="DECIMAL"/>
+        <result column="GOOD_AMOUNT" property="goodAmount" jdbcType="DECIMAL"/>
+        <result column="TAX_CODE_TYPE" property="taxCodeType" jdbcType="VARCHAR"/>
+        <result column="TAX_CODE" property="taxCode" jdbcType="VARCHAR"/>
+        <result column="MIN_ORDER_NUM" property="minOrderNum" jdbcType="DECIMAL"/>
+        <result column="PACKAGE_NUM" property="packageNum" jdbcType="DECIMAL"/>
+        <result column="LEAD_TIME" property="leadTime" jdbcType="DECIMAL"/>
+        <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR"/>
+        <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR"/>
+        <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR"/>
+        <result column="PUR_PRICE1" property="purPrice1" jdbcType="DECIMAL"/>
+        <result column="PUR_PRICE2" property="purPrice2" jdbcType="DECIMAL"/>
+        <result column="PUR_PRICE3" property="purPrice3" jdbcType="DECIMAL"/>
+        <result column="PUR_PRICE4" property="purPrice4" jdbcType="DECIMAL"/>
+        <result column="PUR_PRICE5" property="purPrice5" jdbcType="DECIMAL"/>
+        <result column="SALE_PRICE1" property="salePrice1" jdbcType="DECIMAL"/>
+        <result column="SALE_PRICE2" property="salePrice2" jdbcType="DECIMAL"/>
+        <result column="SALE_PRICE3" property="salePrice3" jdbcType="DECIMAL"/>
+        <result column="SALE_PRICE4" property="salePrice4" jdbcType="DECIMAL"/>
+        <result column="SALE_PRICE5" property="salePrice5" jdbcType="DECIMAL"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="FROM_LINE_ID" property="fromLineId" jdbcType="VARCHAR"/>
+        <result column="FROM_LINE_CODE" property="fromLineCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    SOLUTION_ITEM_LINE_ID, SOLUTION_ITEM_ID, SOLUTION_SUPPLIER_ID, SUPPLIER_ID, SUPPLIER_CODE, 
+    SUPPLIER_NAME, QUANTITY, GOOD_AMOUNT, TAX_CODE_TYPE, TAX_CODE, MIN_ORDER_NUM, PACKAGE_NUM, 
+    LEAD_TIME, AREA_NAME, AREA_CODE, PRICE_TYPE, PUR_PRICE1, PUR_PRICE2, PUR_PRICE3, 
+    PUR_PRICE4, PUR_PRICE5, SALE_PRICE1, SALE_PRICE2, SALE_PRICE3, SALE_PRICE4, SALE_PRICE5, 
+    FROM_TYPE, FROM_LINE_ID, FROM_LINE_CODE, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, 
+    MODIFY_USER_ID, MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, 
+    EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_item_line
+        where SOLUTION_ITEM_LINE_ID = #{solutionItemLineId,jdbcType=CHAR}
+    </select>
+    
+</mapper>

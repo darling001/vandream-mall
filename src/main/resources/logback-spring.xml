@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <springProfile name="prod">
+        <!--<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] -&#45;&#45; %msg%n
+                </pattern>
+            </encoder>
+        </appender>-->
+        <!--<appender name="debug" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] -&#45;&#45; %msg%n
+                </pattern>
+            </encoder>
+        </appender>-->
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>../logs/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>../logs/info.log.%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>300</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <logger name="com.apache.ibatis" level="INFO"/>
+        <logger name="jdbc.sqltiming" level="INFO"/>
+        <logger name="com.ibatis" level="INFO"/>
+        <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="INFO"/>
+        <logger name="com.ibatis.common.jdbc.ScriptRunner" level="INFO"/>
+        <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="INFO"/>
+        <logger name="java.sql.Connection" level="INFO"/>
+        <logger name="java.sql.Statement" level="INFO"/>
+        <logger name="java.sql.PreparedStatement" level="INFO"/>
+        <logger name="java.sql.Connection" level="INFO"/>
+        <logger name="java.sql.ResultSet" level="INFO"/>
+        <logger name="com.vandream.mall.business.dao" level="INFO"/>
+        <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="debug"/>-->
+        <!--</root>-->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>-->
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+    <springProfile name="prow">
+        <!--<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] -&#45;&#45; %msg%n
+                </pattern>
+            </encoder>
+        </appender>-->
+        <!--<appender name="debug" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] -&#45;&#45; %msg%n
+                </pattern>
+            </encoder>
+        </appender>-->
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>../logs/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>../logs/info.log.%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>300</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <logger name="com.apache.ibatis" level="TRACE"/>
+        <logger name="jdbc.sqltiming" level="DEBUG"/>
+        <logger name="com.ibatis" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
+        <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.ResultSet" level="DEBUG"/>
+        <logger name="com.vandream.mall.business.dao" level="DEBUG"/>
+        <logger name="com.vandream" level="INFO"/>
+        <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="debug"/>-->
+        <!--</root>-->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>-->
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <appender name="debug" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>../logs/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>../logs/info.log.%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>300</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <logger name="com.apache.ibatis" level="TRACE"/>
+        <logger name="jdbc.sqltiming" level="DEBUG"/>
+        <logger name="com.ibatis" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
+        <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.ResultSet" level="DEBUG"/>
+        <logger name="com.vandream.mall.business.dao" level="DEBUG"/>
+        <logger name="com.vandream" level="INFO"/>
+        <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="debug"/>-->
+        <!--</root>-->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <appender name="debug" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>../logs/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>../logs/info.log.%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>300</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <logger name="com.apache.ibatis" level="TRACE"/>
+        <logger name="jdbc.sqltiming" level="DEBUG"/>
+        <logger name="com.ibatis" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
+        <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.ResultSet" level="DEBUG"/>
+        <logger name="com.vandream.mall.business.dao" level="DEBUG"/>
+        <logger name="com.vandream" level="DEBUG"/>
+        <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="debug"/>-->
+        <!--</root>-->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <appender name="debug" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>../logs/info.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>../logs/info.log.%d{yyyy-MM-dd}</fileNamePattern>
+                <maxHistory>300</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%logger{36}] --- %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <logger name="com.apache.ibatis" level="TRACE"/>
+        <logger name="jdbc.sqltiming" level="DEBUG"/>
+        <logger name="com.ibatis" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
+        <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
+        <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.Statement" level="DEBUG"/>
+        <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+        <logger name="java.sql.Connection" level="DEBUG"/>
+        <logger name="java.sql.ResultSet" level="DEBUG"/>
+        <logger name="com.vandream.mall.business.dao" level="DEBUG"/>
+        <logger name="com.vandream" level="INFO"/>
+        <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="debug"/>-->
+        <!--</root>-->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+        <root level="INFO">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

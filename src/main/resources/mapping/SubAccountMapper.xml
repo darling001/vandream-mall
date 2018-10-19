@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.SubAccountDAO">
+
+    <resultMap id="findSubAccountListMap" type="com.vandream.mall.business.dto.subAccount.SubAccountListDTO">
+        <id column="ACCOUNT_ID" jdbcType="VARCHAR" property="accountId"/>
+        <id column="ROLE_ID" jdbcType="VARCHAR" property="roleId"/>
+        <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accoutName"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
+        <result column="ACCOUNT_MOBILE" jdbcType="VARCHAR" property="phoneNumber"/>
+        <result column="ACCOUNT_STATUS" jdbcType="CHAR" property="status"/>
+    </resultMap>
+
+    <resultMap id="subAccMap" type="com.vandream.mall.business.dto.subAccount.SubAccountDTO">
+        <id column="ACCOUNT_ID" jdbcType="CHAR" property="accountId"/>
+        <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName"/>
+        <result column="ACCOUNT_MOBILE" jdbcType="VARCHAR" property="accountMobile"/>
+        <result column="ACCOUNT_STATUS" jdbcType="CHAR" property="accountStatus"/>
+    </resultMap>
+    <!-- 获取企业子账户列表 -->
+    <select id="findSubAccountList" resultMap="findSubAccountListMap">
+	SELECT
+	  ua.ACCOUNT_ID,
+	  ua.ACCOUNT_NAME,
+	  GROUP_CONCAT(ur.role_id) as ROLE_ID,
+	  GROUP_CONCAT(ur.role_name) as ROLE_NAME,
+	  ua.ACCOUNT_MOBILE,
+      ua.ACCOUNT_STATUS
+    FROM
+	  ucm_account ua
+    JOIN ucm_account_role uac ON ua.ACCOUNT_ID = uac.account_id
+    JOIN ucm_role ur ON uac.role_id = ur.role_id
+    WHERE
+	  ua.PARENT_ACCOUNT_ID = #{parentAccountId}
+        <if test="null!=status ">
+          AND ua.ACCOUNT_STATUS = #{status}
+        </if>
+    GROUP BY
+	  ua.ACCOUNT_ID,
+	  ua.ACCOUNT_NAME
+    ORDER BY ua.CREATE_DATE DESC
+    </select>
+
+    <!-- 添加子账户时查询手机是否已存在一级以及状态使用情况 -->
+    <select id="getSubAccount" resultMap="subAccMap">
+        SELECT
+        ACCOUNT_ID, ACCOUNT_NAME, ACCOUNT_MOBILE, ACCOUNT_STATUS
+        FROM
+        ucm_account
+        WHERE
+        ACCOUNT_MOBILE = #{phoneNumber}
+    </select>
+
+</mapper>

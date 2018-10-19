@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.DemandLineDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.demand.DemandLineDTO">
+        <id column="DEMAND_LINE_ID" property="demandLineId" jdbcType="CHAR"/>
+        <result column="DEMAND_ID" property="demandId" jdbcType="CHAR"/>
+        <result column="DEMAND_LINE_CODE" property="demandLineCode" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR"/>
+        <result column="CATEGORY_CODE" property="categoryCode" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="PURCHASE_MANAGER_ID" property="purchaseManagerId" jdbcType="CHAR"/>
+        <result column="PURCHASE_MANAGER_CODE" property="purchaseManagerCode" jdbcType="VARCHAR"/>
+        <result column="PURCHASE_MANAGER" property="purchaseManager" jdbcType="VARCHAR"/>
+        <result column="ITEM_ID" property="itemId" jdbcType="CHAR"/>
+        <result column="ITEM_LINE_ID" property="itemLineId" jdbcType="CHAR"/>
+        <result column="ITEM_TYPE" property="itemType" jdbcType="VARCHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="ITEM_LINE_CODE" property="itemLineCode" jdbcType="VARCHAR"/>
+        <result column="ITEM_SPEC_DESC" property="itemSpecDesc" jdbcType="VARCHAR"/>
+        <result column="UNIT_TYPE_NAME" property="unitTypeName" jdbcType="VARCHAR"/>
+        <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR"/>
+        <result column="BRAND" property="brand" jdbcType="VARCHAR"/>
+        <result column="DEMAND_REMARK" property="demandRemark" jdbcType="VARCHAR"/>
+        <result column="QUANTITY" property="quantity" jdbcType="DECIMAL"/>
+        <result column="GOOD_AMOUNT" property="goodAmount" jdbcType="DECIMAL"/>
+        <result column="SALE_PRICE1" property="salePrice1" jdbcType="DECIMAL"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="FROM_LINE_ID" property="fromLineId" jdbcType="VARCHAR"/>
+        <result column="FROM_LINE_CODE" property="fromLineCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+        <result column="SPU_ID" property="spuId" jdbcType="CHAR"/>
+        <result column="STANDARD_FLAG" property="standardFlag"/>
+        <result column="SOLUTION_SUPPLIER_ID" property="solutionSupplierId"/>
+    </resultMap>
+    <resultMap id="findLineMap" type="com.vandream.mall.business.dto.demand.DemandLineDetailDTO">
+        <result column="DEMAND_ID" property="demandId" jdbcType="CHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="BRAND" property="brand" jdbcType="VARCHAR"/>
+        <result column="DEMAND_REMARK" property="demandRemark" jdbcType="VARCHAR"/>
+        <result column="UNIT_TYPE_NAME" property="unitTypeName" jdbcType="VARCHAR"/>
+        <result column="QUANTITY" property="quantity" jdbcType="VARCHAR"/>
+        <result column="DEMAND_VISIT_ID" property="demandVisitId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="demandVisitLogMap" type="com.vandream.mall.business.vo.demand.DemandVisitLogVO">
+        <result column="VISIT_TIME" property="visitTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    DEMAND_LINE_ID, DEMAND_ID, DEMAND_LINE_CODE, CATEGORY_ID, CATEGORY_CODE, CATEGORY_NAME, 
+    PURCHASE_MANAGER_ID, PURCHASE_MANAGER_CODE, PURCHASE_MANAGER, ITEM_ID, ITEM_LINE_ID, 
+    ITEM_TYPE, ITEM_NAME, ITEM_LINE_CODE, ITEM_SPEC_DESC, UNIT_TYPE_NAME, UNIT_TYPE, 
+    BRAND, DEMAND_REMARK, QUANTITY, GOOD_AMOUNT, SALE_PRICE1, FROM_TYPE, FROM_LINE_ID, 
+    FROM_LINE_CODE, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, 
+    MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, 
+    EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, SPU_ID
+    </sql>
+    <sql id="Item_Column_List">
+        pdl.DEMAND_ID, pdl.CATEGORY_ID, pdl.ITEM_ID, pdl.ITEM_LINE_ID,
+        pdl.ITEM_NAME, pdl.ITEM_SPEC_DESC, pdl.UNIT_TYPE_NAME, pdl.UNIT_TYPE,
+        pdl.BRAND, pdl.QUANTITY,it.STANDARD_FLAG,pitl.SOLUTION_SUPPLIER_ID
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_demand_line
+        where DEMAND_LINE_ID = #{demandLineId,jdbcType=CHAR}
+    </select>
+    <select id="findItemList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Item_Column_List"/>
+        from psd_demand_line pdl inner join psd_item it on pdl.DEMAND_ID=it.DEMAND_ID
+        inner join psd_item_line pitl on it.SOLUTION_ITEM_ID=pitl.SOLUTION_ITEM_ID
+        where pdl.DEMAND_ID=#{demandId} and pdl.CATEGORY_ID=#{categoryId} GROUP BY pitl.SOLUTION_ITEM_ID
+    </select>
+    <select id="getDemandLineList"
+            parameterType="com.vandream.mall.business.vo.demand.DemandRequestVO"
+            resultMap="findLineMap">
+       SELECT
+        h.DEMAND_ID ,
+        l.ITEM_NAME,
+        l.BRAND,l.DEMAND_REMARK,
+        l.UNIT_TYPE_NAME,l.QUANTITY,
+        h.DEMAND_VISIT_ID
+        FROM psd_demand_head h
+        LEFT JOIN psd_demand_line l
+        ON l.DEMAND_ID = h.DEMAND_ID
+        WHERE l.DEMAND_ID=#{demandId}
+    </select>
+    <select id="getdemandVisitLogs"
+            parameterType="com.vandream.mall.business.vo.demand.DemandRequestVO"
+            resultMap="demandVisitLogMap" >
+      SELECT
+           v.VISIT_TIME
+            FROM psd_demand_visit v
+           WHERE v.DEMAND_ID=#{demandId}  and v.DEMAND_VISIT_CODE !='V1'
+           ORDER BY v.DEMAND_VISIT_CODE DESC
+    </select>
+</mapper>

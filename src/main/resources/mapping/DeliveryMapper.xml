@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.DeliveryDAO">
+    <resultMap id="DeliveryNoticeListResultMap" type="com.vandream.mall.business.dto.delivery.notice.DeliveryNoticeListDTO">
+        <id column="DELIVERY_NOTICE_HEAD_ID" jdbcType="CHAR" property="deliveryNoticeId"/>
+        <id column="SALES_CONTRACT_HEAD_ID" jdbcType="CHAR" property="saleContractHeadId"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="NOTICE_DATE" jdbcType="TIMESTAMP" property="deliveryNoticeDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="PURCHASE_CONTRACT_CODE" jdbcType="VARCHAR" property="saleContractHeadCode"/>
+        <result column="EXPECTED_RECEIPT_DATE" jdbcType="TIMESTAMP" property="deliveryDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="staffer"/>
+        <result column="TELEPHONE" jdbcType="VARCHAR" property="contactTel"/>
+        <result column="NOTICE_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="DELIVERY_COUNT" jdbcType="INTEGER" property="deliveryCount"/>
+        <result column="NOTE_CODE" jdbcType="VARCHAR" property="isRead"/>
+    </resultMap>
+
+    <resultMap id="DeliveryNoticeDetailResultMap" type="com.vandream.mall.business.dto.delivery.notice.DeliveryNoticeDetailDTO">
+        <id column="DELIVERY_NOTICE_HEAD_ID" jdbcType="CHAR" property="deliveryNoticeId"/>
+        <id column="SALES_CONTRACT_HEAD_ID" jdbcType="CHAR" property="saleContractId"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="NOTICE_DATE" jdbcType="TIMESTAMP" property="deliveryNoticeDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="EXPECTED_RECEIPT_DATE" jdbcType="TIMESTAMP" property="expectDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="PURCHASE_CONTRACT_CODE" jdbcType="VARCHAR" property="saleContractCode"/>
+        <result column="COMPANY_NAME" jdbcType="VARCHAR" property="customerName"/>
+        <result column="CUSTOMER_SITE_ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="purchaser"/>
+        <result column="TELEPHONE" jdbcType="VARCHAR" property="contactTel"/>
+        <result column="NOTICE_REMARK" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <resultMap id="DeliveryDetailResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryDetailDTO">
+        <id column="DELIVERY_NOTICE_HEAD_ID" jdbcType="CHAR" property="deliveryNoticeId"/>
+        <result column="FROM_TYPE" jdbcType="VARCHAR" property="fromType"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="PURCHASE_CONTRACT_CODE" jdbcType="VARCHAR" property="purchaseHeadId"/>
+        <result column="ADDRESS" jdbcType="CHAR" property="address"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="NOTICE_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="NOTICE_DATE" jdbcType="TIMESTAMP" property="deliveryNoticeDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_CODE" jdbcType="VARCHAR" property="deliveryCode"/>
+        <result column="DELIVERY_DATE"  property="deliveryDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ARRIVAL_DATE" jdbcType="TIMESTAMP" property="arrivalDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="TRANSPORT_COMPANY" property="logisticsName" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CONTACTS" property="contactName" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CONTACTS_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="TRANSPORT_CODE" jdbcType="VARCHAR" property="logisticsCode"/>
+        <result column="CAR_SHIP_NO" jdbcType="VARCHAR" property="plateNumber"/>
+        <result column="CAR_CONTACTS" jdbcType="VARCHAR" property="plateContactName"/>
+        <result column="CAR_CONTACTS_PHONE" property="plateContactTel" jdbcType="VARCHAR"/>
+        <result column="RECEIPT_DATE"  property="signingTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="RECEIPT_REMARK" jdbcType="VARCHAR" property="signingInfo"/>
+        <result column="ARRIVAL_REMARK" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="DeliveryInfoDetailResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryDetailDTO">
+        <id column="DELIVERY_NOTICE_HEAD_ID" jdbcType="CHAR" property="deliveryNoticeId"/>
+        <result column="FROM_TYPE" jdbcType="VARCHAR" property="fromType"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="PURCHASE_CONTRACT_CODE" jdbcType="VARCHAR" property="purchaseHeadId"/>
+        <result column="ADDRESS" jdbcType="CHAR" property="address"/>
+        <result column="DELIVERY_NOTICE_CODE" jdbcType="VARCHAR" property="deliveryNoticeCode"/>
+        <result column="DELIVERY_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="NOTICE_DATE" jdbcType="TIMESTAMP" property="deliveryNoticeDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_CODE" jdbcType="VARCHAR" property="deliveryCode"/>
+        <result column="DELIVERY_DATE"  property="deliveryDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ARRIVAL_DATE" jdbcType="TIMESTAMP" property="arrivalDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="TRANSPORT_COMPANY" property="logisticsName" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CONTACTS" property="contactName" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CONTACTS_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="TRANSPORT_CODE" jdbcType="VARCHAR" property="logisticsCode"/>
+        <result column="CAR_SHIP_NO" jdbcType="VARCHAR" property="plateNumber"/>
+        <result column="CAR_CONTACTS" jdbcType="VARCHAR" property="plateContactName"/>
+        <result column="CAR_CONTACTS_PHONE" property="plateContactTel" jdbcType="VARCHAR"/>
+        <result column="RECEIPT_DATE"  property="signingTime" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="RECEIPT_REMARK" jdbcType="VARCHAR" property="signingInfo"/>
+        <result column="ARRIVAL_REMARK" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="DeliveryListResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryInfoListDTO">
+        <id column="DELIVERY_HEAD_ID" jdbcType="CHAR" property="deliveryHeadId"/>
+        <id column="DELIVERY_LINE_ID" jdbcType="CHAR" property="deliveryLineId"/>
+        <result column="DELIVERY_CODE" jdbcType="VARCHAR" property="deliveryCode"/>
+        <result column="DELIVERY_LINE_CODE" jdbcType="VARCHAR" property="deliveryLineCode"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="ITEM_COUNT" jdbcType="DECIMAL" property="itemCount"/>
+        <result column="DELIVERY_DATE" jdbcType="TIMESTAMP" property="deliveryDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CUSTOMER_SITE_ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="CUSTOMER_CONSIGNEET_NAME" jdbcType="VARCHAR" property="contact"/>
+        <result column="CUSTOMER_CONSIGNEET_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="DELIVERY_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="NOTE_CODE" jdbcType="VARCHAR" property="isRead"/>
+    </resultMap>
+
+    <!-- 获取发货管理列表 -->
+    <select id="findDeliveryNoticeList" resultMap="DeliveryNoticeListResultMap">
+        SELECT
+        som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID,
+        som_delivery_notice_head.DELIVERY_NOTICE_CODE,
+        som_delivery_notice_head.NOTICE_DATE,
+        som_delivery_notice_head.PURCHASE_CONTRACT_CODE,
+        som_delivery_notice_head.EXPECTED_RECEIPT_DATE,
+        som_sales_contract_head.PROJECT_NAME,
+        hr_staff.USER_NAME,
+        hr_staff.TELEPHONE,
+        som_delivery_notice_head.NOTICE_STATUS,
+        som_sales_contract_head.SALES_CONTRACT_HEAD_ID,
+        (count(DISTINCT(tms_delivery_head.DELIVERY_HEAD_ID))) AS DELIVERY_COUNT,
+        if(count(DISTINCT(tms_delivery_head.DELIVERY_HEAD_ID))>COUNT(DISTINCT(ext_bill_read.BILL_ID)),0,1) AS NOTE_CODE
+        FROM
+        som_delivery_notice_head AS som_delivery_notice_head
+        LEFT JOIN som_sales_contract_head AS som_sales_contract_head
+        ON som_delivery_notice_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_head.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN hr_staff AS hr_staff
+        ON som_delivery_notice_head.STAFF_ID = hr_staff.STAFF_ID
+        LEFT JOIN tms_delivery_head AS tms_delivery_head
+        ON (som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = tms_delivery_head.FROM_ID and <![CDATA[tms_delivery_head.DELIVERY_STATUS <> '10']]>)
+        LEFT JOIN ext_bill_read AS ext_bill_read
+        ON (tms_delivery_head.DELIVERY_HEAD_ID = ext_bill_read.BILL_ID and ext_bill_read.BILL_TYPE='20' and ext_bill_read.ACCOUNT_ID = #{userId})
+        WHERE som_delivery_notice_head.SUPPLIER_ID = #{supplierId}
+        <if test="keyword != null and  keyword != ''">
+            AND
+            (
+            som_delivery_notice_head.DELIVERY_NOTICE_CODE LIKE concat('%',#{keyword},'%')
+            OR
+            som_delivery_notice_head.PURCHASE_CONTRACT_CODE LIKE concat('%',#{keyword},'%')
+            OR
+            hr_staff.TELEPHONE LIKE concat('%',#{keyword},'%')
+            OR
+            som_sales_contract_head.PROJECT_NAME LIKE concat('%',#{keyword},'%')
+            OR
+            hr_staff.USER_NAME LIKE concat('%',#{keyword},'%')
+            )
+        </if>
+        <if test="startTime != null and startTime != ''">
+            <![CDATA[ AND
+                som_delivery_notice_head.EXPECTED_RECEIPT_DATE >=
+                #{startTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+            ]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[ AND
+                som_delivery_notice_head.EXPECTED_RECEIPT_DATE <
+                #{endTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+            ]]>
+        </if>
+        <![CDATA[ AND som_delivery_notice_head.NOTICE_STATUS <> '00'
+             AND som_delivery_notice_head.NOTICE_STATUS <> '10'
+             AND som_delivery_notice_head.NOTICE_STATUS <> '20' ]]>
+        GROUP BY som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID
+        ORDER BY som_delivery_notice_head.CREATE_DATE DESC
+    </select>
+
+    <!-- 获取供方发货通知单详情 -->
+    <select id="getSupplierDeliveryNoticeInfo" resultMap="DeliveryNoticeDetailResultMap">
+        SELECT
+	      som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID,
+	      som_delivery_notice_head.DELIVERY_NOTICE_CODE,
+	      som_delivery_notice_head.NOTICE_DATE,
+	      som_delivery_notice_head.EXPECTED_RECEIPT_DATE,
+	      hr_staff.USER_NAME,
+	      hr_staff.TELEPHONE,
+	      som_sales_contract_head.SALES_CONTRACT_HEAD_ID,
+	      som_delivery_notice_head.PURCHASE_CONTRACT_CODE,
+	      concat(som_delivery_notice_head.CUS_SITE_REGION_NAME,
+	            som_delivery_notice_head.CUS_SITE_CITY_NAME,
+	            som_delivery_notice_head.CUS_SITE_COUNTY_NAME,
+	            som_delivery_notice_head.CUSTOMER_SITE_ADDRESS) AS CUSTOMER_SITE_ADDRESS,
+	      som_delivery_notice_head.NOTICE_REMARK,
+	      pom_purchase_contract_company.COMPANY_NAME
+        FROM
+	      som_delivery_notice_head AS som_delivery_notice_head
+	    LEFT JOIN som_sales_contract_head AS som_sales_contract_head
+        ON som_delivery_notice_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_head.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN hr_staff AS hr_staff ON som_delivery_notice_head.STAFF_ID = hr_staff.STAFF_ID
+        LEFT JOIN pom_purchase_contract_company ON som_delivery_notice_head.PURCHASE_CONTRACT_HEAD_ID = pom_purchase_contract_company.PURCHASE_CONTRACT_HEAD_ID
+        WHERE
+	      som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = #{deliveryNoticeId}
+	    AND   pom_purchase_contract_company.COMPANY_TYPE='M'
+    </select>
+
+    <!-- 获取供方发货单详情 -->
+    <select id="getDeliveryItem" resultMap="DeliveryDetailResultMap">
+        SELECT
+	    DELIVERY_NOTICE_CODE,
+	    DELIVERY_NOTICE_HEAD_ID,
+	    NOTICE_DATE,
+	    FROM_TYPE,
+	    PURCHASE_CONTRACT_CODE,
+	    NOTICE_STATUS,
+	    concat(
+	    concat(CUS_SITE_REGION_NAME,
+	            CUS_SITE_CITY_NAME,
+	            CUS_SITE_COUNTY_NAME,
+	            CUSTOMER_SITE_ADDRESS),
+		    CONCAT(
+			'(',
+			CUSTOMER_CONSIGNEET_NAME,
+			'收) '
+		),
+		CUSTOMER_CONSIGNEET_PHONE
+	    ) AS ADDRESS
+      FROM
+	    som_delivery_notice_head
+      WHERE som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = #{deliveryNoticeId}
+    </select>
+    <!-- 获取供方发货单详情 -->
+    <select id="getDeliveryInfo" resultMap="DeliveryInfoDetailResultMap">
+        SELECT
+        tms_delivery_head.`DELIVERY_CODE`,
+        som_delivery_notice_head.NOTICE_DATE,
+        tms_delivery_head.`DELIVERY_DATE`,
+        tms_delivery_head.ARRIVAL_DATE,
+        som_delivery_notice_head.DELIVERY_NOTICE_CODE,
+        som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID,
+        som_delivery_notice_head.FROM_TYPE,
+        som_delivery_notice_head.PURCHASE_CONTRACT_CODE,
+        tms_delivery_head.PURCHASE_CONTRACT_HEAD_ID,
+        tms_delivery_head.DELIVERY_STATUS,
+        CONCAT(
+        tms_delivery_head.CUS_SITE_REGION_NAME,tms_delivery_head.CUS_SITE_CITY_NAME,
+        tms_delivery_head.CUS_SITE_COUNTY_NAME,tms_delivery_head.CUSTOMER_SITE_ADDRESS,
+        '(',tms_delivery_head.CUSTOMER_CONSIGNEET_NAME,'收) ',
+        tms_delivery_head.CUSTOMER_CONSIGNEET_PHONE
+        ) AS ADDRESS,
+        tms_delivery_head.TRANSPORT_COMPANY,
+        tms_delivery_head.TRANSPORT_CONTACTS,
+        tms_delivery_head.`TRANSPORT_CONTACTS_PHONE`,
+        tms_delivery_head.TRANSPORT_CODE,
+        tms_delivery_head.CAR_SHIP_NO,
+        tms_delivery_head.`CAR_CONTACTS`,
+        tms_delivery_head.`CAR_CONTACTS_PHONE`,
+        tms_delivery_head.`RECEIPT_DATE`,
+        tms_delivery_head.`RECEIPT_REMARK`,
+        tms_delivery_head.ARRIVAL_REMARK
+        FROM
+        tms_delivery_head AS tms_delivery_head
+        LEFT JOIN som_delivery_notice_head AS som_delivery_notice_head
+        ON tms_delivery_head.FROM_ID = som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID
+        WHERE
+        tms_delivery_head.DELIVERY_HEAD_ID = #{deliveryHeadId}
+    </select>
+
+    <!-- 获取供方发货单列表 -->
+    <select id="findDeliveryList" resultMap="DeliveryListResultMap">
+        SELECT
+        tms.DELIVERY_HEAD_ID,
+        tms.DELIVERY_CODE,
+        tms.DELIVERY_LINE_ID,
+        tms.DELIVERY_LINE_CODE,
+        tms.ITEM_NAME,
+        tms.ITEM_COUNT,
+        tms.DELIVERY_DATE,
+        tms.CUSTOMER_SITE_ADDRESS,
+        tms.CUSTOMER_CONSIGNEET_NAME,
+        tms.CUSTOMER_CONSIGNEET_PHONE,
+        tms.DELIVERY_STATUS,
+        tms.CREATE_DATE,
+		tms.NOTE_CODE
+        FROM
+        (SELECT
+          tms_delivery_head.DELIVERY_HEAD_ID,
+          tms_delivery_head.DELIVERY_CODE,
+          tms_delivery_line.DELIVERY_LINE_ID,
+          tms_delivery_line.DELIVERY_LINE_CODE,
+          pom_purchase_contract_line.ITEM_NAME,
+          COUNT(1) ITEM_COUNT,
+          tms_delivery_head.DELIVERY_DATE,
+          concat(tms_delivery_head.CUS_SITE_REGION_NAME,
+                tms_delivery_head.CUS_SITE_CITY_NAME,
+                tms_delivery_head.CUS_SITE_COUNTY_NAME,
+                tms_delivery_head.CUSTOMER_SITE_ADDRESS)
+                AS CUSTOMER_SITE_ADDRESS,
+          tms_delivery_head.CUSTOMER_CONSIGNEET_NAME,
+          tms_delivery_head.CUSTOMER_CONSIGNEET_PHONE,
+          tms_delivery_head.DELIVERY_STATUS,
+          tms_delivery_head.CREATE_DATE,
+          COUNT(DISTINCT(ext_bill_read.BILL_ID)) AS NOTE_CODE
+        FROM
+          som_delivery_notice_head AS som_delivery_notice_head
+        LEFT JOIN tms_delivery_head AS tms_delivery_head
+          ON som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = tms_delivery_head.FROM_ID
+        LEFT JOIN tms_delivery_line AS tms_delivery_line
+          ON tms_delivery_head.DELIVERY_HEAD_ID = tms_delivery_line.DELIVERY_HEAD_ID
+        LEFT JOIN tms_logistics_info AS tms_logistics_info
+          ON tms_delivery_head.DELIVERY_HEAD_ID = tms_logistics_info.DELIVERY_HEAD_ID
+        LEFT JOIN pom_purchase_contract_line AS pom_purchase_contract_line
+          ON tms_delivery_line.PURCHASE_CONTRACT_LINE_ID = pom_purchase_contract_line.PURCHASE_CONTRACT_LINE_ID
+        LEFT JOIN ext_bill_read AS ext_bill_read
+		  ON (tms_delivery_head.DELIVERY_HEAD_ID = ext_bill_read.BILL_ID AND ext_bill_read.BILL_TYPE = 20 AND ext_bill_read.ACCOUNT_ID = #{userId})
+        WHERE
+        som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID = #{deliveryNoticeId}
+        <![CDATA[ AND tms_delivery_head.DELIVERY_STATUS <> '10' ]]>
+          GROUP BY DELIVERY_HEAD_ID,LOGISTICS_DATE ORDER BY LOGISTICS_DATE DESC
+        ) tms GROUP BY DELIVERY_HEAD_ID ORDER BY CREATE_DATE DESC
+    </select>
+</mapper>

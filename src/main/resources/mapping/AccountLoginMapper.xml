@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.AccountLoginDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.domain.AccountLogin">
+        <id column="ACCOUNT_LOGIN_ID" property="accountLoginId" jdbcType="CHAR"/>
+        <result column="ACCOUNT_ID" property="accountId" jdbcType="CHAR"/>
+        <result column="ACCOUNT_ALIAS" property="accountAlias" jdbcType="VARCHAR"/>
+        <result column="ACCOUNT_ALIAS_TYPE" property="accountAliasType" jdbcType="CHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR"/>
+        <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR"/>
+        <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR"/>
+        <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR"/>
+        <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR"/>
+        <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR"/>
+        <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR"/>
+        <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR"/>
+        <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR"/>
+        <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ACCOUNT_LOGIN_ID, ACCOUNT_ID, ACCOUNT_ALIAS, ACCOUNT_ALIAS_TYPE, CREATE_USER_ID, 
+    CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, 
+    BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, 
+    EXT_COL8, EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, 
+    EXT_COL16, EXT_COL17, EXT_COL18, EXT_COL19, EXT_COL20
+  </sql>
+
+    <insert id="insertAccountLogin" parameterType="com.vandream.mall.business.domain.AccountLogin">
+        insert into member.ucm_account_login
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accountLoginId != null">
+                ACCOUNT_LOGIN_ID,
+            </if>
+            <if test="accountId != null">
+                ACCOUNT_ID,
+            </if>
+            <if test="accountAlias != null">
+                ACCOUNT_ALIAS,
+            </if>
+            <if test="accountAliasType != null">
+                ACCOUNT_ALIAS_TYPE,
+            </if>
+            <if test="createUserId != null">
+                CREATE_USER_ID,
+            </if>
+            <if test="createUserName != null">
+                CREATE_USER_NAME,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="modifyUserId != null">
+                MODIFY_USER_ID,
+            </if>
+            <if test="modifyUserName != null">
+                MODIFY_USER_NAME,
+            </if>
+            <if test="modifyDate != null">
+                MODIFY_DATE,
+            </if>
+            <if test="orgId != null">
+                ORG_ID,
+            </if>
+            <if test="bookId != null">
+                BOOK_ID,
+            </if>
+            <if test="groupId != null">
+                GROUP_ID,
+            </if>
+            <if test="extCol1 != null">
+                EXT_COL1,
+            </if>
+            <if test="extCol2 != null">
+                EXT_COL2,
+            </if>
+            <if test="extCol3 != null">
+                EXT_COL3,
+            </if>
+            <if test="extCol4 != null">
+                EXT_COL4,
+            </if>
+            <if test="extCol5 != null">
+                EXT_COL5,
+            </if>
+            <if test="extCol6 != null">
+                EXT_COL6,
+            </if>
+            <if test="extCol7 != null">
+                EXT_COL7,
+            </if>
+            <if test="extCol8 != null">
+                EXT_COL8,
+            </if>
+            <if test="extCol9 != null">
+                EXT_COL9,
+            </if>
+            <if test="extCol10 != null">
+                EXT_COL10,
+            </if>
+            <if test="extCol11 != null">
+                EXT_COL11,
+            </if>
+            <if test="extCol12 != null">
+                EXT_COL12,
+            </if>
+            <if test="extCol13 != null">
+                EXT_COL13,
+            </if>
+            <if test="extCol14 != null">
+                EXT_COL14,
+            </if>
+            <if test="extCol15 != null">
+                EXT_COL15,
+            </if>
+            <if test="extCol16 != null">
+                EXT_COL16,
+            </if>
+            <if test="extCol17 != null">
+                EXT_COL17,
+            </if>
+            <if test="extCol18 != null">
+                EXT_COL18,
+            </if>
+            <if test="extCol19 != null">
+                EXT_COL19,
+            </if>
+            <if test="extCol20 != null">
+                EXT_COL20,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="accountId != null">
+                #{accountId,jdbcType=CHAR},
+            </if>
+            <if test="accountAlias != null">
+                #{accountAlias,jdbcType=VARCHAR},
+            </if>
+            <if test="accountAliasType != null">
+                #{accountAliasType,jdbcType=CHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserName != null">
+                #{createUserName,jdbcType=VARCHAR},
+            </if>
+            NOW(),
+            <if test="modifyUserId != null">
+                #{modifyUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyUserName != null">
+                #{modifyUserName,jdbcType=VARCHAR},
+            </if>
+            NOW(),
+            <if test="orgId != null">
+                #{orgId,jdbcType=VARCHAR},
+            </if>
+            <if test="bookId != null">
+                #{bookId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol1 != null">
+                #{extCol1,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol2 != null">
+                #{extCol2,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol3 != null">
+                #{extCol3,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol4 != null">
+                #{extCol4,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol5 != null">
+                #{extCol5,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol6 != null">
+                #{extCol6,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol7 != null">
+                #{extCol7,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol8 != null">
+                #{extCol8,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol9 != null">
+                #{extCol9,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol10 != null">
+                #{extCol10,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol11 != null">
+                #{extCol11,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol12 != null">
+                #{extCol12,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol13 != null">
+                #{extCol13,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol14 != null">
+                #{extCol14,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol15 != null">
+                #{extCol15,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol16 != null">
+                #{extCol16,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol17 != null">
+                #{extCol17,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol18 != null">
+                #{extCol18,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol19 != null">
+                #{extCol19,jdbcType=VARCHAR},
+            </if>
+            <if test="extCol20 != null">
+                #{extCol20,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

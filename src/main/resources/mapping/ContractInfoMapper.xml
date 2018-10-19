@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.ContractInfoDAO">
+    <resultMap id="contractInfoResultMap" type="com.vandream.mall.business.vo.buyerContract.ContractInfoitemListVO">
+        <result column="SALES_CONTRACT_HEAD_ID" jdbcType="VARCHAR" property="contractId"/>
+        <result column="ITEM_ID" jdbcType="VARCHAR" property="itemId"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="ITEM_SPEC_DESC" jdbcType="VARCHAR" property="paramters"/>
+        <result column="SALE_QUANTITY" jdbcType="DECIMAL" property="quantity"/>
+        <result column="UNIT_TYPE" jdbcType="VARCHAR" property="unit"/>
+        <result column="SALE_PRICE" jdbcType="DECIMAL" property="unitPrice"/>
+        <result column="TAX_CODE" jdbcType="VARCHAR" property="taxRate"/>
+        <result column="TOTAL_AMOUNT" jdbcType="DECIMAL" property="anountPrice"/>
+        <result column="EXPECTED_RECEIPT_DATE" jdbcType="TIMESTAMP" property="expectDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ITEM_LINE_VERSION" property="orderItemVersion" jdbcType="VARCHAR"/>
+        <result column="ITEM_LINE_ID" property="itemLineId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getContractInfoItem" resultMap="contractInfoResultMap">
+        SELECT
+            som_sales_contract_head.SALES_CONTRACT_HEAD_ID,
+            som_sales_contract_line.ITEM_ID,
+            som_sales_contract_line.ITEM_NAME,
+            som_sales_contract_line.ITEM_SPEC_DESC,
+            som_sales_contract_line.SALE_QUANTITY,
+            som_sales_contract_line.UNIT_TYPE,
+            som_sales_contract_line.BRAND_NAME,
+            som_sales_contract_line.SALE_PRICE,
+            som_sales_contract_line.TAX_CODE,
+            som_sales_contract_line.TOTAL_AMOUNT,
+            som_sales_contract_line.EXPECTED_RECEIPT_DATE,
+            som_sales_contract_line.ITEM_LINE_VERSION,
+            som_sales_contract_line.ITEM_LINE_ID
+        FROM
+            som_sales_contract_head
+        LEFT JOIN som_sales_contract_line ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_line.SALES_CONTRACT_HEAD_ID
+        WHERE som_sales_contract_head.SALES_CONTRACT_HEAD_ID = #{comtractId}
+        ORDER BY   som_sales_contract_line.EXPECTED_RECEIPT_DATE ASC
+    </select>
+
+    <resultMap id="attachmentResultMap" type="com.vandream.mall.business.vo.buyerContract.AttachmentListVO">
+        <result column="FILE_NAME" jdbcType="VARCHAR" property="attachmentName"/>
+        <result column="FILE_PATH" jdbcType="VARCHAR" property="attachmentPath"/>
+    </resultMap>
+    <select id="getAttachment" resultMap="attachmentResultMap">
+        SELECT
+            aus_at_attachment_list.FILE_NAME,
+            aus_at_attachment_list.FILE_PATH
+        FROM
+            som_sales_contract_head
+            RIGHT JOIN aus_at_attachment_list ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = aus_at_attachment_list.BILL_NO and aus_at_attachment_list.ATTACHMENT_TYPE = 'salesContractDoc'
+            AND aus_at_attachment_list.BUSINESS_TYPE = 'somSalesContract'
+        WHERE
+            som_sales_contract_head.SALES_CONTRACT_HEAD_ID = #{comtractId}
+    </select>
+
+
+
+
+    <resultMap id="billingInformationResultMap" type="com.vandream.mall.business.vo.buyerContract.BillingInformationVO">
+        <result column="PAYMENT_REMARK" jdbcType="VARCHAR" property="receiptsExplain"/>
+        <result column="BEGIN_DATE" jdbcType="TIMESTAMP" property="startDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="PAYMENT_DAYS" jdbcType="VARCHAR" property="limitDay"/>
+        <result column="AMOUNT_RATE" jdbcType="DECIMAL" property="proportion"/>
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount"/>
+    </resultMap>
+    <select id="getBillingInformation" resultMap="billingInformationResultMap" >
+        SELECT
+          som_sales_contract_payment.PAYMENT_REMARK,
+          som_sales_contract_payment.BEGIN_DATE,
+          som_sales_contract_payment.PAYMENT_DAYS,
+          som_sales_contract_payment.AMOUNT_RATE,
+          som_sales_contract_payment.AMOUNT
+        FROM
+          som_sales_contract_head
+          RIGHT JOIN som_sales_contract_payment ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_payment.SALES_CONTRACT_HEAD_ID
+        WHERE
+          som_sales_contract_head.SALES_CONTRACT_HEAD_ID = #{comtractId}
+    </select>
+
+    <resultMap id="contractAttachmentMap" type="com.vandream.mall.business.vo.buyerContract.AttachmentListVO">
+        <result column="FILE_NAME" jdbcType="VARCHAR" property="attachmentName"/>
+        <result column="FILE_PATH" jdbcType="VARCHAR" property="attachmentPath"/>
+    </resultMap>
+    <select id="getContractList" resultMap="contractAttachmentMap">
+        SELECT
+            aus_at_attachment_list.FILE_NAME,
+            aus_at_attachment_list.FILE_PATH
+        FROM
+            som_sales_contract_head
+            RIGHT JOIN aus_at_attachment_list ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = aus_at_attachment_list.BILL_NO
+            AND aus_at_attachment_list.ATTACHMENT_TYPE = 'salesContractText' AND aus_at_attachment_list.BUSINESS_TYPE = 'somSalesContract'
+        WHERE
+            som_sales_contract_head.SALES_CONTRACT_HEAD_ID = #{comtractId}
+    </select>
+
+    <select id="getTotalAmount" resultType="java.math.BigDecimal">
+        SELECT
+          sum(som_sales_contract_payment.AMOUNT) payment_total_amount
+        FROM
+          som_sales_contract_head
+          LEFT JOIN som_sales_contract_payment ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_payment.SALES_CONTRACT_HEAD_ID
+        WHERE
+          som_sales_contract_head.SALES_CONTRACT_HEAD_ID = #{comtractId}
+    </select>
+
+    <resultMap id="ContractIdentify" type="com.vandream.mall.business.vo.buyerContract.ContractInfoVO">
+        <result column="OPERATOR_STAFF_NAME" jdbcType="VARCHAR" property="confirmer"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="confirmDateTime" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+    </resultMap>
+    <select id="getContractIdentifyPeople" resultMap="ContractIdentify">
+        SELECT
+            som_sales_contract_record.OPERATOR_STAFF_NAME,
+            som_sales_contract_record.CREATE_DATE
+        FROM
+            som_sales_contract_record
+        WHERE
+            SALES_CONTRACT_HEAD_ID = #{comtractId}
+            AND OPERATOR_TYPE = 50
+
+    </select>
+    <select id="getContractCodeById" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT SALES_CONTRACT_CODE FROM som_sales_contract_head  where SALES_CONTRACT_HEAD_ID=#{contractId}
+    </select>
+
+    <resultMap id="contractResultMap" type="com.vandream.mall.business.vo.buyerContract.ContractInfoVO">
+        <result column="CONTRACT_NAME" jdbcType="VARCHAR" property="contractName"/>
+        <result column="SALES_CONTRACT_CODE" jdbcType="VARCHAR" property="contractCode"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="contractDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="purchaser"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="supplier"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="CUSTOMER_CONSIGNEET_NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="CUSTOMER_CONSIGNEET_PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="CONTRACT_STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="CUSTOMER_TAX" jdbcType="VARCHAR" property="identificationCode"/>
+        <result column="CUSTOMER_INVOICE_NAME" jdbcType="VARCHAR" property="companyName"/>
+        <result column="CUSTOMER_INVOICE_ADDRESS" jdbcType="VARCHAR" property="companyAddress"/>
+        <result column="CUSTOMER_INVOICE_TELEPHONE" jdbcType="VARCHAR" property="tel"/>
+        <result column="CUSTOMER_INVOICE_BANK_CODE" jdbcType="VARCHAR" property="bankName"/>
+        <result column="CUSTOMER_INVOICE_BANK_NO" jdbcType="VARCHAR" property="cardNumber"/>
+        <result column="SIGN_PERSON" jdbcType="VARCHAR" property="firstParty"/>
+        <result column="CUSTOMER_SIGN_PERSON" jdbcType="VARCHAR" property="secondParty"/>
+        <result column="CONTRACT_REMARKS" jdbcType="VARCHAR" property="contractRemarks"/>
+        <result column="SIGN_DATE" jdbcType="TIMESTAMP" property="takeEffectDateTime" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+    </resultMap>
+    <select id="getContractInfo" resultMap="contractResultMap">
+        SELECT
+            hr_organization.ORG_NAME,
+            som_sales_contract_head.SALES_CONTRACT_HEAD_ID,
+            som_sales_contract_head.SALES_CONTRACT_CODE,
+            som_sales_contract_head.CONTRACT_NAME,
+            som_sales_contract_head.CREATE_DATE,
+            som_sales_contract_head.CONTRACT_STATUS,
+            som_sales_contract_head.CUSTOMER_NAME,
+            som_sales_contract_head.PROJECT_NAME,
+            CONCAT(
+		    som_sales_contract_head.CUS_SITE_REGION_NAME,
+		    som_sales_contract_head.CUS_SITE_CITY_NAME,
+		    som_sales_contract_head.CUS_SITE_COUNTY_NAME,
+		    som_sales_contract_head.CUSTOMER_SITE_ADDRESS
+	         ) AS address,
+            som_sales_contract_head.CUSTOMER_CONSIGNEET_NAME,
+            som_sales_contract_head.CUSTOMER_CONSIGNEET_PHONE,
+            som_sales_contract_head.CUSTOMER_TAX,
+            som_sales_contract_head.CUSTOMER_INVOICE_ADDRESS,
+            som_sales_contract_head.CUSTOMER_INVOICE_TELEPHONE,
+            som_sales_contract_head.CUSTOMER_INVOICE_BANK_CODE,
+            som_sales_contract_head.CUSTOMER_INVOICE_BANK_NO,
+            som_sales_contract_head.CUSTOMER_INVOICE_NAME,
+            som_sales_contract_head.SIGN_PERSON,
+            som_sales_contract_head.CUSTOMER_SIGN_PERSON,
+            som_sales_contract_head.SIGN_DATE,
+            som_sales_contract_head.CONTRACT_REMARKS
+        FROM
+            som_sales_contract_head
+            LEFT JOIN hr_organization  ON som_sales_contract_head.BOOK_ID  = hr_organization.BOOK_ID
+            AND hr_organization.ORGANIZATION_ID  = '1001'
+        WHERE
+            som_sales_contract_head.SALES_CONTRACT_HEAD_ID = #{comtractId}
+    </select>
+</mapper>

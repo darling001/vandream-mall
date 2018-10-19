@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.FindLogisticsDAO">
+    <resultMap id="findLogistics"
+               type="com.vandream.mall.business.vo.buyerContract.FindLogisticsListVO">
+        <result column="TRANSPORT_COMPANY" jdbcType="VARCHAR" property="logisticsName"/>
+        <result column="TRANSPORT_CODE" jdbcType="VARCHAR" property="logisticsCode"/>
+        <collection property="logisticsList"
+                    ofType="com.vandream.mall.business.vo.buyerContract.FindLogisticsVO">
+            <result column="LOGISTICS_DATE" jdbcType="TIMESTAMP" property="logisticsTime"
+                    typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+            <result column="LOGISTICS_MEMO" jdbcType="VARCHAR" property="logisticsInfo"/>
+        </collection>
+    </resultMap>
+    <select id="findLogisticsList" resultMap="findLogistics">
+        SELECT
+          tms_delivery_head.TRANSPORT_COMPANY,
+          tms_delivery_head.TRANSPORT_CODE,
+          tms_logistics_info.LOGISTICS_DATE,
+          tms_logistics_info.LOGISTICS_MEMO
+        FROM tms_delivery_head
+        LEFT JOIN tms_logistics_info ON
+          tms_delivery_head.DELIVERY_HEAD_ID = tms_logistics_info.DELIVERY_HEAD_ID
+        WHERE tms_delivery_head.DELIVERY_HEAD_ID = #{deliverInfold} AND tms_delivery_head.TRANSPORT_CODE IS NOT NULL
+        ORDER BY tms_logistics_info.LOGISTICS_DATE DESC;
+    </select>
+    <resultMap id="LogisticsLogs" type="com.vandream.mall.business.vo.LogisticsVO">
+        <result column="LOGISTICS_DATE" property="dateTime"  jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="LOGISTICS_MEMO" property="logisticInfo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="findLongisticsListByDeliveryId" resultMap="LogisticsLogs">
+         SELECT
+         tdh.LOGISTICS_DATE,tdh.LOGISTICS_MEMO
+        FROM tms_logistics_info tdh
+        WHERE tdh.`DELIVERY_HEAD_ID`=#{deliveryHeadId}
+        ORDER BY tdh.LOGISTICS_DATE DESC
+    </select>
+</mapper>

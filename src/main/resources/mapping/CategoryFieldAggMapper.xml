@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.CategoryFieldAggDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.domain.CategoryFieldAgg">
+        <id column="AGG_ID" property="aggId" jdbcType="CHAR"/>
+        <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR"/>
+        <result column="SPEC_FIELD_ID" property="specFieldId" jdbcType="CHAR"/>
+        <result column="SPEC_NAME" property="specName" jdbcType="VARCHAR"/>
+        <result column="SPEC_CODE" property="specCode" jdbcType="VARCHAR"/>
+        <result column="SPEC_VALUES" property="specValues" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    AGG_ID, CATEGORY_ID, SPEC_FIELD_ID, SPEC_NAME, SPEC_CODE, SPEC_VALUES, CREATE_USER_ID, 
+    CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, 
+    BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, 
+    EXT_COL8, EXT_COL9, EXT_COL10
+  </sql>
+    <sql id="Search_Column_List">
+    AGG_ID, CATEGORY_ID, SPEC_FIELD_ID, SPEC_NAME, SPEC_CODE, SPEC_VALUES
+  </sql>
+
+
+    <select id="findListByCategoryId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Search_Column_List"/>
+        from vandream_goods.CMC_CATEGORY_FIELD_AGG
+        where CATEGORY_ID = #{categoryId,jdbcType=CHAR}
+    </select>
+
+</mapper>

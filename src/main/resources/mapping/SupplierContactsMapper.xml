@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.SupplierContactsDAO" >
+  <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.SupplierContactsDTO" >
+    <id column="SUPPLIER_CONTACTS_ID" property="supplierContactsId" jdbcType="CHAR" />
+    <result column="SUPPLIER_CLUE_ID" property="supplierClueId" jdbcType="CHAR" />
+    <result column="SUPPLIER_ID" property="supplierId" jdbcType="CHAR" />
+    <result column="CONTACT_NAME" property="contactName" jdbcType="VARCHAR" />
+    <result column="CONTACT_MOBILE" property="contactMobile" jdbcType="VARCHAR" />
+    <result column="CONTACT_DUTY" property="contactDuty" jdbcType="VARCHAR" />
+    <result column="CONTACT_EMAIL" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="CONTACT_TELEPHONE" property="contactTelephone" jdbcType="VARCHAR" />
+    <result column="CONTACT_FLAG" property="contactFlag" jdbcType="VARCHAR" />
+    <result column="IS_DECISION_PERSON" property="isDecisionPerson" jdbcType="CHAR" />
+    <result column="SUPPLIER_REMARK" property="supplierRemark" jdbcType="VARCHAR" />
+    <result column="DECISION_CIRCS" property="decisionCircs" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+    <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR" />
+    <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR" />
+    <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR" />
+    <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR" />
+    <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR" />
+    <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR" />
+    <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR" />
+    <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR" />
+    <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR" />
+    <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR" />
+    <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR" />
+    <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR" />
+    <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR" />
+    <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR" />
+    <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR" />
+    <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR" />
+    <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR" />
+    <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR" />
+    <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR" />
+    <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SUPPLIER_CONTACTS_ID, SUPPLIER_CLUE_ID, SUPPLIER_ID, CONTACT_NAME, CONTACT_MOBILE, 
+    CONTACT_DUTY, CONTACT_EMAIL, CONTACT_TELEPHONE, CONTACT_FLAG, IS_DECISION_PERSON, 
+    SUPPLIER_REMARK, DECISION_CIRCS, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, 
+    MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, 
+    EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, EXT_COL11, 
+    EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, EXT_COL16, EXT_COL17, EXT_COL18, EXT_COL19, 
+    EXT_COL20
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crm_supplier_contacts
+    where SUPPLIER_CONTACTS_ID = #{supplierContactsId,jdbcType=CHAR}
+  </select>
+  <select id="findBySupplierId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from crm_supplier_contacts
+    where SUPPLIER_ID = #{supplierId,jdbcType=CHAR}
+  </select>
+
+</mapper>

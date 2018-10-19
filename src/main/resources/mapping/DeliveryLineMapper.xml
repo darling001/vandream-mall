@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.delivery.DeliveryLineDAO" >
+  <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryLineDTO" >
+    <id column="DELIVERY_LINE_ID" property="deliveryLineId" jdbcType="CHAR" />
+    <result column="DELIVERY_LINE_CODE" property="deliveryLineCode" jdbcType="VARCHAR" />
+    <result column="DELIVERY_HEAD_ID" property="deliveryHeadId" jdbcType="CHAR" />
+    <result column="SALE_CONTRACT_LINE_ID" property="saleContractLineId" jdbcType="VARCHAR" />
+    <result column="SALES_CONTRACT_LINE_ID" property="salesContractLineId" jdbcType="VARCHAR" />
+    <result column="SALE_CONTRACT_LINE_CODE" property="saleContractLineCode" jdbcType="VARCHAR" />
+    <result column="SALES_CONTRACT_LINE_CODE" property="salesContractLineCode" jdbcType="VARCHAR" />
+    <result column="PURCHASE_CONTRACT_LINE_ID" property="purchaseContractLineId" jdbcType="CHAR" />
+    <result column="PURCHASE_CONTRACT_LINE_CODE" property="purchaseContractLineCode" jdbcType="VARCHAR" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="VARCHAR" />
+    <result column="CATEGORY_CODE" property="categoryCode" jdbcType="VARCHAR" />
+    <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR" />
+    <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+    <result column="ITEM_LINE_ID" property="itemLineId" jdbcType="VARCHAR" />
+    <result column="ITEM_LINE_CODE" property="itemLineCode" jdbcType="VARCHAR" />
+    <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+    <result column="ITEM_SPEC_DESC" property="itemSpecDesc" jdbcType="VARCHAR" />
+    <result column="UOM_WIDTH" property="uomWidth" jdbcType="VARCHAR" />
+    <result column="UOM_HEIGHT" property="uomHeight" jdbcType="VARCHAR" />
+    <result column="UOM_LENGTH" property="uomLength" jdbcType="VARCHAR" />
+    <result column="UOM_DENSITY" property="uomDensity" jdbcType="VARCHAR" />
+    <result column="UOM_WEIGHT" property="uomWeight" jdbcType="VARCHAR" />
+    <result column="NOTICE_DELIVERY_QUANTITY" property="noticeDeliveryQuantity" jdbcType="DECIMAL" />
+    <result column="DELIVERY_QUANTITY" property="deliveryQuantity" jdbcType="DECIMAL" />
+    <result column="RECEIPT_QUANTITY" property="receiptQuantity" jdbcType="DECIMAL" />
+    <result column="DELIVERY_LINE_REMARK" property="deliveryLineRemark" jdbcType="VARCHAR" />
+    <result column="UNIT_TYPE" property="unitType" jdbcType="VARCHAR" />
+    <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR" />
+    <result column="FROM_LINE_ID" property="fromLineId" jdbcType="VARCHAR" />
+    <result column="FROM_LINE_CODE" property="fromLineCode" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+    <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR" />
+    <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR" />
+    <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR" />
+    <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR" />
+    <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR" />
+    <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR" />
+    <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR" />
+    <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR" />
+    <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR" />
+    <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR" />
+    <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR" />
+    <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR" />
+    <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR" />
+    <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR" />
+    <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DELIVERY_LINE_ID, DELIVERY_LINE_CODE, DELIVERY_HEAD_ID, SALE_CONTRACT_LINE_ID, SALES_CONTRACT_LINE_ID, 
+    SALE_CONTRACT_LINE_CODE, SALES_CONTRACT_LINE_CODE, PURCHASE_CONTRACT_LINE_ID, PURCHASE_CONTRACT_LINE_CODE, 
+    CATEGORY_ID, CATEGORY_CODE, CATEGORY_NAME, ITEM_ID, ITEM_LINE_ID, ITEM_LINE_CODE, 
+    ITEM_NAME, ITEM_SPEC_DESC, UOM_WIDTH, UOM_HEIGHT, UOM_LENGTH, UOM_DENSITY, UOM_WEIGHT, 
+    NOTICE_DELIVERY_QUANTITY, DELIVERY_QUANTITY, RECEIPT_QUANTITY, DELIVERY_LINE_REMARK, 
+    UNIT_TYPE, FROM_TYPE, FROM_LINE_ID, FROM_LINE_CODE, CREATE_USER_ID, CREATE_DATE, 
+    CREATE_USER_NAME, MODIFY_USER_ID, MODIFY_DATE, MODIFY_USER_NAME, ORG_ID, GROUP_ID, 
+    BOOK_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, 
+    EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tms_delivery_line
+    where DELIVERY_LINE_ID = #{deliveryLineId,jdbcType=CHAR}
+  </select>
+
+</mapper>

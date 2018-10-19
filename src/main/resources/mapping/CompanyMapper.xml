@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.CompanyDAO">
+
+    <resultMap id="companyTypeResultMap" type="com.vandream.mall.business.dto.authentication.CompanyTypeDTO">
+        <result column="VALUE_CODE" jdbcType="VARCHAR" property="valueCode"/>
+        <result column="VALUE_NAME" jdbcType="VARCHAR" property="valueName"/>
+    </resultMap>
+    <resultMap id="companyResultMap" type="com.vandream.mall.business.dto.authentication.CompanyDTO">
+        <id column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName"/>
+        <id column="SUPPLIER_ID" jdbcType="VARCHAR" property="supplierId" />
+        <id column="CUSTOMER_ID" jdbcType="VARCHAR" property="customerId" />
+        <result column="COMPANY_FLAG" jdbcType="CHAR" property="companyFlag"/>
+        <result column="REGISTER_CREDIT_CODE" jdbcType="VARCHAR" property="registerCreditCode"/>
+        <result column="CERTIFICATE_TYPE" jdbcType="CHAR" property="certificateType"/>
+        <result column="REGISTER_BUSINESS_NO" jdbcType="VARCHAR" property="businessLicense"/>
+        <result column="LEGAL_PERSON" jdbcType="VARCHAR" property="businessEntity"/>
+        <result column="REGISTER_ADDRESS" jdbcType="VARCHAR"  property="registeredAddress"/>
+        <result column="COMPANY_TYPE" jdbcType="VARCHAR" property="companyType"/>
+        <result column="BUSINESS_SCOPE" jdbcType="VARCHAR" property="businessScope" />
+        <result column="CONTACT_NAME" jdbcType="VARCHAR" property="contact" />
+        <result column="CONTACT_MOBILE" jdbcType="VARCHAR" property="contactNumber" />
+        <result column="BUSINESS_AREA" jdbcType="VARCHAR" property="businessArea" />
+        <result column="CUSTOMER_TYPE" jdbcType="VARCHAR" property="customerType" />
+        <result column="SUPPLIER_TYPE" jdbcType="VARCHAR" property="supplierType" />
+        <result column="MAJOR_PRODUCT" jdbcType="VARCHAR" property="mainProduct" />
+        <result column="CUSTOMER_LEVEL" jdbcType="VARCHAR" property="memberRating" />
+        <result column="BRAND" jdbcType="VARCHAR" property="brand" />
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        COMPANY_NAME,
+    </sql>
+
+    <select id="getCompanyTypeList" parameterType="java.lang.String" resultMap="companyTypeResultMap">
+        SELECT
+        VALUE_CODE,
+        VALUE_NAME
+        FROM
+        aus_valueset_line
+        WHERE VALUESET_HEAD_ID = #{customerType}
+    </select>
+
+    <!--获取企业认证信息(需方)-->
+    <select id="getCompanyInfoByCompanyIAndCustomerId" resultMap="companyResultMap">
+        SELECT
+        p.COMPANY_NAME,
+        p.CERTIFICATE_TYPE,
+        p.REGISTER_CREDIT_CODE,
+        p.REGISTER_BUSINESS_NO,
+        p.LEGAL_PERSON,
+        p.REGISTER_ADDRESS,
+        CASE p.COMPANY_TYPE
+          WHEN 'WJLJ01' THEN '集团内（杭萧关联公司）'
+          WHEN 'WJLJ00' THEN '集团外（纯外部公司）'
+          WHEN 'WJLJ02' THEN '参股公司'
+          ELSE ' '
+        END
+        AS COMPANY_TYPE,
+        p.BUSINESS_SCOPE,
+        s.CONTACT_NAME,
+        s.CONTACT_MOBILE,
+        CASE c.CUSTOMER_TYPE
+          WHEN '10' THEN '房产企业'
+          WHEN '11' THEN '建筑施工企业'
+          WHEN '12' THEN '装饰装修企业'
+          WHEN '13' THEN '机电安装企业'
+          WHEN '14' THEN '政府采购'
+          WHEN '15' THEN '部品企业'
+          WHEN '16' THEN '钢企企业'
+          WHEN '99' THEN '其他'
+          ELSE ' '
+        END
+        AS CUSTOMER_TYPE,
+        CASE c.CUSTOMER_LEVEL
+          WHEN '00' THEN '普通会员'
+          WHEN '10' THEN '高级会员'
+          WHEN '20' THEN 'VIP会员'
+          ELSE '普通会员'
+        END
+        AS CUSTOMER_LEVEL,
+        cc.BUSINESS_AREA
+        FROM
+            crm_company p
+        LEFT JOIN crm_customer c ON p.COMPANY_ID = c.COMPANY_ID
+        LEFT JOIN crm_customer_contacts s ON c.CUSTOMER_ID = s.CUSTOMER_ID
+        LEFT JOIN crm_customer_clue cc ON c.CUSTOMER_CLUE_ID = cc.CUSTOMER_CLUE_ID
+        WHERE
+        c.CUSTOMER_ID = #{customerId}
+    </select>
+
+    <!--获取企业认证信息(供方)-->
+    <select id="getCompanyInfoByCompanyIAndSupplierId" resultMap="companyResultMap">
+      SELECT
+        p.COMPANY_NAME,
+        p.CERTIFICATE_TYPE,
+        p.REGISTER_CREDIT_CODE,
+        p.REGISTER_BUSINESS_NO,
+        p.LEGAL_PERSON,
+        p.REGISTER_ADDRESS,
+        CASE p.COMPANY_TYPE
+          WHEN 'WJLJ01' THEN '集团内（杭萧关联公司）'
+          WHEN 'WJLJ00' THEN '集团外（纯外部公司）'
+          WHEN 'WJLJ02' THEN '参股公司'
+          ELSE ' '
+        END
+        AS COMPANY_TYPE,
+        p.BUSINESS_SCOPE,
+        s.CONTACT_NAME,
+        s.CONTACT_MOBILE,
+        c.BRAND,
+        c.BUSINESS_AREA,
+        c.MAJOR_PRODUCT,
+		CASE c.SUPPLIER_TYPE
+          WHEN '10' THEN '厂家'
+          WHEN '11' THEN '经销商'
+          WHEN '12' THEN '服务商'
+					WHEN '99' THEN '其他'
+          ELSE ' '
+        END
+        AS SUPPLIER_TYPE
+        FROM
+            crm_company p
+        LEFT JOIN crm_supplier c ON p.COMPANY_ID = c.COMPANY_ID
+        LEFT JOIN crm_supplier_contacts s ON c.SUPPLIER_ID = s.SUPPLIER_ID
+        WHERE
+        c.SUPPLIER_ID = #{supplierId}
+    </select>
+    <!--得到公司供需方id信息-->
+    <select id="getCompanyInfo" resultMap="companyResultMap">
+        SELECT CUSTOMER_ID,SUPPLIER_ID FROM ucm_account WHERE ACCOUNT_ID = #{userId}
+    </select>
+
+</mapper>

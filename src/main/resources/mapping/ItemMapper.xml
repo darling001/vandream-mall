@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.ItemDAO">
+
+    <resultMap id="areaMap" type="com.vandream.mall.business.dto.item.AreaDTO">
+        <result property="areaRangeName" column="AREA_RANGE_NAME"/>
+        <result property="areaStatus" column="STATUS"/>
+    </resultMap>
+    <select id="getAreaRangeName" parameterType="java.lang.String" resultMap="areaMap">
+        SELECT
+        AREA_RANGE_NAME, STATUS
+        FROM
+        aus_area_range
+        WHERE
+        AREA_RANGE_CODE= #{areaCode}
+    </select>
+    <select id="queryStandardFlagByItemIdList" resultType="com.vandream.mall.business.dto.item.ItemDTO">
+        SELECT ITEM_ID AS itemId,STANDARD_FLAG AS standardFlag
+        FROM cmc_item WHERE ITEM_ID IN
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getBrandByItemId" resultType="java.lang.String" parameterType="string">
+        SELECT TRADEMARK FROM cmc_item WHERE item_id = #{itemId}
+    </select>
+
+    <select id="findTipList" resultType="java.lang.String" parameterType="string">
+       SELECT
+           tip_desc
+        FROM
+           cmc_brand_tip T
+           JOIN cmc_brand_tip_relation R
+              ON (T.TIP_CODE = R.TIP_CODE)
+        WHERE R.BRAND_ID = #{brandId} AND T.`tip_status`='40'
+    </select>
+</mapper>

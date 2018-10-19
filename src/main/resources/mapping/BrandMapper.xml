@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.homepage.BrandDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.homepage.BrandDTO">
+        <id column="BRAND_ID" jdbcType="CHAR" property="brandId"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="BRIEF_NAME" jdbcType="VARCHAR" property="briefName"/>
+        <result column="WEBSITE" jdbcType="VARCHAR" property="website"/>
+        <result column="CATEGORY_ID" jdbcType="VARCHAR" property="categoryId"/>
+        <result column="LOGO_URL" jdbcType="CHAR" property="logoUrl"/>
+        <result column="BRAND_INTRODUCTION" jdbcType="VARCHAR" property="brandIntroduction"/>
+        <result column="BRAND_STORY_TITLE" jdbcType="CHAR" property="brandStoryTitle"/>
+        <result column="BRAND_STORY" jdbcType="CHAR" property="brandStory"/>
+        <result column="BELONG_COUNTRY" jdbcType="CHAR" property="belongCountry"/>
+        <result column="BELONG_COMPANY" jdbcType="CHAR" property="belongCompany"/>
+        <result column="FOUND_YEAR" jdbcType="CHAR" property="foundYear"/>
+        <result column="CREATE_USER_ID" jdbcType="CHAR" property="createUserId"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MODIFY_USER_ID" jdbcType="CHAR" property="modifyUserId"/>
+        <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ORG_ID" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="BOOK_ID" jdbcType="VARCHAR" property="createDate"/>
+        <result column="GROUP_ID" jdbcType="VARCHAR" property="modifyUserId"/>
+        <result column="EXT_COL1" jdbcType="VARCHAR" property="extCol1"/>
+        <result column="EXT_COL2" jdbcType="VARCHAR" property="extCol2"/>
+        <result column="EXT_COL3" jdbcType="VARCHAR" property="extCol3"/>
+        <result column="EXT_COL4" jdbcType="VARCHAR" property="extCol4"/>
+        <result column="EXT_COL5" jdbcType="VARCHAR" property="extCol5"/>
+        <result column="EXT_COL6" jdbcType="VARCHAR" property="extCol6"/>
+        <result column="EXT_COL7" jdbcType="VARCHAR" property="extCol7"/>
+        <result column="EXT_COL8" jdbcType="VARCHAR" property="extCol8"/>
+        <result column="EXT_COL9" jdbcType="VARCHAR" property="extCol9"/>
+        <result column="EXT_COL10" jdbcType="VARCHAR" property="extCol10"/>
+        <result column="CREATE_USER_NAME" jdbcType="CHAR" property="createUserName"/>
+        <result column="MODIFY_USER_NAME" jdbcType="CHAR" property="modifyUserName"/>
+        <result column="BRAND_INTRODUCTION_NOTES" jdbcType="CHAR" property="brandIntroductionNotes"/>
+        <result column="BRAND_STORY_NOTES" jdbcType="VARCHAR" property="brandStoryNotes"/>
+    </resultMap>
+    <resultMap id="BrandListResultMap" type="com.vandream.mall.business.dto.homepage.BrandDTO">
+        <id column="BRAND_ID" jdbcType="CHAR" property="brandId"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="LOGO_URL" jdbcType="VARCHAR" property="logoUrl"/>
+        <result column="BRAND_INTRODUCTION_NOTES" jdbcType="VARCHAR" property="brandIntroductionNotes"/>
+    </resultMap>
+    <resultMap id="BrandDetailResultMap" type="com.vandream.mall.business.dto.homepage.BrandDTO">
+        <id column="BRAND_ID" jdbcType="CHAR" property="brandId"/>
+        <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+        <result column="LOGO_URL" jdbcType="VARCHAR" property="logoUrl"/>
+        <result column="WEBSITE" jdbcType="VARCHAR" property="website"/>
+        <result column="FOUND_YEAR" jdbcType="VARCHAR" property="foundYear"/>
+        <result column="BRAND_INTRODUCTION_NOTES" jdbcType="VARCHAR" property="brandIntroductionNotes"/>
+        <result column="BRAND_STORY_TITLE" jdbcType="VARCHAR" property="brandStoryTitle"/>
+        <result column="BRAND_STORY_NOTES" jdbcType="VARCHAR" property="brandStoryNotes"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    BRAND_ID,
+    BRAND_NAME,
+    STATUS,
+    BRIEF_NAME,
+    WEBSITE,
+    CATEGORY_ID,
+    LOGO_URL,
+    BRAND_INTRODUCTION,
+    BRAND_STORY_TITLE,
+    BRAND_STORY,
+    BELONG_COUNTRY,
+    BELONG_COMPANY,
+    FOUND_YEAR,
+    CREATE_USER_ID,
+    CREATE_DATE,
+    MODIFY_USER_ID,
+    MODIFY_DATE,
+    ORG_ID,
+    BOOK_ID,
+    GROUP_ID,
+    EXT_COL1,
+    EXT_COL2,
+    EXT_COL3,
+    EXT_COL4,
+    EXT_COL5,
+    EXT_COL6,
+    EXT_COL7,
+    EXT_COL8,
+    EXT_COL9,
+    EXT_COL10,
+    CREATE_USER_NAME,
+    MODIFY_USER_NAME,
+    BRAND_INTRODUCTION_NOTES,
+    BRAND_STORY_NOTES
+    </sql>
+
+
+    <select id="findBrandList" resultMap="BrandListResultMap">
+        SELECT
+        b.BRAND_ID as BRAND_ID,
+        b.BRAND_NAME as BRAND_NAME,
+        pic.PIC_EX_FILEID as LOGO_URL,
+        b.BRAND_INTRODUCTION_NOTES as BRAND_INTRODUCTION_NOTES
+        FROM  (SELECT * FROM cmc_brand cb WHERE cb.status = '40') b left join aus_at_picture_list pic  ON b.BRAND_ID=pic.BILL_NO
+        AND pic.pic_status = '40'
+        AND pic.BILL_TYPE = 'cmcBrand'
+    </select>
+    <select id="getBrandDetailById" parameterType="java.lang.String" resultMap="BrandDetailResultMap">
+        SELECT
+        b.BRAND_NAME as  BRAND_NAME,
+        pic.PIC_EX_FILEID as LOGO_URL,
+        b.WEBSITE as WEBSITE,
+        b.FOUND_YEAR as FOUND_YEAR,
+        b.BRAND_INTRODUCTION_NOTES as BRAND_INTRODUCTION_NOTES,
+        b.BRAND_STORY_TITLE as BRAND_STORY_TITLE,
+        b.BRAND_STORY_NOTES as BRAND_STORY_NOTES
+        FROM cmc_brand b  left join aus_at_picture_list pic on (pic.bill_no=b.brand_id  and b.`STATUS`='40' and
+         pic.pic_status ='40' and pic.bill_type='cmcBrand')
+        WHERE BRAND_ID =#{brandId}
+    </select>
+
+</mapper>

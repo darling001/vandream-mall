@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.SnapshotDAO">
+    <resultMap id="contractSnapshotMap" type="com.vandream.mall.business.dto.snapshot.ContractSnapshotDTO">
+        <result column="sales_contract_head_id" jdbcType="VARCHAR" property="contractHeadId"/>
+        <result column="sales_contract_line_id" jdbcType="VARCHAR" property="contractLineId"/>
+        <collection property="items" ofType="com.vandream.mall.business.dto.snapshot.ItemSnapshotVersionDTO" >
+            <result column="item_line_id" jdbcType="VARCHAR" property="itemLineId"/>
+            <result column="item_line_version" jdbcType="VARCHAR" property="itemLineVersion"/>
+        </collection>
+    </resultMap>
+    
+    <resultMap id="versionMap" type="com.vandream.mall.business.dto.snapshot.ItemSnapshotVersionDTO">
+            <result column="item_line_id" jdbcType="VARCHAR" property="itemLineId"/>
+            <result column="item_line_version" jdbcType="VARCHAR" property="itemLineVersion"/>
+    </resultMap>
+
+    <resultMap id="itemSnapshotMap" type="com.vandream.mall.business.dto.snapshot.ItemSnapshotDTO">
+        <result column="ITEM_CODE" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="ITEM_SHORTNAME" jdbcType="VARCHAR" property="itemShortName"/>
+        <result column="MIN_ORDER_NUM" jdbcType="DECIMAL" property="minOrderNum"/>
+        <result column="PRIMARY_UNIT_CODE" jdbcType="VARCHAR" property="primaryUnitCode"/>
+        <result column="AREA_NAME" jdbcType="VARCHAR" property="areaName"/>
+        <result column="SPEC_CONTENTS" jdbcType="VARCHAR" property="specContents"/>
+        <result column="ITEM_ID" jdbcType="VARCHAR" property="itemId"/>
+        <result column="DESC_CONTENTS" jdbcType="VARCHAR" property="descContents"/>
+    </resultMap>
+
+    <resultMap id="imageMap" type="com.vandream.mall.business.dto.item.ImageDTO">
+        <result column="PIC_EX_FILEID" jdbcType="VARCHAR" property="picExFileid"/>
+        <result column="BILL_TYPE" jdbcType="VARCHAR" property="billType"/>
+        <result column="PIC_ORDER" jdbcType="VARCHAR" property="picOrder"/>
+        <result column="PIC_NAME" jdbcType="VARCHAR" property="picName"/>
+    </resultMap>
+    
+    <resultMap id="descMap" type="com.vandream.mall.business.dto.item.ItemDescDTO">
+        <result column="DESC_TITLE" jdbcType="VARCHAR" property="descTitle"/>
+        <result column="ORDER_SORT" jdbcType="VARCHAR" property="orderSort"/>
+        <result column="DESC_TEXT" jdbcType="VARCHAR" property="descText"/>
+    </resultMap>
+    
+    
+    <select id="findContractSnapshotList" resultMap="contractSnapshotMap">
+        SELECT  sales_contract_head_id,sales_contract_line_id,item_line_id,item_line_version  FROM  som_sales_contract_line  WHERE
+        sales_contract_head_id IN
+        <foreach collection="ids" index="index" item="item"  separator="," open="(" close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="findCartSnapshotList" parameterType="java.util.HashMap" resultMap="versionMap" >
+        SELECT item_line_id  AS "item_line_id",item_line_version AS "item_line_version"
+        FROM  vandream_mall.MALL_CART
+        WHERE   user_id  = ${userId}
+    </select>
+    
+    <select id="getCartSnapshot" resultMap="versionMap">
+        select  cil.ITEM_LINE_VERSION AS "item_line_version",cil.ITEM_LINE_ID  AS "item_line_id"
+        from cmc_item_line cil
+          WHERE
+        cil.ITEM_ID = #{itemId} AND cil.status="40"
+        <choose>
+            <when test="areaCode!=null and areaCode!='' ">
+                AND cil.AREA_CODE=#{areaCode}
+            </when>
+            <otherwise>
+                limit 0,1
+            </otherwise>
+        </choose>
+    </select>
+    
+    <select id="findCurrentItemLineVersionList"  resultMap="versionMap">
+        select   IFNULL(cil.ITEM_LINE_VERSION,'0') AS "item_line_version"
+       ,cil.ITEM_LINE_ID  AS "item_line_id"
+        from cmc_item_line cil
+        where  cil.ITEM_LINE_ID   in
+        <foreach collection="itemlineIds" item="itemLineId" open="(" separator="," close=")">
+            #{itemLineId}
+        </foreach>   
+        
+    </select>
+
+    <select id="getItemSnapshotDetailInfo" resultMap="itemSnapshotMap">
+        SELECT ITEM_CODE, ITEM_NAME, ITEM_SHORTNAME, MIN_ORDER_NUM, PRIMARY_UNIT_CODE, AREA_NAME, SPEC_CONTENTS, ITEM_ID, DESC_CONTENTS
+        FROM cmc_item_snapshot WHERE ITEM_LINE_ID = #{itemLineId} AND ITEM_LINE_VERSION = #{version}
+    </select>
+
+    <select id="getContractLineInfo" resultType="com.vandream.mall.business.dto.snapshot.ContractSnapshotDTO">
+        SELECT SALE_PRICE, CREATE_DATE FROM som_sales_contract_line WHERE SALES_CONTRACT_HEAD_ID = #{salesContractHeadId} AND ITEM_LINE_ID=#{itemLineId}
+    </select>
+    
+    <select id="findPictureList" resultMap="imageMap">
+        select  PIC_EX_FILEID,BILL_TYPE,PIC_ORDER,PIC_NAME from aus_at_picture_list  where   BILL_NO  = #{itemId}
+        and  PIC_STATUS  ="40"
+    </select>
+    
+    <select id="findItemDescList" resultMap="descMap">
+        select  DESC_TITLE,DESC_TEXT,ORDER_SORT  from cmc_item_desc   where   BILL_NO  = #{itemId}
+    </select>
+
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.SalesReservationDAO">
+    <resultMap id="SalesResultMap" type="com.vandream.mall.business.dto.SalesReservationDTO">
+        <id column="SALES_RESERVATION_ID" property="salesReservationId" jdbcType="CHAR"/>
+        <id column="SALES_CONTRACT_HEAD_ID" property="contractId" jdbcType="CHAR"/>
+        <id column="ITEM_LINE_ID" property="itemId" jdbcType="CHAR"/>
+        <result column="SALES_RESERVATION_CODE" property="salesReservationCode" jdbcType="VARCHAR"/>
+        <result column="RESERVATION_DATE" property="notifyDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_REGION_NAME" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_CITY_NAME" property="cityName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTY_NAME" property="countryName" jdbcType="VARCHAR"/>
+        <result column="SOLUTION_CODE" property="dispatchCode" jdbcType="VARCHAR"/>
+        <result column="USER_NAME" property="purchaser"
+                jdbcType="VARCHAR"/>
+        <result column="TELEPHONE" property="contactPhone" jdbcType="VARCHAR"/>
+        <result column="RESERVATION_REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="OPERATOR_TYPE" property="isRead" jdbcType="VARCHAR"/>
+        <collection property="itemList"  select="getContractGoodsList" column="SALES_RESERVATION_CODE"/>   
+    </resultMap>
+    
+    <resultMap id="ContractGoodsMap" type="com.vandream.mall.business.dto.ContractLineDTO">
+        <id column="ITEM_ID" property="itemId" jdbcType="VARCHAR"/>
+        <id column="ITEM_LINE_ID" property="itemLineId" jdbcType="VARCHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="BRAND_NAME" property="brand" jdbcType="VARCHAR"/>
+        <result column="EXPECTED_RECEIPT_DATE" property="deliveryDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ITEM_SPEC_DESC" property="technicalParameter" jdbcType="VARCHAR"/>
+        <result column="RESERVATION_QUANTITY" property="quantity" jdbcType="DECIMAL"/>
+        <result column="VALUE_NAME" property="unit" jdbcType="VARCHAR"/>
+        <result column="CONTRACT_LINE_REMARKS" property="itemRemark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 获取单条锁货详情 -->
+    <select id="getSalesReservationInfo" resultMap="SalesResultMap" parameterType="java.util.Map">
+        SELECT
+	      r.SALES_RESERVATION_ID,
+          r.SALES_RESERVATION_CODE,
+          r.RESERVATION_DATE,
+          h.PROJECT_NAME,
+          CONCAT(h.CUS_SITE_REGION_NAME,h.CUS_SITE_CITY_NAME,h.CUS_SITE_COUNTY_NAME) AS address,
+          t5.SOLUTION_CODE,
+          s.USER_NAME,
+          s.TELEPHONE,
+          r.SALES_CONTRACT_HEAD_ID,
+          r.RESERVATION_REMARK
+        FROM
+	      som_sales_reservation r
+        LEFT JOIN som_sales_contract_head h ON r.SALES_CONTRACT_HEAD_ID = h.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN som_sales_contract_line l ON r.SALES_CONTRACT_LINE_ID = l.SALES_CONTRACT_LINE_ID
+		LEFT JOIN som_coupon_line t3 ON l.COUPON_LINE_ID = t3.COUPON_LINE_ID
+		LEFT JOIN psd_solution_demand t4 ON t3.SOLUTION_LINE_ID = t4.SOLUTION_DEMAND_ID
+		LEFT JOIN psd_solution_head t5 ON t4.SOLUTION_ID = t5.SOLUTION_ID
+        LEFT JOIN hr_staff s ON r.STAFF_ID = s.STAFF_ID
+        WHERE l.SUPPLIER_ID = #{supplierId}
+        AND r.SALES_RESERVATION_ID = #{salesReservationId}
+    </select>
+
+    <!-- 查询供方锁货列表 -->
+    <select id="findSalesReservationList" resultMap="SalesResultMap" parameterType="java.util.Map">
+        SELECT
+	      r.SALES_RESERVATION_ID,
+	      r.SALES_RESERVATION_CODE,
+          r.RESERVATION_DATE,
+	      h.PROJECT_NAME,
+          CONCAT(h.CUS_SITE_REGION_NAME,h.CUS_SITE_CITY_NAME,h.CUS_SITE_COUNTY_NAME) AS address,
+	      s.USER_NAME,
+	      s.TELEPHONE,
+          br.OPERATOR_TYPE
+        FROM
+	      som_sales_reservation r
+        LEFT JOIN som_sales_contract_head h ON r.SALES_CONTRACT_HEAD_ID = h.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN som_sales_contract_line l ON r.SALES_CONTRACT_LINE_ID = l.SALES_CONTRACT_LINE_ID
+        LEFT JOIN hr_staff s ON r.STAFF_ID = s.STAFF_ID
+        LEFT JOIN ext_bill_read br ON r.SALES_RESERVATION_ID = br.BILL_ID
+        WHERE l.SUPPLIER_ID = #{supplierId}
+        AND r.RESERVATION_STATUS = 20
+        <if test="keyword != null and  keyword != ''">
+            AND
+            (
+            r.SALES_RESERVATION_CODE LIKE concat('%',#{keyword},'%')
+            OR
+            s.TELEPHONE LIKE concat('%',#{keyword},'%')
+            OR
+            concat(h.CUS_SITE_REGION_NAME,h.CUS_SITE_CITY_NAME,h.CUS_SITE_COUNTY_NAME) LIKE concat('%',#{keyword},'%')
+            OR
+            h.PROJECT_NAME LIKE concat('%',#{keyword},'%')
+            )
+        </if>
+        <if test="notifyStartTime != null and notifyStartTime != ''">
+            <![CDATA[ AND
+                r.RESERVATION_DATE >=
+                #{notifyStartTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+            ]]>
+        </if>
+        <if test="notifyEndTime != null and notifyEndTime != ''">
+            <![CDATA[ AND
+                r.RESERVATION_DATE <
+                #{notifyEndTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+            ]]>
+        </if>
+        GROUP BY r.SALES_RESERVATION_ID
+        ORDER BY r.CREATE_DATE DESC
+    </select>
+
+        <select id="getContractGoodsList" resultMap="ContractGoodsMap" parameterType="java.lang.String">
+        SELECT
+	      s.ITEM_ID,
+	      s.ITEM_LINE_ID,
+	      l.ITEM_NAME,
+	      l.BRAND_NAME,
+	      l.EXPECTED_RECEIPT_DATE,
+	      l.ITEM_SPEC_DESC,
+	      s.RESERVATION_QUANTITY,
+	      aus.VALUE_NAME,
+	      l.CONTRACT_LINE_REMARKS
+        FROM
+	      som_sales_reservation s
+        LEFT JOIN som_sales_contract_line l ON (
+	        s.SALES_CONTRACT_LINE_ID = l.SALES_CONTRACT_LINE_ID
+          )
+        LEFT JOIN aus_valueset_line aus ON (
+	      s.RESERVATION_UNIT_CODE = aus.VALUE_CODE
+        )
+        LEFT JOIN som_sales_contract_head sch ON (
+	      s.SALES_CONTRACT_HEAD_ID = sch.SALES_CONTRACT_HEAD_ID
+        )
+        WHERE s.SALES_RESERVATION_CODE = #{SALES_RESERVATION_CODE}
+    </select>
+
+</mapper>

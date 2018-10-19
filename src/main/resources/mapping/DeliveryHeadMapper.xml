@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.delivery.DeliveryHeadDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.delivery.DeliveryHeadDTO">
+        <id column="DELIVERY_HEAD_ID" property="deliveryHeadId" jdbcType="CHAR"/>
+        <result column="DELIVERY_CODE" property="deliveryCode" jdbcType="VARCHAR"/>
+        <result column="DELIVERY_DATE" property="deliveryDate" jdbcType="TIMESTAMP"/>
+        <result column="EXPECTED_RECEIPT_DATE" property="expectedReceiptDate" jdbcType="TIMESTAMP"/>
+        <result column="CUSTOMER_COMPANY_ID" property="customerCompanyId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR"/>
+        <result column="SALES_CONTRACT_HEAD_ID" property="salesContractHeadId" jdbcType="CHAR"/>
+        <result column="SALES_CONTRACT_CODE" property="salesContractCode" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CONSIGNEET_ID" property="customerConsigneetId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CONSIGNEET_NAME" property="customerConsigneetName"
+                jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CONSIGNEET_PHONE" property="customerConsigneetPhone"
+                jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_ID" property="customerSiteId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_NATION" property="customerSiteNation" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_AREA" property="customerSiteArea" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_ADDRESS" property="customerSiteAddress" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTRY_CODE" property="cusSiteCountryCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTRY_NAME" property="cusSiteCountryName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_REGION_CODE" property="cusSiteRegionCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_REGION_NAME" property="cusSiteRegionName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTY_CODE" property="cusSiteCountyCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTY_NAME" property="cusSiteCountyName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_CITY_CODE" property="cusSiteCityCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_CITY_NAME" property="cusSiteCityName" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_COMPANY_ID" property="supplierCompanyId" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_ID" property="supplierId" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_CODE" property="supplierCode" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_NAME" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="PURCHASE_CONTRACT_HEAD_ID" property="purchaseContractHeadId"
+                jdbcType="CHAR"/>
+        <result column="PURCHASE_CONTRACT_CODE" property="purchaseContractCode" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_DELIVERY_ID" property="supplierDeliveryId" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_DELIVERY_NAME" property="supplierDeliveryName" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_DELIVERY_PHONE" property="supplierDeliveryPhone"
+                jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_SITE_ID" property="supplierSiteId" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_SITE_NATION" property="supplierSiteNation" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_SITE_AREA" property="supplierSiteArea" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_SITE_ADDRESS" property="supplierSiteAddress" jdbcType="VARCHAR"/>
+        <result column="DELIVERY_STATUS" property="deliveryStatus" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CONTACTS" property="transportContacts" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CONTACTS_PHONE" property="transportContactsPhone"
+                jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_CODE" property="transportCode" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_COMPANY" property="transportCompany" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_TYPE" property="transportType" jdbcType="VARCHAR"/>
+        <result column="TRANSPORT_REMARKS" property="transportRemarks" jdbcType="VARCHAR"/>
+        <result column="CAR_SHIP_NO" property="carShipNo" jdbcType="VARCHAR"/>
+        <result column="CAR_CONTACTS" property="carContacts" jdbcType="VARCHAR"/>
+        <result column="CAR_CONTACTS_PHONE" property="carContactsPhone" jdbcType="VARCHAR"/>
+        <result column="DELIVERY_REMARK" property="deliveryRemark" jdbcType="VARCHAR"/>
+        <result column="STAFF_ID" property="staffId" jdbcType="VARCHAR"/>
+        <result column="STAFF_CODE" property="staffCode" jdbcType="VARCHAR"/>
+        <result column="STAFF_NAME" property="staffName" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENT_NAME" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENT_CODE" property="departmentCode" jdbcType="VARCHAR"/>
+        <result column="ARRIVAL_PERSON" property="arrivalPerson" jdbcType="VARCHAR"/>
+        <result column="ARRIVAL_PERSON_CODE" property="arrivalPersonCode" jdbcType="VARCHAR"/>
+        <result column="ARRIVAL_DATE" property="arrivalDate" jdbcType="TIMESTAMP"/>
+        <result column="ARRIVAL_REMARK" property="arrivalRemark" jdbcType="VARCHAR"/>
+        <result column="RECEIPT_PERSON" property="receiptPerson" jdbcType="VARCHAR"/>
+        <result column="RECEIPT_DATE" property="receiptDate" jdbcType="TIMESTAMP"/>
+        <result column="RECEIPT_TYPE" property="receiptType" jdbcType="VARCHAR"/>
+        <result column="RECEIPT_REMARK" property="receiptRemark" jdbcType="VARCHAR"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="FROM_CODE" property="fromCode" jdbcType="VARCHAR"/>
+        <result column="FROM_ID" property="fromId" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="DATE"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="DATE"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR"/>
+        <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR"/>
+        <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR"/>
+        <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR"/>
+        <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="InvoiceListResultMap"
+               type="com.vandream.mall.business.dto.delivery.DeliveryHeadDTO">
+        <result column="DELIVERY_HEAD_ID" property="deliveryHeadId" jdbcType="CHAR"/>
+        <result column="DELIVERY_CODE" property="deliveryCode" jdbcType="VARCHAR"/>
+        <result column="DELIVERY_DATE" property="deliveryDate" jdbcType="VARCHAR"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="DELIVERY_STATUS" property="deliveryStatus" jdbcType="VARCHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="ITEM_COUNT" property="itemCount" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_ADDRESS" property="customerSiteAddress"/>
+        <result column="IS_READ" property="isRead" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    DELIVERY_HEAD_ID, DELIVERY_CODE, DELIVERY_DATE, EXPECTED_RECEIPT_DATE, CUSTOMER_COMPANY_ID, 
+    CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, SALES_CONTRACT_HEAD_ID, SALES_CONTRACT_CODE, 
+    CUSTOMER_CONSIGNEET_ID, CUSTOMER_CONSIGNEET_NAME, CUSTOMER_CONSIGNEET_PHONE, CUSTOMER_SITE_ID, 
+    CUSTOMER_SITE_NATION, CUSTOMER_SITE_AREA, CUSTOMER_SITE_ADDRESS, CUS_SITE_COUNTRY_CODE, 
+    CUS_SITE_COUNTRY_NAME, CUS_SITE_REGION_CODE, CUS_SITE_REGION_NAME, CUS_SITE_COUNTY_CODE, 
+    CUS_SITE_COUNTY_NAME, CUS_SITE_CITY_CODE, CUS_SITE_CITY_NAME, SUPPLIER_COMPANY_ID, 
+    SUPPLIER_ID, SUPPLIER_CODE, SUPPLIER_NAME, PURCHASE_CONTRACT_HEAD_ID, PURCHASE_CONTRACT_CODE, 
+    SUPPLIER_DELIVERY_ID, SUPPLIER_DELIVERY_NAME, SUPPLIER_DELIVERY_PHONE, SUPPLIER_SITE_ID, 
+    SUPPLIER_SITE_NATION, SUPPLIER_SITE_AREA, SUPPLIER_SITE_ADDRESS, DELIVERY_STATUS, 
+    TRANSPORT_CONTACTS, TRANSPORT_CONTACTS_PHONE, TRANSPORT_CODE, TRANSPORT_COMPANY, 
+    TRANSPORT_TYPE, TRANSPORT_REMARKS, CAR_SHIP_NO, CAR_CONTACTS, CAR_CONTACTS_PHONE, 
+    DELIVERY_REMARK, STAFF_ID, STAFF_CODE, STAFF_NAME, DEPARTMENT_ID, DEPARTMENT_NAME, 
+    DEPARTMENT_CODE, ARRIVAL_PERSON, ARRIVAL_PERSON_CODE, ARRIVAL_DATE, ARRIVAL_REMARK, 
+    RECEIPT_PERSON, RECEIPT_DATE, RECEIPT_TYPE, RECEIPT_REMARK, FROM_TYPE, FROM_CODE, 
+    FROM_ID, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, 
+    MODIFY_DATE, ORG_ID, GROUP_ID, BOOK_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, 
+    EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, 
+    EXT_COL14, EXT_COL15
+  </sql>
+    <sql id="Invoice_List_Column">
+       tdh.DELIVERY_HEAD_ID,tdh.DELIVERY_CODE,tdh.DELIVERY_DATE,tdh.DELIVERY_STATUS,dtc.ITEM_NAME,dtc.ITEM_COUNT,
+       concat(tdh.CUS_SITE_REGION_NAME,tdh.CUS_SITE_CITY_NAME,tdh.CUS_SITE_COUNTY_NAME,tdh.CUSTOMER_SITE_ADDRESS,
+       '(',tdh.CUSTOMER_CONSIGNEET_NAME,'收)',tdh.CUSTOMER_CONSIGNEET_PHONE) AS "CUSTOMER_ADDRESS",
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tms_delivery_head
+        where DELIVERY_HEAD_ID = #{deliveryHeadId,jdbcType=CHAR}
+    </select>
+    <select id="findInvoiceList" resultMap="InvoiceListResultMap" parameterType="string">
+        select
+        <include refid="Invoice_List_Column"/>
+
+        CASE
+        WHEN tdh.SALES_CONTRACT_HEAD_ID IS NULL THEN '0'
+        WHEN ( SELECT count( * ) FROM ext_bill_read ebr WHERE BILL_ID = tdh.DELIVERY_HEAD_ID AND BILL_TYPE = '20' AND
+        ebr.ACCOUNT_ID = #{userId} ) > 0 THEN '1'
+        WHEN ( SELECT count( * ) FROM ext_bill_read ebr WHERE BILL_ID = tdh.DELIVERY_HEAD_ID AND BILL_TYPE = '20' AND
+        ebr.ACCOUNT_ID = #{userId} ) = 0 THEN '2'
+        END AS IS_READ
+
+        from tms_delivery_head tdh inner join
+        (select DELIVERY_HEAD_ID,ITEM_NAME,count(0) AS "ITEM_COUNT"
+        from tms_delivery_line group by DELIVERY_HEAD_ID) dtc
+        on tdh.DELIVERY_HEAD_ID=dtc.DELIVERY_HEAD_ID
+        where PURCHASE_CONTRACT_HEAD_ID=#{purchaseContractHeadId}
+    </select>
+
+</mapper>

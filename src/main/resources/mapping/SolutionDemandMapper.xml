@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.SolutionDemandDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.solution.SolutionDemandDTO">
+        <id column="SOLUTION_DEMAND_ID" property="solutionDemandId" jdbcType="CHAR"/>
+        <result column="SOLUTION_ID" property="solutionId" jdbcType="CHAR"/>
+        <result column="SOLUTION_DEMAND_CODE" property="solutionDemandCode" jdbcType="VARCHAR"/>
+        <result column="DEMAND_LINE_ID" property="demandLineId" jdbcType="CHAR"/>
+        <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR"/>
+        <result column="CATEGORY_CODE" property="categoryCode" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="ITEM_ID" property="itemId" jdbcType="CHAR"/>
+        <result column="ITEM_LINE_ID" property="itemLineId" jdbcType="CHAR"/>
+        <result column="ITEM_LINE_CODE" property="itemLineCode" jdbcType="VARCHAR"/>
+        <result column="ITEM_TYPE" property="itemType" jdbcType="VARCHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="ITEM_SPEC_DESC" property="itemSpecDesc" jdbcType="VARCHAR"/>
+        <result column="DEMAND_REMARK" property="demandRemark" jdbcType="VARCHAR"/>
+        <result column="BRAND" property="brand" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_ID" property="supplierId" jdbcType="CHAR"/>
+        <result column="SUPPLIER_NAME" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_CODE" property="supplierCode" jdbcType="VARCHAR"/>
+        <result column="STANDARD_FLAG" property="standardFlag" jdbcType="VARCHAR"/>
+        <result column="ITEM_PRICE_ID" property="itemPriceId" jdbcType="VARCHAR"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ItemInfoResultMap"
+               type="com.vandream.mall.business.dto.solution.SolutionDemandDTO">
+        <result column="SOLUTION_DEMAND_ID" property="solutionDemandId" jdbcType="CHAR"/>
+        <result column="DEMAND_LINE_ID" property="demandLineId" jdbcType="CHAR"/>
+        <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR"/>
+        <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="ITEM_ID" property="itemId" jdbcType="CHAR"/>
+        <result column="ITEM_LINE_ID" property="itemLineId" jdbcType="CHAR"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="ITEM_SPEC_DESC" property="itemSpecDesc" jdbcType="VARCHAR"/>
+        <result column="DEMAND_REMARK" property="demandRemark" jdbcType="VARCHAR"/>
+        <result column="BRAND" property="brand" jdbcType="VARCHAR"/>
+        <result column="STANDARD_FLAG" property="standardFlag" jdbcType="VARCHAR"/>
+        <result column="SOLUTION_SUPPLIER_ID" property="solutionSupplierId"/>
+        <result column="QUANTITY" property="quantity"/>
+        <result column="UNIT_TYPE_NAME" property="unitTypeName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        SOLUTION_DEMAND_ID, SOLUTION_ID, SOLUTION_DEMAND_CODE, DEMAND_LINE_ID, CATEGORY_ID,
+        CATEGORY_CODE, CATEGORY_NAME, ITEM_ID, ITEM_LINE_ID, ITEM_LINE_CODE, ITEM_TYPE, ITEM_NAME,
+        ITEM_SPEC_DESC, DEMAND_REMARK, BRAND, SUPPLIER_ID, SUPPLIER_NAME,SUPPLIER_CODE,STANDARD_FLAG,
+        ITEM_PRICE_ID,FROM_TYPE, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME,
+        MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5,
+        EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10
+    </sql>
+    <sql id="ItemInfoColumnList">
+        sd.SOLUTION_DEMAND_ID,
+        sd.DEMAND_LINE_ID,
+        sd.CATEGORY_ID,
+        sd.CATEGORY_NAME,
+        sd.ITEM_ID,
+        sd.ITEM_LINE_ID,
+        sd.ITEM_NAME,
+        sd.BRAND,
+        sd.ITEM_SPEC_DESC,
+        sd.DEMAND_REMARK,
+        sd.STANDARD_FLAG,
+        dl.QUANTITY,
+        dl.UNIT_TYPE_NAME,
+        ss.SOLUTION_SUPPLIER_ID
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_solution_demand
+        where SOLUTION_DEMAND_ID = #{solutionDemandId,jdbcType=CHAR}
+    </select>
+    <select id="findListBySolutionId" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from psd_solution_demand
+        where SOLUTION_ID = #{solutionId}
+    </select>
+    <select id="findSolutionItemInfoList" resultMap="ItemInfoResultMap"
+            parameterType="string">
+        SELECT
+        <include refid="ItemInfoColumnList"/>
+        FROM
+        psd_solution_demand sd
+        INNER JOIN psd_demand_line dl
+        ON sd.DEMAND_LINE_ID=dl.DEMAND_LINE_ID
+        LEFT JOIN psd_solution_supplier ss
+        ON sd.SOLUTION_ID = ss.SOLUTION_ID
+        WHERE sd.SOLUTION_ID = #{solutionId} AND ss.SUPPLIER_ID = #{supplierId}
+        GROUP BY sd.SOLUTION_DEMAND_ID
+    </select>
+    <select id="findSolutionSupplierItemInfoList" resultMap="ItemInfoResultMap"
+            parameterType="string">
+         SELECT
+        sd.SOLUTION_DEMAND_ID,
+        sd.DEMAND_LINE_ID,
+        sd.CATEGORY_ID,
+        sd.CATEGORY_NAME,
+        sd.ITEM_ID,
+        sd.ITEM_LINE_ID,
+        sd.ITEM_NAME,
+        sd.BRAND,
+        sd.ITEM_SPEC_DESC,
+        sd.DEMAND_REMARK,
+        sd.STANDARD_FLAG,
+        dl.QUANTITY,
+        dl.UNIT_TYPE_NAME,
+        ss.SOLUTION_SUPPLIER_ID
+        FROM psd_solution_supplier ss
+        INNER JOIN psd_solution_demand sd
+        ON sd.SOLUTION_ID = ss.SOLUTION_ID
+        INNER JOIN psd_demand_line dl
+        ON sd.DEMAND_LINE_ID=dl.DEMAND_LINE_ID
+        WHERE ss.SOLUTION_SUPPLIER_ID = #{solutionSupplierId} AND ss.SUPPLIER_ID = #{supplierId}
+        GROUP BY sd.SOLUTION_DEMAND_ID
+    </select>
+</mapper>

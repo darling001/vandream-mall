@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.OrderDAO">
+    <resultMap id="orderDemailListMap" type="com.vandream.mall.business.dto.order.OrderDetailDTO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="order_no" jdbcType="BIGINT" property="orderNo"/>
+        <result column="address" jdbcType="BIGINT" property="address"/>
+        <result column="lead_time" jdbcType="VARCHAR"  property="leadTime" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="name" />
+        <collection property="orderItemEntityList" ofType="com.vandream.mall.business.vo.OrderItemVO" >
+            <id column="orderItemEntityList.id" jdbcType="BIGINT" property="id"/>
+            <result column="orderItemEntityList.order_item_id" jdbcType="BIGINT" property="orderItemId"/>
+            <result column="orderItemEntityList.order_id" jdbcType="BIGINT" property="orderId"/>
+            <result column="orderItemEntityList.item_id" jdbcType="VARCHAR"  property="itemId" />
+            <result column="orderItemEntityList.item_line_id" jdbcType="VARCHAR" property="itemLineId"/>
+            <result column="orderItemEntityList.item_unit" jdbcType="VARCHAR" property="itemUnit" />
+            <result column="orderItemEntityList.item_price" jdbcType="DECIMAL" property="itemPrice" />
+            <result column="orderItemEntityList.item_num" jdbcType="INTEGER" property="itemNum" />
+        </collection>
+    </resultMap>
+    
+    <resultMap id="itemMatchMap" type="com.vandream.mall.business.vo.order.ItemMatchAggVO">
+        <result column="ci.ITEM_ID" jdbcType="VARCHAR" property="itemId"/>
+        <result column="ci.ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+        <result column="ci.SPEC_CONTENTS" jdbcType="VARCHAR"  property="specContents" />
+        <collection property="itemLineList" ofType="com.vandream.mall.business.vo.order.ItemLineAggVO" >
+            <id column="itemLineList.ITEM_LINE_ID" jdbcType="VARCHAR" property="itemLineId"/>
+            <result column="itemLineList.ITEM_LINE_CODE" jdbcType="VARCHAR" property="itemLineCode"/>
+            <result column="itemLineList.AREA_CODE" jdbcType="VARCHAR" property="areaRangeCode"/>
+            <result column="itemLineList.SALE_PRICE1" jdbcType="DECIMAL" property="salePrice1"/>
+            <result column="itemLineList.SALE_PRICE2" jdbcType="DECIMAL"  property="salePrice2" />
+            <result column="itemLineList.SALE_PRICE3" jdbcType="DECIMAL" property="salePrice3"/>
+        </collection>
+    </resultMap>
+    
+    
+    
+    
+    <select id="addBatchOrder" parameterType="java.lang.String" resultMap="orderDemailListMap">
+        select mo.id,mo.order_no,mo.address,mo.user_name,
+            moi.id as "orderItemEntityList.id",
+            moi.order_id as "orderItemEntityList.order_id",
+            moi.item_id as "orderItemEntityList.item_id",
+            moi.item_line_id as "orderItemEntityList.item_line_id",
+            moi.item_unit as "orderItemEntityList.item_unit",
+            moi.item_price as "orderItemEntityList.item_price",
+            moi.item_num as "orderItemEntityList.item_num"
+        from vandream_mall.MALL_ORDER mo INNER JOIN MALL_ORDER_ITEM moi ON mo.order_no=moi.order_id
+          where mo.user_id=#{userId}
+    </select>
+    <insert id="batchInsertOrderList" parameterType="java.lang.String" >
+        insert into vandream_mall.MALL_ORDER(order_no,address,user_id,user_name,lead_time)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.orderNo},#{item.address},#{item.userId},#{item.name},SYSDATE())
+        </foreach>
+    </insert>
+    <select id="selectMallOrderByOrderNo"  parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT id FROM vandream_mall.MALL_ORDER WHERE order_no=#{orderNo}
+    </select>
+    
+    <select id="findItemMatchInfo"   resultMap="itemMatchMap">
+        SELECT ci.ITEM_ID AS "ci.ITEM_ID",
+       ci.ITEM_NAME   AS "ci.ITEM_NAME",
+       ci.SPEC_CONTENTS AS "ci.SPEC_CONTENTS",
+       cl.ITEM_LINE_ID AS  "itemLineList.ITEM_LINE_ID",
+       cl.ITEM_LINE_CODE AS "itemLineList.ITEM_LINE_CODE" ,
+       cl.AREA_CODE AS  "itemLineList.AREA_CODE",
+       cp.SALE_PRICE1 AS  "itemLineList.SALE_PRICE1",
+       cp.SALE_PRICE2 AS  "itemLineList.SALE_PRICE2",
+       cp.SALE_PRICE3 AS  "itemLineList.SALE_PRICE3"
+        FROM product.cmc_item  ci 
+        LEFT JOIN product.cmc_item_line  cl  ON  ci.ITEM_ID = cl.ITEM_ID
+        LEFT JOIN  product.cmc_item_price  cp ON  cp.ITEM_LINE_ID  = cl.ITEM_LINE_ID          
+        WHERE  ci.ITEM_STATUS = '40'
+        AND    cl.STATUS = '40'  
+        AND    ci.item_id in
+        <foreach collection="itemIdList" index="index" item="item"  separator="," open="(" close=")">
+        #{item,jdbcType=VARCHAR}
+         </foreach>
+        AND    cl.AREA_CODE in
+        <foreach collection="arangeCodeSet" index="index" item="item"  separator="," open="(" close=")">
+        #{item,jdbcType=VARCHAR}
+         </foreach>
+        GROUP  BY ci.item_id
+    </select>
+    <select id="findUnItemMatchInfo"   resultMap="itemMatchMap">
+        SELECT ci.ITEM_ID AS "ci.ITEM_ID",
+       ci.ITEM_NAME   AS "ci.ITEM_NAME",
+       ci.SPEC_CONTENTS AS "ci.SPEC_CONTENTS"
+        FROM product.cmc_item  ci 
+        WHERE  ci.ITEM_STATUS = '40'
+        AND    ci.item_id in
+        <foreach collection="itemIdList" index="index" item="item"  separator="," open="(" close=")">
+        #{item,jdbcType=VARCHAR}
+         </foreach>
+    </select>
+
+</mapper>

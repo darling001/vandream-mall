@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.AddressDAO">
+    <resultMap id="addressResultMap" type="com.vandream.mall.business.dto.AddressDTO">
+        <id column="COMPANY_SITE_ID" jdbcType="CHAR" property="companySiteId"/>
+        <result column="SITE_REGION_NAME" jdbcType="VARCHAR" property="siteRegionName"/>
+        <result column="SITE_CITY_NAME" jdbcType="VARCHAR" property="siteCityName"/>
+        <result column="SITE_COUNTY_NAME" jdbcType="VARCHAR" property="siteCountyName"/>
+        <result column="SITE_REGION_CODE" jdbcType="VARCHAR" property="siteRegionCode"/>
+        <result column="SITE_CITY_CODE" jdbcType="VARCHAR" property="siteCityCode"/>
+        <result column="SITE_COUNTY_CODE" jdbcType="VARCHAR" property="siteCountyCode"/>
+        <result column="SITE_ADDRESS" jdbcType="VARCHAR" property="siteAddress"/>
+        <result column="SITE_RECEIVER" jdbcType="VARCHAR" property="siteReceiver"/>
+        <result column="SITE_RECEIVER_MOBILE" jdbcType="VARCHAR" property="siteReceiverMobile"/>
+        <result column="SITE_POSTAL" jdbcType="VARCHAR" property="sitePostal"/>
+        <result column="COMPANY_ID" jdbcType="VARCHAR" property="companyId"/>
+        <result column="IS_DEFAULT" jdbcType="VARCHAR" property="isDefault"/>
+        <result column="CREATE_USER_ID" jdbcType="VARCHAR" property="operatorUserId"/>
+        <result column="CREATE_USER_NAME" jdbcType="VARCHAR" property="operatorUserName"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="operatorUserName"/>
+        <result column="SITE_TYPE" jdbcType="VARCHAR" property="siteType"/>
+        <result column="areas" jdbcType="VARCHAR" property="areas"/>
+        <result column="SITE_COUNTRY_CODE" jdbcType="VARCHAR" property="countryCode"/>
+        <result column="SITE_COUNTRY_NAME" jdbcType="VARCHAR" property="countryName"/>
+    </resultMap>
+    <select id="getAddressListByUserId" parameterType="java.lang.String" resultMap="addressResultMap">
+        SELECT
+        COMPANY_SITE_ID,SITE_RECEIVER,SITE_POSTAL,SITE_ADDRESS,
+        COMPANY_ID,IS_DEFAULT,CONCAT(SITE_REGION_NAME,SITE_CITY_NAME,SITE_COUNTY_NAME) AS "areas",SITE_RECEIVER_MOBILE
+        FROM crm_company_site
+        <where>
+            SITE_STATUS='40'
+            <if test="companyId != null and '' != companyId">
+                AND COMPANY_ID = #{companyId}
+            </if>
+        </where>
+        ORDER BY
+        IS_DEFAULT = '1' desc, CREATE_DATE desc
+        LIMIT 20
+    </select>
+
+    <select id="getAddressById" parameterType="java.lang.String" resultMap="addressResultMap">
+        SELECT
+        COMPANY_SITE_ID,SITE_REGION_CODE,SITE_REGION_NAME,SITE_CITY_CODE,SITE_CITY_NAME,SITE_COUNTY_CODE,SITE_COUNTY_NAME,SITE_ADDRESS,SITE_RECEIVER,SITE_RECEIVER_MOBILE,SITE_POSTAL,IS_DEFAULT,SITE_TYPE,CREATE_USER_NAME,SITE_COUNTRY_CODE,SITE_COUNTRY_NAME
+        FROM crm_company_site
+        <where>
+            SITE_STATUS='40'
+            <if test="addressId !=null and '' != addressId">
+               AND COMPANY_SITE_ID = #{addressId}
+            </if>
+            <if test="companyId!=null and ''!=companyId">
+                AND COMPANY_ID = #{companyId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

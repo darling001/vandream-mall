@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.AreaDao">
+    <resultMap id="areaListMap" type="com.vandream.mall.business.vo.AreaVO">
+        <result property="id" jdbcType="VARCHAR" column="AREA_CODE"/>
+        <result property="name" jdbcType="VARCHAR" column="AREA_NAME" />
+        <collection property="cityListEntityList" ofType="com.vandream.mall.business.vo.AreaVO">
+            <result property="id" jdbcType="VARCHAR" column="AREA_CODE2"/>
+            <result property="name" jdbcType="VARCHAR" column="AREA_NAME2" />
+                <collection property="cityListEntityList" ofType="com.vandream.mall.business.vo.AreaVO">
+                <result property="id" jdbcType="VARCHAR" column="AREA_CODE3"/>
+                <result property="name" jdbcType="VARCHAR" column="AREA_NAME3" />
+                </collection>
+        </collection>
+    </resultMap>
+
+    <resultMap id="areaMap" type="com.vandream.mall.business.dto.item.AreaDTO">
+        <result property="areaRangeName" column="AREA_RANGE_NAME" />
+        <result property="areaCode" column="AREA_RANGE_CODE" />
+        <result property="areaStatus" column="STATUS" />
+    </resultMap>
+
+    <select id="getAreaList" resultMap="areaListMap">
+        SELECT
+          pro.area_code AS AREA_CODE,
+          pro.AREA_NAME AS AREA_NAME,
+          pro.PARENT_AREA_CODE AS PARENT_AREA_CODE,
+          city.area_code AS AREA_CODE2,
+          city.AREA_NAME AS AREA_NAME2,
+          city.PARENT_AREA_CODE AS PARENT_AREA_CODE2,
+          ar.area_code AS AREA_CODE3,
+          ar.AREA_NAME AS AREA_NAME3,
+          ar.PARENT_AREA_CODE AS PARENT_AREA_CODE3
+        FROM
+          aus_area_info pro
+          INNER JOIN aus_area_info  city
+          INNER JOIN aus_area_info  ar
+            ON (city.PARENT_AREA_CODE = pro.AREA_CODE AND
+             ar.PARENT_AREA_CODE = city.AREA_CODE)
+            WHERE pro.AREA_CODE !="CN"
+        ORDER BY ar.AREA_CODE
+    </select>
+
+    <!-- 获取区域对象列表 -->
+    <select id="findAreaRangeList" resultMap="areaMap">
+        SELECT
+          AREA_RANGE_CODE, AREA_RANGE_NAME, STATUS
+        FROM
+        aus_area_range
+    </select>
+</mapper>

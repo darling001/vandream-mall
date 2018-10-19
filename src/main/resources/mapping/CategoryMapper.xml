@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.homepage.CategoryDAO">
+
+    <resultMap id="categoryResultMap" type="com.vandream.mall.business.dto.homepage.CategoryDTO">
+        <id column="CATEGORY_ID1" jdbcType="VARCHAR" property="categoryId"/>
+        <result column="CATEGORY_CODE1" jdbcType="VARCHAR" property="categoryCode"/>
+        <result column="CATEGORY_NAME1" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="PARENT_CATEGORY_ID1" jdbcType="VARCHAR" property="parentCategoryId"/>
+        <result column="CATEGORY_LEVEL1" jdbcType="VARCHAR" property="categoryLevel"/>
+        <result column="TAGS1" jdbcType="VARCHAR" property="tags"/>
+        <result column="IS_SHOW1" jdbcType="TINYINT" property="isShow"/>
+        <result column="ICON1" jdbcType="VARCHAR" property="icon"/>
+        <result column="URL_STATUS1" jdbcType="TINYINT" property="urlStatus"/>
+        <collection property="categoryList" ofType="com.vandream.mall.business.dto.homepage.CategoryDTO">
+        <id column="CATEGORY_ID2" jdbcType="VARCHAR" property="categoryId"/>
+            <result column="CATEGORY_CODE2" jdbcType="VARCHAR" property="categoryCode"/>
+            <result column="CATEGORY_NAME2" jdbcType="VARCHAR" property="categoryName"/>
+            <result column="PARENT_CATEGORY_ID2" jdbcType="VARCHAR" property="parentCategoryId"/>
+            <result column="CATEGORY_LEVEL2" jdbcType="VARCHAR" property="categoryLevel"/>
+            <result column="TAGS2" jdbcType="VARCHAR" property="tags"/>
+            <result column="IS_SHOW2" jdbcType="TINYINT" property="isShow"/>
+            <result column="ICON2" jdbcType="VARCHAR" property="icon"/>
+            <result column="URL_STATUS2" jdbcType="TINYINT" property="urlStatus"/>
+            <collection property="categoryList" ofType="com.vandream.mall.business.dto.homepage.CategoryDTO">
+                <id column="CATEGORY_ID3" jdbcType="VARCHAR" property="categoryId"/>
+                <result column="CATEGORY_CODE3" jdbcType="VARCHAR" property="categoryCode"/>
+                <result column="CATEGORY_NAME3" jdbcType="VARCHAR" property="categoryName"/>
+                <result column="PARENT_CATEGORY_ID3" jdbcType="VARCHAR" property="parentCategoryId"/>
+                <result column="CATEGORY_LEVEL3" jdbcType="VARCHAR" property="categoryLevel"/>
+                <result column="TAGS3" jdbcType="VARCHAR" property="tags"/>
+                <result column="IS_SHOW3" jdbcType="TINYINT" property="isShow"/>
+                <result column="ICON3" jdbcType="VARCHAR" property="icon"/>
+                <result column="URL_STATUS3" jdbcType="TINYINT" property="urlStatus"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <sql id="base_column">
+        CATEGORY_ID,
+        CATEGORY_CODE,
+        CATEGORY_NAME,
+        CATEGORY_DESC,
+        PARENT_CATEGORY_ID,
+        CATEGORY_FULL_CODE,
+        CATEGORY_FULL_NAME,
+        CATEGORY_LEVEL,
+        TAGS,
+        IS_SHOW,
+        ICON,
+        URL_STATUS
+    </sql>
+
+
+    <select id="getCategoryList" resultMap="categoryResultMap">
+        SELECT
+        f.CATEGORY_ID CATEGORY_ID1,
+        f.CATEGORY_CODE CATEGORY_CODE1,
+        f.CATEGORY_NAME CATEGORY_NAME1,
+        f.PARENT_CATEGORY_ID PARENT_CATEGORY_ID1,
+        f.CATEGORY_LEVEL CATEGORY_LEVEL1,
+        f.TAGS TAGS1,
+        f.IS_SHOW IS_SHOW1,
+        f.ICON ICON1,
+        f.URL_STATUS URL_STATUS1,
+        s.CATEGORY_ID CATEGORY_ID2,
+        s.CATEGORY_CODE CATEGORY_CODE2,
+        s.CATEGORY_NAME CATEGORY_NAME2,
+        s.PARENT_CATEGORY_ID PARENT_CATEGORY_ID2,
+        s.CATEGORY_LEVEL CATEGORY_LEVEL2,
+        s.TAGS TAGS2,
+        s.IS_SHOW IS_SHOW2,
+        s.ICON ICON2,
+        s.URL_STATUS URL_STATUS2,
+        t.CATEGORY_ID CATEGORY_ID3,
+        t.CATEGORY_CODE CATEGORY_CODE3,
+        t.CATEGORY_NAME CATEGORY_NAME3,
+        t.PARENT_CATEGORY_ID PARENT_CATEGORY_ID3,
+        t.CATEGORY_LEVEL CATEGORY_LEVEL3,
+        t.TAGS TAGS3,
+        t.IS_SHOW IS_SHOW3,
+        t.ICON ICON3,
+        t.URL_STATUS URL_STATUS3
+        FROM cmc_category_info f
+        INNER JOIN cmc_category_info s ON f.CATEGORY_ID=s.PARENT_CATEGORY_ID
+        INNER JOIN cmc_category_info t ON s.CATEGORY_ID=t.PARENT_CATEGORY_ID
+        <if test="categoryId!=null and categoryId!=''">
+            AND f.CATEGORY_ID=#{categoryId}
+        </if>
+        ORDER BY f.SORT DESC,s.SORT DESC,t.SORT DESC
+    </select>
+
+    <select id="queryCategoryList" resultType="com.vandream.mall.business.dto.homepage.CategoryDTO">
+        SELECT
+         CATEGORY_ID AS categoryId,
+        CATEGORY_CODE AS categoryCode,
+        CATEGORY_NAME AS categoryName,
+        CATEGORY_DESC AS categoryDesc,
+        PARENT_CATEGORY_ID AS parentCategoryId,
+        CATEGORY_FULL_CODE AS categoryFullCode,
+        CATEGORY_FULL_NAME AS categoryFullName,
+        CATEGORY_LEVEL AS categoryLevel,
+        TAGS AS tags,
+        IS_SHOW AS isShow,
+        ICON AS icon,
+        URL_STATUS AS urlStatus
+        FROM cmc_category_info
+        WHERE CATEGORY_FULL_CODE IS NOT NULL ORDER BY CATEGORY_FULL_CODE
+    </select>
+
+</mapper>

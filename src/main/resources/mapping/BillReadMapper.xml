@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.BillReadDAO">
+    <select id="selectBillReadCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM ext_bill_read
+        where BILL_ID = #{deliveryHeadId}
+        and ACCOUNT_ID = #{userId}
+    </select>
+
+</mapper>

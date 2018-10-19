@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.purchase.PurchaseContractHeadDAO">
+    <resultMap id="BaseResultMap"
+               type="com.vandream.mall.business.dto.purchase.PurchaseContractHeadDTO">
+        <id column="PURCHASE_CONTRACT_HEAD_ID" property="purchaseContractHeadId" jdbcType="CHAR"/>
+        <result column="PURCHASE_CONTRACT_CODE" property="purchaseContractCode" jdbcType="VARCHAR"/>
+        <result column="CONTRACT_TYPE" property="contractType" jdbcType="VARCHAR"/>
+        <result column="CONTRACT_NAME" property="contractName" jdbcType="VARCHAR"/>
+        <result column="CONTRACT_BEGIN_DATE" property="contractBeginDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CONTRACT_END_DATE" property="contractEndDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CURRENCY_CODE" property="currencyCode" jdbcType="VARCHAR"/>
+        <result column="OUT_CONTRACT_CODE" property="outContractCode" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_COMPANY_ID" property="supplierCompanyId" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_ID" property="supplierId" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_CODE" property="supplierCode" jdbcType="VARCHAR"/>
+        <result column="SUPPLIER_NAME" property="supplierName" jdbcType="VARCHAR"/>
+        <result column="STAFF_ID" property="staffId" jdbcType="VARCHAR"/>
+        <result column="STAFF_CODE" property="staffCode" jdbcType="VARCHAR"/>
+        <result column="STAFF_NAME" property="staffName" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENT_CODE" property="departmentCode" jdbcType="VARCHAR"/>
+        <result column="DEPARTMENT_NAME" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="CONTRACT_STATUS" property="contractStatus" jdbcType="VARCHAR"/>
+        <result column="CONTRACT_REMARKS" property="contractRemarks" jdbcType="VARCHAR"/>
+        <result column="PROJECT_ID" property="projectId" jdbcType="VARCHAR"/>
+        <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR"/>
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"/>
+        <result column="DEMAND_ID" property="demandId" jdbcType="VARCHAR"/>
+        <result column="DEMAND_CODE" property="demandCode" jdbcType="VARCHAR"/>
+        <result column="SOLUTION_ID" property="solutionId" jdbcType="VARCHAR"/>
+        <result column="SOLUTION_CODE" property="solutionCode" jdbcType="VARCHAR"/>
+        <result column="SALES_CONTRACT_HEAD_ID" property="salesContractHeadId" jdbcType="CHAR"/>
+        <result column="SALES_CONTRACT_CODE" property="salesContractCode" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_COMPANY_ID" property="customerCompanyId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CONSIGNEET_ID" property="customerConsigneetId" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CONSIGNEET_NAME" property="customerConsigneetName"
+                jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_CONSIGNEET_PHONE" property="customerConsigneetPhone"
+                jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_ID" property="customerSiteId" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTRY_CODE" property="cusSiteCountryCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTRY_NAME" property="cusSiteCountryName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_REGION_CODE" property="cusSiteRegionCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_REGION_NAME" property="cusSiteRegionName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_CITY_CODE" property="cusSiteCityCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_CITY_NAME" property="cusSiteCityName" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTY_CODE" property="cusSiteCountyCode" jdbcType="VARCHAR"/>
+        <result column="CUS_SITE_COUNTY_NAME" property="cusSiteCountyName" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SITE_ADDRESS" property="customerSiteAddress" jdbcType="VARCHAR"/>
+        <result column="NO_TAX_AMOUNT" property="noTaxAmount" jdbcType="DECIMAL"/>
+        <result column="TAX_AMOUNT" property="taxAmount" jdbcType="DECIMAL"/>
+        <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="TEMPLATE_ID" property="templateId" jdbcType="VARCHAR"/>
+        <result column="TEMPLATE_CODE" property="templateCode" jdbcType="VARCHAR"/>
+        <result column="SIGN_TYPE" property="signType" jdbcType="VARCHAR"/>
+        <result column="SIGN_DATE" property="signDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="TAX_CODE_TYPE" property="taxCodeType" jdbcType="VARCHAR"/>
+        <result column="SIGN_PLACE" property="signPlace" jdbcType="VARCHAR"/>
+        <result column="SIGN_PERSON" property="signPerson" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_SIGN_PERSON" property="customerSignPerson" jdbcType="VARCHAR"/>
+        <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR"/>
+        <result column="FROM_ID" property="fromId" jdbcType="VARCHAR"/>
+        <result column="FROM_CODE" property="fromCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR"/>
+        <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR"/>
+        <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR"/>
+        <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR"/>
+        <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR"/>
+        <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR"/>
+        <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR"/>
+        <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR"/>
+        <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR"/>
+        <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR"/>
+        <result column="CUSTOMER_ADDRESS" property="customerAddress" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="OrderListResultMap"
+               type="com.vandream.mall.business.dto.purchase.PurchaseContractHeadDTO">
+        <id column="PURCHASE_CONTRACT_HEAD_ID" property="purchaseContractHeadId" jdbcType="CHAR"/>
+        <result column="PURCHASE_CONTRACT_CODE" property="purchaseContractCode" jdbcType="VARCHAR"/>
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR"/>
+        <result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="DECIMAL"/>
+        <result column="CONTRACT_STATUS" property="contractStatus" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"
+                typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="PAYED_AMOUNT" property="receipts" jdbcType="DECIMAL"/>
+        <result column="DELIVERY_HEAD_ID" property="deliveryHeadId" jdbcType="VARCHAR"/>
+        <result column="IS_READ" property="isRead" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    PURCHASE_CONTRACT_HEAD_ID, PURCHASE_CONTRACT_CODE, CONTRACT_TYPE, CONTRACT_NAME, 
+    CONTRACT_BEGIN_DATE, CONTRACT_END_DATE, CURRENCY_CODE, OUT_CONTRACT_CODE, SUPPLIER_COMPANY_ID, 
+    SUPPLIER_ID, SUPPLIER_CODE, SUPPLIER_NAME, STAFF_ID, STAFF_CODE, STAFF_NAME, DEPARTMENT_ID, 
+    DEPARTMENT_CODE, DEPARTMENT_NAME, CONTRACT_STATUS, CONTRACT_REMARKS, PROJECT_ID, 
+    PROJECT_CODE, PROJECT_NAME, DEMAND_ID, DEMAND_CODE, SOLUTION_ID, SOLUTION_CODE, SALES_CONTRACT_HEAD_ID, 
+    SALES_CONTRACT_CODE, CUSTOMER_COMPANY_ID, CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, 
+    CUSTOMER_CONSIGNEET_ID, CUSTOMER_CONSIGNEET_NAME, CUSTOMER_CONSIGNEET_PHONE, CUSTOMER_SITE_ID, 
+    CUS_SITE_COUNTRY_CODE, CUS_SITE_COUNTRY_NAME, CUS_SITE_REGION_CODE, CUS_SITE_REGION_NAME, 
+    CUS_SITE_CITY_CODE, CUS_SITE_CITY_NAME, CUS_SITE_COUNTY_CODE, CUS_SITE_COUNTY_NAME, 
+    CUSTOMER_SITE_ADDRESS, NO_TAX_AMOUNT, TAX_AMOUNT, TOTAL_AMOUNT, TEMPLATE_ID, TEMPLATE_CODE, 
+    SIGN_TYPE, SIGN_DATE, TAX_CODE_TYPE, SIGN_PLACE, SIGN_PERSON, CUSTOMER_SIGN_PERSON, 
+    FROM_TYPE, FROM_ID, FROM_CODE, CREATE_DATE, CREATE_USER_ID, CREATE_USER_NAME, MODIFY_DATE, 
+    MODIFY_USER_ID, MODIFY_USER_NAME, ORG_ID, GROUP_ID, BOOK_ID, EXT_COL1, EXT_COL2, 
+    EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, 
+    EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, EXT_COL15, EXT_COL16, EXT_COL17, EXT_COL18, 
+    EXT_COL19, EXT_COL20,
+
+    CONCAT(CUS_SITE_REGION_NAME,CUS_SITE_CITY_NAME,CUS_SITE_COUNTY_NAME,CUSTOMER_SITE_ADDRESS,
+    "(",CUSTOMER_CONSIGNEET_NAME,"收)",CUSTOMER_CONSIGNEET_PHONE) AS "CUSTOMER_ADDRESS"
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pom_purchase_contract_head
+        where PURCHASE_CONTRACT_HEAD_ID = #{purchaseContractHeadId,jdbcType=CHAR}
+    </select>
+    <select id="findOrderList" parameterType="java.util.Map" resultMap="OrderListResultMap">
+        SELECT
+        pch.PURCHASE_CONTRACT_HEAD_ID,
+        pch.PURCHASE_CONTRACT_CODE,
+        pch.PROJECT_NAME,
+        pch.TOTAL_AMOUNT,
+        pch.CREATE_DATE,
+        pcl.ITEM_ID,
+        pcl.ITEM_NAME,
+        pch.CONTRACT_STATUS,
+        vacc.PAYED_AMOUNT,
+        tdh.DELIVERY_HEAD_ID,
+
+        CASE
+        WHEN pch.PURCHASE_CONTRACT_HEAD_ID IS NULL THEN '0'
+        WHEN ( SELECT count( * ) FROM ext_bill_read ebr WHERE BILL_ID = tdh.DELIVERY_HEAD_ID AND BILL_TYPE = '20' AND
+        ebr.ACCOUNT_ID = #{userId} ) > 0 THEN '1'
+        WHEN ( SELECT count( * ) FROM ext_bill_read ebr WHERE BILL_ID = tdh.DELIVERY_HEAD_ID AND BILL_TYPE = '20' AND
+        ebr.ACCOUNT_ID = #{userId} ) = 0 THEN '2'
+        END AS IS_READ
+
+        FROM pom_purchase_contract_head pch
+        INNER JOIN pom_purchase_contract_line pcl ON pch.PURCHASE_CONTRACT_HEAD_ID = pcl.PURCHASE_CONTRACT_HEAD_ID
+        LEFT JOIN view_apm_capital_contract vacc ON pch.PURCHASE_CONTRACT_HEAD_ID=vacc.CONTRACT_HEAD_ID
+        LEFT JOIN tms_delivery_head tdh ON pch.PURCHASE_CONTRACT_HEAD_ID=tdh.PURCHASE_CONTRACT_HEAD_ID
+        <where>
+            <if test="status==null or status==''">
+                AND pch.CONTRACT_STATUS NOT IN ('05','06','10','20','11','51')
+            </if>
+            <if test="status!=null and status!=''">
+                AND pch.CONTRACT_STATUS=#{status}
+            </if>
+            <if test="keyword!=null and keyword!=''">
+                AND(pch.PURCHASE_CONTRACT_CODE like CONCAT('%',#{keyword},'%') OR
+                pcl.CATEGORY_NAME like CONCAT('%',#{keyword},'%') OR
+                pcl.ITEM_NAME like CONCAT('%',#{keyword},'%')
+                )
+            </if>
+            <if test="null!=supplierId and ''!=supplierId">
+                AND pch.SUPPLIER_ID=#{supplierId}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                <![CDATA[ AND
+                pch.CONTRACT_BEGIN_DATE >=
+                #{startTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                ]]>
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                <![CDATA[ AND
+                pch.CONTRACT_END_DATE <
+                #{endTime,typeHandler=com.vandream.mall.commons.utils.handler.LongTypeHandler}
+                ]]>
+            </if>
+
+        </where>
+        GROUP BY pch.PURCHASE_CONTRACT_HEAD_ID ORDER BY pch.CREATE_DATE DESC
+
+    </select>
+
+
+</mapper>

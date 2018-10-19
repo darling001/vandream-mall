@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.homepage.TagInfoDAO">
+    <resultMap id="tagInfoTree" type="com.vandream.mall.business.dto.homepage.TagInfoDTO">
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="styleType" property="styleType" jdbcType="VARCHAR"/>
+        <result column="attrJson" property="attrJson" jdbcType="VARCHAR"/>
+        <result column="childTagInfoIds" property="childTagInfoIds" javaType="java.util.List"
+                typeHandler="com.vandream.mall.commons.utils.handler.JsonTypeHandler"/>
+        <result column="stype_type" property="styleType" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <!-- 根据前端页面传入的pid，查出所有tag 如果id=0，即为父节点pid,则取出所有一级节点，否则，根据id取出对应的行数据-->
+    <select id="queryTagInfoTreeList" resultMap="tagInfoTree">
+        SELECT t1.type,t2.tag_id , t2.pid,t2.attr_info attrJson
+        ,JSON_EXTRACT(t2.attr_info,'$.child') childTagInfoIds ,t2.style_type styleType
+        FROM tag t1 INNER JOIN tag_info t2 ON t1.id = t2.tag_id
+        <choose>
+            <when test="id  == 0">
+                AND t2.pid = #{id}
+            </when>
+            <otherwise>
+                AND t2.id = #{id}
+            </otherwise>
+        </choose>
+        ORDER BY sort ASC
+    </select>
+    <!-- 查出叶子节点 -->
+    <select id="queryTagInfoChildList" resultMap="tagInfoTree" parameterType="java.util.List">
+
+        SELECT t1.type,t2.tag_id , t2.pid,t2.attr_info attrJson
+        ,JSON_EXTRACT(t2.attr_info,'$.child') childTagInfoIds ,t2.style_type styleType
+        FROM tag t1 INNER JOIN tag_info t2 ON t1.id = t2.tag_id
+        AND t2.id IN
+        <foreach collection="childTagInfoIds" item="id" index="index"
+                 open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        ORDER BY sort ASC
+    </select>
+
+</mapper>

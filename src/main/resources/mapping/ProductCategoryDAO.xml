@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.ProductCategoryDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.ProductCategoryDTO">
+        <id column="CATEGORY_ID" property="categoryId" jdbcType="CHAR"/>
+        <result column="CATEGORY_CODE" property="categoryCode" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_NAME" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_DESC" property="categoryDesc" jdbcType="VARCHAR"/>
+        <result column="PARENT_CATEGORY_ID" property="parentCategoryId" jdbcType="CHAR"/>
+        <result column="CATEGORY_FULL_CODE" property="categoryFullCode" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_FULL_NAME" property="categoryFullName" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_LEVEL" property="categoryLevel" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_SORT" property="categorySort" jdbcType="DECIMAL"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="CATEGORY_MANAGER" property="categoryManager" jdbcType="VARCHAR"/>
+        <result column="EFFECT_USER_ID" property="effectUserId" jdbcType="CHAR"/>
+        <result column="EFFECT_DATE" property="effectDate" jdbcType="DATE"/>
+        <result column="INVALID_USER_ID" property="invalidUserId" jdbcType="CHAR"/>
+        <result column="INVALID_DATE" property="invalidDate" jdbcType="DATE"/>
+        <result column="SPEC_DEFINE_ID" property="specDefineId" jdbcType="CHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="CHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="CHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="CHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="fullCategoryResultMap"
+               type="com.vandream.mall.business.dto.CategoryAggDTO">
+        <result column="FID" property="fid"/>
+        <result column="FNAME" property="fname"/>
+        <result column="FLEVEL" property="flevel"/>
+        <result column="SID" property="sid"/>
+        <result column="SNAME" property="sname"/>
+        <result column="SLEVEL" property="slevel"/>
+        <result column="TID" property="tid"/>
+        <result column="TNAME" property="tname"/>
+        <result column="TLEVEL" property="tlevel"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    CATEGORY_ID, CATEGORY_CODE, CATEGORY_NAME, CATEGORY_DESC, PARENT_CATEGORY_ID, CATEGORY_FULL_CODE, 
+    CATEGORY_FULL_NAME, CATEGORY_LEVEL, CATEGORY_SORT, STATUS, CATEGORY_MANAGER, EFFECT_USER_ID, 
+    EFFECT_DATE, INVALID_USER_ID, INVALID_DATE, SPEC_DEFINE_ID, CREATE_USER_ID, CREATE_DATE, 
+    MODIFY_USER_ID, MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, 
+    EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, CREATE_USER_NAME, 
+    MODIFY_USER_NAME
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from cmc_category
+        where CATEGORY_ID = #{categoryId,jdbcType=CHAR}
+    </select>
+    <select id="findFullCategory" resultMap="fullCategoryResultMap" parameterType="string">
+      SELECT ca.CATEGORY_ID AS 'TID',ca.CATEGORY_NAME AS 'TNAME',ca.CATEGORY_LEVEL AS 'TLEVEL',
+      cb.CATEGORY_ID AS 'SID',cb.CATEGORY_NAME AS 'SNAME',cb.CATEGORY_LEVEL AS 'SLEVEL',
+      cc.CATEGORY_ID AS 'FID',cc.CATEGORY_NAME AS 'FNAME',cc.CATEGORY_LEVEL  AS 'FLEVEL'
+      FROM cmc_category ca ,cmc_category cb ,cmc_category cc
+      WHERE cc.CATEGORY_ID=cb.PARENT_CATEGORY_ID AND cb.CATEGORY_ID=ca.PARENT_CATEGORY_ID
+      AND(ca.CATEGORY_ID=#{categoryId} OR cb.CATEGORY_ID=#{categoryId}
+      OR cc.CATEGORY_ID=#{categoryId})
+      GROUP BY cc.CATEGORY_ID
+ </select>
+</mapper>

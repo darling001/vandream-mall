@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.DemandvisitDAO" >
+  <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.demand.DemandvisitDTO" >
+    <id column="DEMAND_VISIT_ID" property="demandVisitId" jdbcType="CHAR" />
+    <result column="DEMAND_ID" property="demandId" jdbcType="CHAR" />
+    <result column="DEMAND_VISIT_CODE" property="demandVisitCode" jdbcType="VARCHAR" />
+    <result column="VISIT_CONTACTS" property="visitContacts" jdbcType="VARCHAR" />
+    <result column="VISIT_CUSTOMER" property="visitCustomer" jdbcType="VARCHAR" />
+    <result column="VISIT_TIME" property="visitTime" jdbcType="TIMESTAMP" />
+    <result column="VISIT_AREA" property="visitArea" jdbcType="VARCHAR" />
+    <result column="VISIT_REMARK" property="visitRemark" jdbcType="VARCHAR" />
+    <result column="DEMAND_CODE" property="demandCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="CHAR" />
+    <result column="CUSTOMER_CODE" property="customerCode" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="DEMAND_RESUME" property="demandResume" jdbcType="VARCHAR" />
+    <result column="DEMAND_DISCUSS" property="demandDiscuss" jdbcType="VARCHAR" />
+    <result column="DEMAND_STATUS" property="demandStatus" jdbcType="VARCHAR" />
+    <result column="DEMAND_TYPE" property="demandType" jdbcType="VARCHAR" />
+    <result column="FROM_TYPE" property="fromType" jdbcType="VARCHAR" />
+    <result column="FROM_ID" property="fromId" jdbcType="VARCHAR" />
+    <result column="FROM_CODE" property="fromCode" jdbcType="VARCHAR" />
+    <result column="DEMAND_TIME" property="demandTime" jdbcType="TIMESTAMP" />
+    <result column="DEMAND_ACCOUNT_ID" property="demandAccountId" jdbcType="CHAR" />
+    <result column="DEMAND_ACCOUNT_NAME" property="demandAccountName" jdbcType="VARCHAR" />
+    <result column="DEMAND_CONTACTS" property="demandContacts" jdbcType="VARCHAR" />
+    <result column="DEMAND_PHONE" property="demandPhone" jdbcType="VARCHAR" />
+    <result column="DEMAND_CONTACTS_ROLE" property="demandContactsRole" jdbcType="VARCHAR" />
+    <result column="PROJECT_ID" property="projectId" jdbcType="CHAR" />
+    <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR" />
+    <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+    <result column="BUDGET" property="budget" jdbcType="DECIMAL" />
+    <result column="CURRENCY_CODE" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="DELIVERY_PERIOD_START" property="deliveryPeriodStart" jdbcType="TIMESTAMP" />
+    <result column="DELIVERY_PERIOD_END" property="deliveryPeriodEnd" jdbcType="TIMESTAMP" />
+    <result column="PLATFORM_CONTACTS_ID" property="platformContactsId" jdbcType="CHAR" />
+    <result column="PLATFORM_CONTACTS_CODE" property="platformContactsCode" jdbcType="VARCHAR" />
+    <result column="PLATFORM_CONTACTS" property="platformContacts" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_SITE_AREA" property="customerSiteArea" jdbcType="VARCHAR" />
+    <result column="PLATFORM_PHONE" property="platformPhone" jdbcType="VARCHAR" />
+    <result column="CLOSE_REASON" property="closeReason" jdbcType="VARCHAR" />
+    <result column="CLOSE_TIME" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="CLOSE_USER_ID" property="closeUserId" jdbcType="CHAR" />
+    <result column="CLOSE_USER_NAME" property="closeUserName" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="CHAR" />
+    <result column="CREATE_USER_NAME" property="createUserName" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="CHAR" />
+    <result column="MODIFY_USER_NAME" property="modifyUserName" jdbcType="VARCHAR" />
+    <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="ORG_ID" property="orgId" jdbcType="CHAR" />
+    <result column="BOOK_ID" property="bookId" jdbcType="CHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="CHAR" />
+    <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR" />
+    <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR" />
+    <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR" />
+    <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR" />
+    <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR" />
+    <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR" />
+    <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR" />
+    <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR" />
+    <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR" />
+    <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEMAND_VISIT_ID, DEMAND_ID, DEMAND_VISIT_CODE, VISIT_CONTACTS, VISIT_CUSTOMER, VISIT_TIME, 
+    VISIT_AREA, VISIT_REMARK, DEMAND_CODE, CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, 
+    DEMAND_RESUME, DEMAND_DISCUSS, DEMAND_STATUS, DEMAND_TYPE, FROM_TYPE, FROM_ID, FROM_CODE, 
+    DEMAND_TIME, DEMAND_ACCOUNT_ID, DEMAND_ACCOUNT_NAME, DEMAND_CONTACTS, DEMAND_PHONE, 
+    DEMAND_CONTACTS_ROLE, PROJECT_ID, PROJECT_CODE, PROJECT_NAME, BUDGET, CURRENCY_CODE, 
+    DELIVERY_PERIOD_START, DELIVERY_PERIOD_END, PLATFORM_CONTACTS_ID, PLATFORM_CONTACTS_CODE, 
+    PLATFORM_CONTACTS, CUSTOMER_SITE_AREA, PLATFORM_PHONE, CLOSE_REASON, CLOSE_TIME, 
+    CLOSE_USER_ID, CLOSE_USER_NAME, CREATE_USER_ID, CREATE_USER_NAME, CREATE_DATE, MODIFY_USER_ID, 
+    MODIFY_USER_NAME, MODIFY_DATE, ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, 
+    EXT_COL4, EXT_COL5, EXT_COL6, EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from psd_demand_visit
+    where DEMAND_VISIT_ID = #{demandVisitId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from psd_demand_visit
+    where DEMAND_VISIT_ID = #{demandVisitId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.vandream.mall.business.dto.demand.DemandvisitDTO" >
+    insert into psd_demand_visit (DEMAND_VISIT_ID, DEMAND_ID, DEMAND_VISIT_CODE, 
+      VISIT_CONTACTS, VISIT_CUSTOMER, VISIT_TIME, 
+      VISIT_AREA, VISIT_REMARK, DEMAND_CODE, 
+      CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, 
+      DEMAND_RESUME, DEMAND_DISCUSS, DEMAND_STATUS, 
+      DEMAND_TYPE, FROM_TYPE, FROM_ID, 
+      FROM_CODE, DEMAND_TIME, DEMAND_ACCOUNT_ID, 
+      DEMAND_ACCOUNT_NAME, DEMAND_CONTACTS, DEMAND_PHONE, 
+      DEMAND_CONTACTS_ROLE, PROJECT_ID, PROJECT_CODE, 
+      PROJECT_NAME, BUDGET, CURRENCY_CODE, 
+      DELIVERY_PERIOD_START, DELIVERY_PERIOD_END, 
+      PLATFORM_CONTACTS_ID, PLATFORM_CONTACTS_CODE, 
+      PLATFORM_CONTACTS, CUSTOMER_SITE_AREA, PLATFORM_PHONE, 
+      CLOSE_REASON, CLOSE_TIME, CLOSE_USER_ID, 
+      CLOSE_USER_NAME, CREATE_USER_ID, CREATE_USER_NAME, 
+      CREATE_DATE, MODIFY_USER_ID, MODIFY_USER_NAME, 
+      MODIFY_DATE, ORG_ID, BOOK_ID, 
+      GROUP_ID, EXT_COL1, EXT_COL2, 
+      EXT_COL3, EXT_COL4, EXT_COL5, 
+      EXT_COL6, EXT_COL7, EXT_COL8, 
+      EXT_COL9, EXT_COL10)
+    values (#{demandVisitId,jdbcType=CHAR}, #{demandId,jdbcType=CHAR}, #{demandVisitCode,jdbcType=VARCHAR}, 
+      #{visitContacts,jdbcType=VARCHAR}, #{visitCustomer,jdbcType=VARCHAR}, #{visitTime,jdbcType=TIMESTAMP}, 
+      #{visitArea,jdbcType=VARCHAR}, #{visitRemark,jdbcType=VARCHAR}, #{demandCode,jdbcType=VARCHAR}, 
+      #{customerId,jdbcType=CHAR}, #{customerCode,jdbcType=VARCHAR}, #{customerName,jdbcType=VARCHAR}, 
+      #{demandResume,jdbcType=VARCHAR}, #{demandDiscuss,jdbcType=VARCHAR}, #{demandStatus,jdbcType=VARCHAR}, 
+      #{demandType,jdbcType=VARCHAR}, #{fromType,jdbcType=VARCHAR}, #{fromId,jdbcType=VARCHAR}, 
+      #{fromCode,jdbcType=VARCHAR}, #{demandTime,jdbcType=TIMESTAMP}, #{demandAccountId,jdbcType=CHAR}, 
+      #{demandAccountName,jdbcType=VARCHAR}, #{demandContacts,jdbcType=VARCHAR}, #{demandPhone,jdbcType=VARCHAR}, 
+      #{demandContactsRole,jdbcType=VARCHAR}, #{projectId,jdbcType=CHAR}, #{projectCode,jdbcType=VARCHAR}, 
+      #{projectName,jdbcType=VARCHAR}, #{budget,jdbcType=DECIMAL}, #{currencyCode,jdbcType=VARCHAR}, 
+      #{deliveryPeriodStart,jdbcType=TIMESTAMP}, #{deliveryPeriodEnd,jdbcType=TIMESTAMP}, 
+      #{platformContactsId,jdbcType=CHAR}, #{platformContactsCode,jdbcType=VARCHAR}, 
+      #{platformContacts,jdbcType=VARCHAR}, #{customerSiteArea,jdbcType=VARCHAR}, #{platformPhone,jdbcType=VARCHAR}, 
+      #{closeReason,jdbcType=VARCHAR}, #{closeTime,jdbcType=TIMESTAMP}, #{closeUserId,jdbcType=CHAR}, 
+      #{closeUserName,jdbcType=VARCHAR}, #{createUserId,jdbcType=CHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=CHAR}, #{modifyUserName,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{orgId,jdbcType=CHAR}, #{bookId,jdbcType=CHAR}, 
+      #{groupId,jdbcType=CHAR}, #{extCol1,jdbcType=VARCHAR}, #{extCol2,jdbcType=VARCHAR}, 
+      #{extCol3,jdbcType=VARCHAR}, #{extCol4,jdbcType=VARCHAR}, #{extCol5,jdbcType=VARCHAR}, 
+      #{extCol6,jdbcType=VARCHAR}, #{extCol7,jdbcType=VARCHAR}, #{extCol8,jdbcType=VARCHAR}, 
+      #{extCol9,jdbcType=VARCHAR}, #{extCol10,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vandream.mall.business.dto.demand.DemandvisitDTO" >
+    insert into psd_demand_visit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="demandVisitId != null" >
+        DEMAND_VISIT_ID,
+      </if>
+      <if test="demandId != null" >
+        DEMAND_ID,
+      </if>
+      <if test="demandVisitCode != null" >
+        DEMAND_VISIT_CODE,
+      </if>
+      <if test="visitContacts != null" >
+        VISIT_CONTACTS,
+      </if>
+      <if test="visitCustomer != null" >
+        VISIT_CUSTOMER,
+      </if>
+      <if test="visitTime != null" >
+        VISIT_TIME,
+      </if>
+      <if test="visitArea != null" >
+        VISIT_AREA,
+      </if>
+      <if test="visitRemark != null" >
+        VISIT_REMARK,
+      </if>
+      <if test="demandCode != null" >
+        DEMAND_CODE,
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID,
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE,
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME,
+      </if>
+      <if test="demandResume != null" >
+        DEMAND_RESUME,
+      </if>
+      <if test="demandDiscuss != null" >
+        DEMAND_DISCUSS,
+      </if>
+      <if test="demandStatus != null" >
+        DEMAND_STATUS,
+      </if>
+      <if test="demandType != null" >
+        DEMAND_TYPE,
+      </if>
+      <if test="fromType != null" >
+        FROM_TYPE,
+      </if>
+      <if test="fromId != null" >
+        FROM_ID,
+      </if>
+      <if test="fromCode != null" >
+        FROM_CODE,
+      </if>
+      <if test="demandTime != null" >
+        DEMAND_TIME,
+      </if>
+      <if test="demandAccountId != null" >
+        DEMAND_ACCOUNT_ID,
+      </if>
+      <if test="demandAccountName != null" >
+        DEMAND_ACCOUNT_NAME,
+      </if>
+      <if test="demandContacts != null" >
+        DEMAND_CONTACTS,
+      </if>
+      <if test="demandPhone != null" >
+        DEMAND_PHONE,
+      </if>
+      <if test="demandContactsRole != null" >
+        DEMAND_CONTACTS_ROLE,
+      </if>
+      <if test="projectId != null" >
+        PROJECT_ID,
+      </if>
+      <if test="projectCode != null" >
+        PROJECT_CODE,
+      </if>
+      <if test="projectName != null" >
+        PROJECT_NAME,
+      </if>
+      <if test="budget != null" >
+        BUDGET,
+      </if>
+      <if test="currencyCode != null" >
+        CURRENCY_CODE,
+      </if>
+      <if test="deliveryPeriodStart != null" >
+        DELIVERY_PERIOD_START,
+      </if>
+      <if test="deliveryPeriodEnd != null" >
+        DELIVERY_PERIOD_END,
+      </if>
+      <if test="platformContactsId != null" >
+        PLATFORM_CONTACTS_ID,
+      </if>
+      <if test="platformContactsCode != null" >
+        PLATFORM_CONTACTS_CODE,
+      </if>
+      <if test="platformContacts != null" >
+        PLATFORM_CONTACTS,
+      </if>
+      <if test="customerSiteArea != null" >
+        CUSTOMER_SITE_AREA,
+      </if>
+      <if test="platformPhone != null" >
+        PLATFORM_PHONE,
+      </if>
+      <if test="closeReason != null" >
+        CLOSE_REASON,
+      </if>
+      <if test="closeTime != null" >
+        CLOSE_TIME,
+      </if>
+      <if test="closeUserId != null" >
+        CLOSE_USER_ID,
+      </if>
+      <if test="closeUserName != null" >
+        CLOSE_USER_NAME,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="createUserName != null" >
+        CREATE_USER_NAME,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID,
+      </if>
+      <if test="modifyUserName != null" >
+        MODIFY_USER_NAME,
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID,
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID,
+      </if>
+      <if test="extCol1 != null" >
+        EXT_COL1,
+      </if>
+      <if test="extCol2 != null" >
+        EXT_COL2,
+      </if>
+      <if test="extCol3 != null" >
+        EXT_COL3,
+      </if>
+      <if test="extCol4 != null" >
+        EXT_COL4,
+      </if>
+      <if test="extCol5 != null" >
+        EXT_COL5,
+      </if>
+      <if test="extCol6 != null" >
+        EXT_COL6,
+      </if>
+      <if test="extCol7 != null" >
+        EXT_COL7,
+      </if>
+      <if test="extCol8 != null" >
+        EXT_COL8,
+      </if>
+      <if test="extCol9 != null" >
+        EXT_COL9,
+      </if>
+      <if test="extCol10 != null" >
+        EXT_COL10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="demandVisitId != null" >
+        #{demandVisitId,jdbcType=CHAR},
+      </if>
+      <if test="demandId != null" >
+        #{demandId,jdbcType=CHAR},
+      </if>
+      <if test="demandVisitCode != null" >
+        #{demandVisitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="visitContacts != null" >
+        #{visitContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="visitCustomer != null" >
+        #{visitCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="visitTime != null" >
+        #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitArea != null" >
+        #{visitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="visitRemark != null" >
+        #{visitRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="demandCode != null" >
+        #{demandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=CHAR},
+      </if>
+      <if test="customerCode != null" >
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="demandResume != null" >
+        #{demandResume,jdbcType=VARCHAR},
+      </if>
+      <if test="demandDiscuss != null" >
+        #{demandDiscuss,jdbcType=VARCHAR},
+      </if>
+      <if test="demandStatus != null" >
+        #{demandStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="demandType != null" >
+        #{demandType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromType != null" >
+        #{fromType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromId != null" >
+        #{fromId,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCode != null" >
+        #{fromCode,jdbcType=VARCHAR},
+      </if>
+      <if test="demandTime != null" >
+        #{demandTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="demandAccountId != null" >
+        #{demandAccountId,jdbcType=CHAR},
+      </if>
+      <if test="demandAccountName != null" >
+        #{demandAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="demandContacts != null" >
+        #{demandContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="demandPhone != null" >
+        #{demandPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="demandContactsRole != null" >
+        #{demandContactsRole,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=CHAR},
+      </if>
+      <if test="projectCode != null" >
+        #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="budget != null" >
+        #{budget,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyCode != null" >
+        #{currencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPeriodStart != null" >
+        #{deliveryPeriodStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryPeriodEnd != null" >
+        #{deliveryPeriodEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platformContactsId != null" >
+        #{platformContactsId,jdbcType=CHAR},
+      </if>
+      <if test="platformContactsCode != null" >
+        #{platformContactsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformContacts != null" >
+        #{platformContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="customerSiteArea != null" >
+        #{customerSiteArea,jdbcType=VARCHAR},
+      </if>
+      <if test="platformPhone != null" >
+        #{platformPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="closeReason != null" >
+        #{closeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeUserId != null" >
+        #{closeUserId,jdbcType=CHAR},
+      </if>
+      <if test="closeUserName != null" >
+        #{closeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=CHAR},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=CHAR},
+      </if>
+      <if test="modifyUserName != null" >
+        #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=CHAR},
+      </if>
+      <if test="extCol1 != null" >
+        #{extCol1,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol2 != null" >
+        #{extCol2,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol3 != null" >
+        #{extCol3,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol4 != null" >
+        #{extCol4,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol5 != null" >
+        #{extCol5,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol6 != null" >
+        #{extCol6,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol7 != null" >
+        #{extCol7,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol8 != null" >
+        #{extCol8,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol9 != null" >
+        #{extCol9,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol10 != null" >
+        #{extCol10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vandream.mall.business.dto.demand.DemandvisitDTO" >
+    update psd_demand_visit
+    <set >
+      <if test="demandId != null" >
+        DEMAND_ID = #{demandId,jdbcType=CHAR},
+      </if>
+      <if test="demandVisitCode != null" >
+        DEMAND_VISIT_CODE = #{demandVisitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="visitContacts != null" >
+        VISIT_CONTACTS = #{visitContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="visitCustomer != null" >
+        VISIT_CUSTOMER = #{visitCustomer,jdbcType=VARCHAR},
+      </if>
+      <if test="visitTime != null" >
+        VISIT_TIME = #{visitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitArea != null" >
+        VISIT_AREA = #{visitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="visitRemark != null" >
+        VISIT_REMARK = #{visitRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="demandCode != null" >
+        DEMAND_CODE = #{demandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID = #{customerId,jdbcType=CHAR},
+      </if>
+      <if test="customerCode != null" >
+        CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="demandResume != null" >
+        DEMAND_RESUME = #{demandResume,jdbcType=VARCHAR},
+      </if>
+      <if test="demandDiscuss != null" >
+        DEMAND_DISCUSS = #{demandDiscuss,jdbcType=VARCHAR},
+      </if>
+      <if test="demandStatus != null" >
+        DEMAND_STATUS = #{demandStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="demandType != null" >
+        DEMAND_TYPE = #{demandType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromType != null" >
+        FROM_TYPE = #{fromType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromId != null" >
+        FROM_ID = #{fromId,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCode != null" >
+        FROM_CODE = #{fromCode,jdbcType=VARCHAR},
+      </if>
+      <if test="demandTime != null" >
+        DEMAND_TIME = #{demandTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="demandAccountId != null" >
+        DEMAND_ACCOUNT_ID = #{demandAccountId,jdbcType=CHAR},
+      </if>
+      <if test="demandAccountName != null" >
+        DEMAND_ACCOUNT_NAME = #{demandAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="demandContacts != null" >
+        DEMAND_CONTACTS = #{demandContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="demandPhone != null" >
+        DEMAND_PHONE = #{demandPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="demandContactsRole != null" >
+        DEMAND_CONTACTS_ROLE = #{demandContactsRole,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        PROJECT_ID = #{projectId,jdbcType=CHAR},
+      </if>
+      <if test="projectCode != null" >
+        PROJECT_CODE = #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="budget != null" >
+        BUDGET = #{budget,jdbcType=DECIMAL},
+      </if>
+      <if test="currencyCode != null" >
+        CURRENCY_CODE = #{currencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPeriodStart != null" >
+        DELIVERY_PERIOD_START = #{deliveryPeriodStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryPeriodEnd != null" >
+        DELIVERY_PERIOD_END = #{deliveryPeriodEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="platformContactsId != null" >
+        PLATFORM_CONTACTS_ID = #{platformContactsId,jdbcType=CHAR},
+      </if>
+      <if test="platformContactsCode != null" >
+        PLATFORM_CONTACTS_CODE = #{platformContactsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformContacts != null" >
+        PLATFORM_CONTACTS = #{platformContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="customerSiteArea != null" >
+        CUSTOMER_SITE_AREA = #{customerSiteArea,jdbcType=VARCHAR},
+      </if>
+      <if test="platformPhone != null" >
+        PLATFORM_PHONE = #{platformPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="closeReason != null" >
+        CLOSE_REASON = #{closeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeUserId != null" >
+        CLOSE_USER_ID = #{closeUserId,jdbcType=CHAR},
+      </if>
+      <if test="closeUserName != null" >
+        CLOSE_USER_NAME = #{closeUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=CHAR},
+      </if>
+      <if test="createUserName != null" >
+        CREATE_USER_NAME = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        MODIFY_USER_ID = #{modifyUserId,jdbcType=CHAR},
+      </if>
+      <if test="modifyUserName != null" >
+        MODIFY_USER_NAME = #{modifyUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null" >
+        MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=CHAR},
+      </if>
+      <if test="bookId != null" >
+        BOOK_ID = #{bookId,jdbcType=CHAR},
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID = #{groupId,jdbcType=CHAR},
+      </if>
+      <if test="extCol1 != null" >
+        EXT_COL1 = #{extCol1,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol2 != null" >
+        EXT_COL2 = #{extCol2,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol3 != null" >
+        EXT_COL3 = #{extCol3,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol4 != null" >
+        EXT_COL4 = #{extCol4,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol5 != null" >
+        EXT_COL5 = #{extCol5,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol6 != null" >
+        EXT_COL6 = #{extCol6,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol7 != null" >
+        EXT_COL7 = #{extCol7,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol8 != null" >
+        EXT_COL8 = #{extCol8,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol9 != null" >
+        EXT_COL9 = #{extCol9,jdbcType=VARCHAR},
+      </if>
+      <if test="extCol10 != null" >
+        EXT_COL10 = #{extCol10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DEMAND_VISIT_ID = #{demandVisitId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vandream.mall.business.dto.demand.DemandvisitDTO" >
+    update psd_demand_visit
+    set DEMAND_ID = #{demandId,jdbcType=CHAR},
+      DEMAND_VISIT_CODE = #{demandVisitCode,jdbcType=VARCHAR},
+      VISIT_CONTACTS = #{visitContacts,jdbcType=VARCHAR},
+      VISIT_CUSTOMER = #{visitCustomer,jdbcType=VARCHAR},
+      VISIT_TIME = #{visitTime,jdbcType=TIMESTAMP},
+      VISIT_AREA = #{visitArea,jdbcType=VARCHAR},
+      VISIT_REMARK = #{visitRemark,jdbcType=VARCHAR},
+      DEMAND_CODE = #{demandCode,jdbcType=VARCHAR},
+      CUSTOMER_ID = #{customerId,jdbcType=CHAR},
+      CUSTOMER_CODE = #{customerCode,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      DEMAND_RESUME = #{demandResume,jdbcType=VARCHAR},
+      DEMAND_DISCUSS = #{demandDiscuss,jdbcType=VARCHAR},
+      DEMAND_STATUS = #{demandStatus,jdbcType=VARCHAR},
+      DEMAND_TYPE = #{demandType,jdbcType=VARCHAR},
+      FROM_TYPE = #{fromType,jdbcType=VARCHAR},
+      FROM_ID = #{fromId,jdbcType=VARCHAR},
+      FROM_CODE = #{fromCode,jdbcType=VARCHAR},
+      DEMAND_TIME = #{demandTime,jdbcType=TIMESTAMP},
+      DEMAND_ACCOUNT_ID = #{demandAccountId,jdbcType=CHAR},
+      DEMAND_ACCOUNT_NAME = #{demandAccountName,jdbcType=VARCHAR},
+      DEMAND_CONTACTS = #{demandContacts,jdbcType=VARCHAR},
+      DEMAND_PHONE = #{demandPhone,jdbcType=VARCHAR},
+      DEMAND_CONTACTS_ROLE = #{demandContactsRole,jdbcType=VARCHAR},
+      PROJECT_ID = #{projectId,jdbcType=CHAR},
+      PROJECT_CODE = #{projectCode,jdbcType=VARCHAR},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      BUDGET = #{budget,jdbcType=DECIMAL},
+      CURRENCY_CODE = #{currencyCode,jdbcType=VARCHAR},
+      DELIVERY_PERIOD_START = #{deliveryPeriodStart,jdbcType=TIMESTAMP},
+      DELIVERY_PERIOD_END = #{deliveryPeriodEnd,jdbcType=TIMESTAMP},
+      PLATFORM_CONTACTS_ID = #{platformContactsId,jdbcType=CHAR},
+      PLATFORM_CONTACTS_CODE = #{platformContactsCode,jdbcType=VARCHAR},
+      PLATFORM_CONTACTS = #{platformContacts,jdbcType=VARCHAR},
+      CUSTOMER_SITE_AREA = #{customerSiteArea,jdbcType=VARCHAR},
+      PLATFORM_PHONE = #{platformPhone,jdbcType=VARCHAR},
+      CLOSE_REASON = #{closeReason,jdbcType=VARCHAR},
+      CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      CLOSE_USER_ID = #{closeUserId,jdbcType=CHAR},
+      CLOSE_USER_NAME = #{closeUserName,jdbcType=VARCHAR},
+      CREATE_USER_ID = #{createUserId,jdbcType=CHAR},
+      CREATE_USER_NAME = #{createUserName,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFY_USER_ID = #{modifyUserId,jdbcType=CHAR},
+      MODIFY_USER_NAME = #{modifyUserName,jdbcType=VARCHAR},
+      MODIFY_DATE = #{modifyDate,jdbcType=TIMESTAMP},
+      ORG_ID = #{orgId,jdbcType=CHAR},
+      BOOK_ID = #{bookId,jdbcType=CHAR},
+      GROUP_ID = #{groupId,jdbcType=CHAR},
+      EXT_COL1 = #{extCol1,jdbcType=VARCHAR},
+      EXT_COL2 = #{extCol2,jdbcType=VARCHAR},
+      EXT_COL3 = #{extCol3,jdbcType=VARCHAR},
+      EXT_COL4 = #{extCol4,jdbcType=VARCHAR},
+      EXT_COL5 = #{extCol5,jdbcType=VARCHAR},
+      EXT_COL6 = #{extCol6,jdbcType=VARCHAR},
+      EXT_COL7 = #{extCol7,jdbcType=VARCHAR},
+      EXT_COL8 = #{extCol8,jdbcType=VARCHAR},
+      EXT_COL9 = #{extCol9,jdbcType=VARCHAR},
+      EXT_COL10 = #{extCol10,jdbcType=VARCHAR}
+    where DEMAND_VISIT_ID = #{demandVisitId,jdbcType=CHAR}
+  </update>
+</mapper>

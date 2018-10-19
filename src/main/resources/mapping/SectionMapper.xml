@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.homepage.SectionDAO">
+
+    <resultMap id="sectionResultMap" type="com.vandream.mall.business.dto.homepage.SectionDTO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="section_id" jdbcType="VARCHAR" property="sectionId"/>
+        <result column="section_name" jdbcType="VARCHAR" property="sectionName"/>
+        <result column="image_url" jdbcType="VARCHAR" property="imageUrl"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="pid" jdbcType="INTEGER" property="parentId"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="level" jdbcType="TINYINT" property="level"/>
+        <collection property="data" ofType="com.vandream.mall.business.dto.homepage.SectionDTO" select="getSectionByParentId"
+                    column="{pid=id}">
+        </collection>
+
+    </resultMap>
+
+    <sql id="base_column">
+        id,
+        section_id,
+        section_name,
+        image_url,
+        title,
+        pid,
+        url,
+        `level`
+    </sql>
+
+    <select id="getSectionByParentId" resultMap="sectionResultMap">
+        SELECT
+        <include refid="base_column"/>
+        FROM  cms_section_info
+        <where>
+            pid = ${pid}
+        </where>
+        ORDER  BY  sort DESC
+    </select>
+
+</mapper>

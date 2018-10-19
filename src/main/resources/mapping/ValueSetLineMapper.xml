@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vandream.mall.business.dao.ValueSetLineDAO">
+    <resultMap id="BaseResultMap" type="com.vandream.mall.business.dto.ValueSetLineDTO">
+        <id column="VALUESET_LINE_ID" property="valuesetLineId" jdbcType="VARCHAR"/>
+        <result column="VALUESET_HEAD_ID" property="valuesetHeadId" jdbcType="VARCHAR"/>
+        <result column="VALUE_CODE" property="valueCode" jdbcType="VARCHAR"/>
+        <result column="VALUE_NAME" property="valueName" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="SORT" property="sort" jdbcType="DECIMAL"/>
+        <result column="DEFAULT_FLAG" property="defaultFlag" jdbcType="VARCHAR"/>
+        <result column="SYS_FLAG" property="sysFlag" jdbcType="VARCHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_USER_ID" property="modifyUserId" jdbcType="VARCHAR"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="ORG_ID" property="orgId" jdbcType="VARCHAR"/>
+        <result column="BOOK_ID" property="bookId" jdbcType="VARCHAR"/>
+        <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR"/>
+        <result column="EXT_COL1" property="extCol1" jdbcType="VARCHAR"/>
+        <result column="EXT_COL2" property="extCol2" jdbcType="VARCHAR"/>
+        <result column="EXT_COL3" property="extCol3" jdbcType="VARCHAR"/>
+        <result column="EXT_COL4" property="extCol4" jdbcType="VARCHAR"/>
+        <result column="EXT_COL5" property="extCol5" jdbcType="VARCHAR"/>
+        <result column="EXT_COL6" property="extCol6" jdbcType="VARCHAR"/>
+        <result column="EXT_COL7" property="extCol7" jdbcType="VARCHAR"/>
+        <result column="EXT_COL8" property="extCol8" jdbcType="VARCHAR"/>
+        <result column="EXT_COL9" property="extCol9" jdbcType="VARCHAR"/>
+        <result column="EXT_COL10" property="extCol10" jdbcType="VARCHAR"/>
+        <result column="EXT_COL11" property="extCol11" jdbcType="VARCHAR"/>
+        <result column="EXT_COL12" property="extCol12" jdbcType="VARCHAR"/>
+        <result column="EXT_COL13" property="extCol13" jdbcType="VARCHAR"/>
+        <result column="EXT_COL14" property="extCol14" jdbcType="VARCHAR"/>
+        <result column="EXT_COL15" property="extCol15" jdbcType="VARCHAR"/>
+        <result column="EXT_COL16" property="extCol16" jdbcType="VARCHAR"/>
+        <result column="EXT_COL17" property="extCol17" jdbcType="VARCHAR"/>
+        <result column="EXT_COL18" property="extCol18" jdbcType="VARCHAR"/>
+        <result column="EXT_COL19" property="extCol19" jdbcType="VARCHAR"/>
+        <result column="EXT_COL20" property="extCol20" jdbcType="VARCHAR"/>
+        <result column="CUSTOMIZE_CATEGORY" property="customizeCategory" jdbcType="VARCHAR"/>
+        <result column="USE_BOOK" property="useBook" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    VALUESET_LINE_ID, VALUESET_HEAD_ID, VALUE_CODE, VALUE_NAME, STATUS, SORT, DEFAULT_FLAG, 
+    SYS_FLAG, REMARK, PARENT_CODE, CREATE_USER_ID, CREATE_DATE, MODIFY_USER_ID, MODIFY_DATE, 
+    ORG_ID, BOOK_ID, GROUP_ID, EXT_COL1, EXT_COL2, EXT_COL3, EXT_COL4, EXT_COL5, EXT_COL6, 
+    EXT_COL7, EXT_COL8, EXT_COL9, EXT_COL10, EXT_COL11, EXT_COL12, EXT_COL13, EXT_COL14, 
+    EXT_COL15, EXT_COL16, EXT_COL17, EXT_COL18, EXT_COL19, EXT_COL20, CUSTOMIZE_CATEGORY, 
+    USE_BOOK
+  </sql>
+    <sql id="Base_Info_Column_List">
+     vl.VALUE_CODE,vl.VALUE_NAME
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from aus_valueset_line
+        where VALUESET_LINE_ID = #{valuesetLineId,jdbcType=VARCHAR}
+    </select>
+    <select id="findListByValueSetHeadId" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Info_Column_List"/>
+        from aus_valueset_head vh inner join aus_valueset_line vl on
+        vh.VALUESET_HEAD_ID=vl.VALUESET_HEAD_ID
+        where vh.VALUESET_CODE = #{valueSetCode}
+    </select>
+</mapper>

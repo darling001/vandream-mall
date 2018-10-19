@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vandream.mall.business.dao.FindContractDAO">
+    <resultMap id="findContract" type="com.vandream.mall.business.vo.buyerContract.ContractListVO">
+        <id column="SALES_CONTRACT_HEAD_ID" jdbcType="CHAR" property="contractId"/>
+        <result column="SALES_CONTRACT_CODE" jdbcType="VARCHAR" property="contractCode"/>
+        <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="contractDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="CONTRACT_NAME" jdbcType="VARCHAR" property="contractName"/>
+        <result column="TOTAL_AMOUNT" jdbcType="DECIMAL" property="contractAmount"/>
+        <result column="CONTRACT_STATUS" jdbcType="VARCHAR" property="contractStatus"/>
+        <result column="MAXDATE" jdbcType="TIMESTAMP" property="deliveryEndDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="MINDATE" jdbcType="TIMESTAMP" property="deliveryStartDate" typeHandler="com.vandream.mall.commons.utils.handler.LongTypeHandler"/>
+        <result column="received_amount" jdbcType="DECIMAL" property="paidAmount"/>
+        <result column="status_code" jdbcType="VARCHAR" property="paymentStatus"/>
+        <result column="DELIVERY_STATUS" jdbcType="VARCHAR" property="deliveryStatus"/>
+        <result column="NOTICE_STATUS" jdbcType="VARCHAR" property="noticeStatus"/>
+        <result column="note_code" jdbcType="VARCHAR" property="deliveryNoticeIsRead"/>
+        <result column="delivery_code" jdbcType="VARCHAR" property="deliveryInfoIsRead"/>
+        <result column="FROM_TYPE" jdbcType="VARCHAR" property="fromType"/>
+    </resultMap>
+    <sql id="baseSelectContract">
+        SELECT
+            som_sales_contract_head.SALES_CONTRACT_HEAD_ID,
+            som_sales_contract_head.SALES_CONTRACT_CODE,
+            IF ( tms_delivery_head.DELIVERY_STATUS IS NULL, 20, tms_delivery_head.DELIVERY_STATUS ) as DELIVERY_STATUS,
+            som_sales_contract_head.PROJECT_NAME,
+            som_sales_contract_head.CREATE_DATE,
+             som_sales_contract_head.FROM_TYPE,
+            som_sales_contract_head.CONTRACT_NAME,
+            som_sales_contract_head.TOTAL_AMOUNT,
+            som_sales_contract_head.CONTRACT_STATUS,
+            som_delivery_notice_head.NOTICE_STATUS,
+            max( som_sales_contract_line.EXPECTED_RECEIPT_DATE ) AS MAXDATE,
+            min( som_sales_contract_line.EXPECTED_RECEIPT_DATE ) AS MINDATE,
+            view_arm_capital_contract.received_amount,
+        IF
+            ( count( ebr.BILL_ID ) = count( som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID ) AND count( ebr.BILL_ID )!=0, 1, 2 ) AS note_code,
+        IF
+            ( count( ebrB.BILL_ID ) = count( tms_delivery_head.DELIVERY_HEAD_ID ) AND count( ebrB.BILL_ID )!=0, 1, 2 ) AS delivery_code,
+        IF
+            ( som_sales_contract_head.TOTal_AMOUNT > view_arm_capital_contract.received_amount OR view_arm_capital_contract.received_amount IS NULL, 100, 101 ) AS status_code
+        FROM
+            som_sales_contract_head
+            JOIN som_sales_contract_line ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_line.SALES_CONTRACT_HEAD_ID
+            LEFT JOIN view_arm_capital_contract ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = view_arm_capital_contract.CONTRACT_HEAD_ID
+            LEFT JOIN tms_delivery_head ON ( som_sales_contract_head.SALES_CONTRACT_HEAD_ID = tms_delivery_head.SALES_CONTRACT_HEAD_ID AND tms_delivery_head.DELIVERY_STATUS >= 40 )
+            LEFT JOIN som_delivery_notice_head ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_delivery_notice_head.SALES_CONTRACT_HEAD_ID
+            LEFT JOIN ext_bill_read ebr ON ( ebr.BILL_ID = som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID AND ebr.BILL_TYPE = 15 AND ebr.ACCOUNT_ID = #{userId} )
+            LEFT JOIN ext_bill_read ebrB ON ( ebrB.BILL_ID = tms_delivery_head.DELIVERY_HEAD_ID AND ebrB.BILL_TYPE = 25 AND ebrB.ACCOUNT_ID = #{userId} )
+
+    </sql>
+    <select id="findContractList" resultMap="findContract">
+        <include refid="baseSelectContract"/>
+        <where>
+            som_sales_contract_head.CUSTOMER_ID = #{companyId} AND ((som_sales_contract_head.FROM_TYPE ='MARKET' AND '50' > som_sales_contract_head.CONTRACT_STATUS) or
+            som_sales_contract_head.CONTRACT_STATUS >='50')
+            <if test="keyword != null and keyword != '' ">
+                AND (som_sales_contract_head.CONTRACT_NAME LIKE  CONCAT('%',#{keyword},'%') OR som_sales_contract_head.SALES_CONTRACT_CODE LIKE  CONCAT('%',#{keyword},'%'))
+            </if>
+
+            <if test="contractStartDate != null and contractStartDate != '' ">
+                <![CDATA[   AND som_sales_contract_head.CREATE_DATE > #{contractStartDate}]]>
+            </if>
+
+            <if test="contractEndDate != null and contractEndDate != '' ">
+                <![CDATA[AND  #{contractEndDate} > som_sales_contract_head.CREATE_DATE]]>
+            </if>
+
+            <if test="contractStatus != null and contractStatus != ''and  contractStatus != '100'">
+                AND CONTRACT_STATUS = #{contractStatus}
+            </if>
+
+            <if test="contractStatus == '100'">
+                AND som_sales_contract_head.FROM_TYPE = 'MARKET' AND (CONTRACT_STATUS = '06' OR CONTRACT_STATUS = '10' OR CONTRACT_STATUS = '20' OR CONTRACT_STATUS = '11')
+            </if>
+
+            <if test="deliveryStatus != null and deliveryStatus != '' ">
+                AND DELIVERY_STATUS = #{deliveryStatus}
+            </if>
+
+            <if test="paymentStatus != null and paymentStatus != '' and contractStatus != null and contractStatus != '' ">
+                AND ( som_sales_contract_head.TOTal_AMOUNT > view_arm_capital_contract.received_amount OR view_arm_capital_contract.received_amount IS NULL)
+                AND CONTRACT_STATUS >= #{contractStatus}
+            </if>
+        </where>
+        GROUP BY
+        som_sales_contract_head.SALES_CONTRACT_HEAD_ID
+        ORDER BY
+        CREATE_DATE DESC
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <select id="totalSize" resultType="java.lang.Integer">
+        SELECT
+            count(distinct(som_sales_contract_head.SALES_CONTRACT_HEAD_ID))
+        FROM
+        som_sales_contract_head
+        JOIN som_sales_contract_line ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_sales_contract_line.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN view_arm_capital_contract ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = view_arm_capital_contract.CONTRACT_HEAD_ID
+        LEFT JOIN tms_delivery_head ON ( som_sales_contract_head.SALES_CONTRACT_HEAD_ID = tms_delivery_head.SALES_CONTRACT_HEAD_ID AND tms_delivery_head.DELIVERY_STATUS >= 40 )
+        LEFT JOIN som_delivery_notice_head ON som_sales_contract_head.SALES_CONTRACT_HEAD_ID = som_delivery_notice_head.SALES_CONTRACT_HEAD_ID
+        LEFT JOIN ext_bill_read ebr ON ( ebr.BILL_ID = som_delivery_notice_head.DELIVERY_NOTICE_HEAD_ID AND ebr.BILL_TYPE = 15 AND ebr.ACCOUNT_ID = #{userId} )
+        LEFT JOIN ext_bill_read ebrB ON ( ebrB.BILL_ID = tms_delivery_head.DELIVERY_HEAD_ID AND ebrB.BILL_TYPE = 25 AND ebrB.ACCOUNT_ID = #{userId} )
+        <where>
+            som_sales_contract_head.CUSTOMER_ID = #{companyId} AND ((som_sales_contract_head.FROM_TYPE ='MARKET' AND '50' > som_sales_contract_head.CONTRACT_STATUS) or
+            som_sales_contract_head.CONTRACT_STATUS >='50')
+            <if test="keyword != null and keyword != '' ">
+                AND (som_sales_contract_head.CONTRACT_NAME LIKE  CONCAT('%',#{keyword},'%') OR som_sales_contract_head.SALES_CONTRACT_CODE LIKE  CONCAT('%',#{keyword},'%'))
+            </if>
+
+            <if test="contractStartDate != null and contractStartDate != '' ">
+                <![CDATA[   AND som_sales_contract_head.CREATE_DATE > #{contractStartDate}]]>
+            </if>
+
+            <if test="contractEndDate != null and contractEndDate != '' ">
+                <![CDATA[AND  #{contractEndDate} > som_sales_contract_head.CREATE_DATE]]>
+            </if>
+
+
+            <if test="contractStatus != null and contractStatus != ''and  contractStatus != '100'">
+                AND CONTRACT_STATUS = #{contractStatus}
+            </if>
+
+            <if test="contractStatus == '100'">
+                AND  som_sales_contract_head.FROM_TYPE = 'MARKET' AND (CONTRACT_STATUS = '06' OR CONTRACT_STATUS = '10' OR CONTRACT_STATUS = '20' OR CONTRACT_STATUS = '11')
+            </if>
+
+            <if test="deliveryStatus != null and deliveryStatus != '' ">
+                AND DELIVERY_STATUS = #{deliveryStatus}
+            </if>
+
+            <if test="paymentStatus != null and paymentStatus != '' and contractStatus != null and contractStatus != '' ">
+                AND ( som_sales_contract_head.TOTal_AMOUNT > view_arm_capital_contract.received_amount OR view_arm_capital_contract.received_amount IS NULL)
+                AND CONTRACT_STATUS >= #{contractStatus}
+            </if>
+        </where>
+
+    </select>
+</mapper>
